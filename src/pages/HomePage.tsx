@@ -1,12 +1,13 @@
 import React from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Home from '../views/Home';
-import Login from '../views/Login';
+import LoginPage from '../views/LoginPage';
 import { Switch, Route } from 'react-router-dom';
+import MainHeader from '../components/MainHeader';
 
 const indexRoutes = [
+  { path: "/home/login", component: LoginPage },
   { path: "/home", component: Home },
-  { path: "/login", component: Login },
 ];
 
 const pageStyle = {
@@ -15,6 +16,7 @@ const pageStyle = {
 const HomePage = () => {
   return (
     <div>
+      <MainHeader />
       <Switch>
         {
           indexRoutes.map((prop, key) => {

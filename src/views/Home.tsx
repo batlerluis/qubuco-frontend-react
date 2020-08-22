@@ -25,6 +25,7 @@ const pageStyle = {
   paddingH1: {
     paddingLeft: 80,
     paddingRight: 80,
+    paddingTop: 30,
   },
   titleText: {
     font: "normal normal normal 46px/52px Helvetica Neue",
