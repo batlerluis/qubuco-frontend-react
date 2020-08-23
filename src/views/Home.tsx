@@ -12,12 +12,13 @@ import imgPhone from "../assets/img/phone.png"
 
 const pageStyle = {
   wrapper: {
-    flexGrow: 1,
     minHeight: "100vh",
     height: "auto",
     background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
     paddingTop: 120,
-    // boxSizing: "border-box",
+  },
+  content: {
+    height: "fit-content",
   },
   fullHeight: {
     height: "100%",
@@ -25,7 +26,9 @@ const pageStyle = {
   paddingH1: {
     paddingLeft: 80,
     paddingRight: 80,
-    paddingTop: 30,
+  },
+  search: {
+    paddingTop: 35,
   },
   titleText: {
     font: "normal normal normal 46px/52px Helvetica Neue",
@@ -38,6 +41,10 @@ const pageStyle = {
     letterSpacing: "-1px",
     color: "#707070",
     opacity: 1,
+    paddingBottom: 19,
+  },
+  addLink: {
+    paddingTop: 25,
   },
 };
 
@@ -59,25 +66,27 @@ const Home = (props: any) => {
   const handleLink = (event: any) => event.preventDefault();
 
   return (
-    <Grid container className={classes.wrapper}>
-      <Grid container item xs={12} justify="center">
+    <Grid container className={classes.wrapper} justify="center">
+      <Grid container item sm={12} md={10} justify="center" className={classes.content}>
         <Grid sm={10} md={4} className={classes.paddingH1}>
-          <Grid container direction="column" alignItems="flex-end" justify="space-between">
+          <Grid container direction="column" alignItems="flex-end" justify="space-between" className={classes.fullHeight}>
             <Grid item>
               <h1 className={classes.titleText}>Busca la empresa, califícala y deja tu comentario</h1>
               <h2 className={classes.dscrText}>Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.</h2>
               <Autocomplete
+                className={classes.search}
                 id="free-solo-demo"
-                freeSolo
                 options={top100Films.map((option) => option.title)}
                 renderInput={(params) => (
                   <TextField {...params} margin="none" variant="standard" />
                 )}
               />
-              <Link href="#" color="primary" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
+              <Grid container className={classes.addLink}>
+              <Link className={classes.addLink} href="#" color="primary" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Grid container>
+            <Grid container item>
+              <Grid container justify="space-between">
                 <Grid item>
                   <img src={imgApple} alt="Can not load image!" />
                 </Grid>
@@ -88,8 +97,9 @@ const Home = (props: any) => {
             </Grid>
           </Grid>
         </Grid>
+
         <Grid md={4} className={classes.paddingH1}>
-          <img src={imgPhone} alt="Can not load image!"/>
+          <img src={imgPhone} alt="Can not load image!" />
         </Grid>
       </Grid>
     </Grid>
