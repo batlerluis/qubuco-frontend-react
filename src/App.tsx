@@ -3,9 +3,11 @@ import './App.css';
 import HomePage from './pages/HomePage';
 import { createBrowserHistory } from 'history';
 import { Switch, Router, Route, Redirect } from 'react-router-dom';
+import SurveyPage from './pages/SurveyPage';
 
 const indexRoutes = [
   { path: "/home", component: HomePage },
+  { path: "/survey", component: SurveyPage },
   { path: "/", to: "/home", redirect: true }
 ];
 

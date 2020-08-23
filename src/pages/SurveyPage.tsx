@@ -1,22 +1,22 @@
 import React from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
-import Home from '../views/Home';
-import LoginPage from '../views/LoginPage';
 import { Switch, Route } from 'react-router-dom';
-import MainHeader from '../components/MainHeader';
+import SruveyStart from "../views/SruveyStart";
+import SurveyDetail from '../views/SurveyDetail';
+import SurveyFinal from '../views/SurveyFinal';
 
 const indexRoutes = [
-  { path: "/home/login", component: LoginPage },
-  { path: "/home", component: Home },
+  { path: "/survey/start", component: SruveyStart },
+  { path: "/survey/detail", component: SurveyDetail },
+  { path: "/survey/final", component: SurveyFinal},
 ];
 
 const pageStyle = {
 };
 
-const HomePage = () => {
+const SurveyPage = () => {
   return (
     <div>
-      <MainHeader />
       <Switch>
         {
           indexRoutes.map((prop, key) => {
@@ -24,9 +24,10 @@ const HomePage = () => {
           })
         }
       </Switch>
-      asdfasdfasdfsdf
     </div>
   );
 }
 
-export default withStyles(pageStyle)(HomePage);
+
+
+export default withStyles(pageStyle)(SurveyPage);
