@@ -47,6 +47,9 @@ const pageStyle = {
   addLink: {
     paddingTop: 25,
   },
+  resize: {
+    font: "normal normal normal 20px/52px Quicksand",
+  },
 };
 
 const top100Films = [
@@ -83,7 +86,18 @@ const Home = (props: any) => {
                     options={top100Films.map((option) => option.title)}
                     fullWidth
                     renderInput={(params) => (
-                      <TextField {...params} margin="none" variant="standard" />
+                      <TextField
+                      {...params}
+                      // size="medium"
+                      placeholder="Ingresa el nombre de la em…"
+                      margin="none"
+                      variant="standard"
+                      InputProps={{
+                        classes: {
+                          input: classes.resize,
+                        },
+                      }}
+                      />
                     )}
                   />
                 </Grid>
