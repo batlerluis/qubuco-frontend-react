@@ -24,7 +24,6 @@ const HomePage = () => {
           })
         }
       </Switch>
-      LM
     </div>
   );
 }
