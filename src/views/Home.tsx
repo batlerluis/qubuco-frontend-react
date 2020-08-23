@@ -68,8 +68,8 @@ const Home = (props: any) => {
 
   return (
     <Grid container className={classes.wrapper} justify="center">
-      <Grid container item sm={12} md={10} justify="center" className={classes.content}>
-        <Grid sm={10} md={4} className={classes.paddingH1}>
+      <Grid container justify="center" className={classes.content}>
+        <Grid item sm={10} md={4} className={classes.paddingH1}>
           <Grid container direction="column" alignItems="flex-end" justify="space-between" className={classes.fullHeight}>
             <Grid item>
               <h1 className={classes.titleText}>Busca la empresa, califícala y deja tu comentario</h1>
@@ -107,7 +107,7 @@ const Home = (props: any) => {
           </Grid>
         </Grid>
 
-        <Grid md={4} className={classes.paddingH1}>
+        <Grid item md={4} className={classes.paddingH1}>
           <img src={imgPhone} alt="Can not load image!" />
         </Grid>
       </Grid>

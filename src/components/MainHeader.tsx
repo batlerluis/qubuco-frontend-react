@@ -1,6 +1,7 @@
 import React from 'react';
-import { withStyles, AppBar, Grid } from '@material-ui/core';
+import { withStyles, AppBar, Grid, Button } from '@material-ui/core';
 import PropTypes from "prop-types";
+import { useLocation } from 'react-router-dom';
 
 const headerStyle = {
   root: {
@@ -11,7 +12,11 @@ const headerStyle = {
     paddingRight: 29,
   },
   wrapper: {
-    flexGrow: 1,
+    minHeight: 70,
+    // height: "100%",
+  },
+  fullHeight: {
+    height: "100%",
   },
   logo: {
     paddingRight: 150,
@@ -19,31 +24,56 @@ const headerStyle = {
   },
   rest: {
     flexGrow: 1,
-  }
+  },
+  navLink: {
+    padding: "0px 20px",
+    font: "normal normal normal 15px/17px Helvetica Neue",
+    letterSpacing: -0.15,
+    color: "#717171",
+  },
 };
+
+const pageRoutes = [
+
+];
 
 const MainHeader = (props: any) => {
 
   const { classes } = props;
 
+  let location = useLocation();
+
+  console.log(location);
+
+  const activeRoute = (routeName: string) => {
+    return location.pathname.indexOf(routeName) > -1 ? true : false;
+  }
+
   return (
     <AppBar className={classes.root}>
-      <Grid container className={classes.wrapper}>
-        <Grid item className={classes.logo} alignItems="center">QUBU</Grid>
+      <Grid container className={classes.wrapper} alignItems="stretch">
+        <Grid item className={classes.logo}>
+          <Grid container alignItems="center" className={classes.fullHeight}>
+            QUBU
+          </Grid>
+        </Grid>
         <Grid item className={classes.rest}>
-          <Grid container justify="space-between">
-            <Grid item>Comentar empresa</Grid>
+          <Grid container justify="space-between" alignItems="stretch" className={classes.fullHeight}>
+            <Button className={classes.navLink}>Comentar empresa</Button>
+            <Button className={classes.navLink}>Qué es</Button>
+            <Button className={classes.navLink}>Empresas</Button>
+            <Button className={classes.navLink}>Contacto</Button>
+            <Button className={classes.navLink}>Acceder</Button>
+            <Button className={classes.navLink}>Acceder como empresa</Button>
+            {/* <Grid item>Comentar empresa</Grid>
             <Grid item>Qué es</Grid>
             <Grid item>Empresas</Grid>
             <Grid item>Contacto</Grid>
             <Grid item>Acceder</Grid>
-            <Grid item>Acceder como empresa</Grid>
+            <Grid item>Acceder como empresa</Grid> */}
           </Grid>
         </Grid>
       </Grid>
-
-      {/* <p>asdfasdfsdf</p> */}
-      {/* <p>werwerwer</p> */}
     </AppBar>
   );
 }
