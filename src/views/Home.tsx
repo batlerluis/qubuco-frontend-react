@@ -4,6 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Grid, Link } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import SearchIcon from '@material-ui/icons/Search';
 
 import imgApple from "../assets/img/appstore.png";
 import imgGoogle from "../assets/img/googlestore.png";
@@ -73,16 +74,24 @@ const Home = (props: any) => {
             <Grid item>
               <h1 className={classes.titleText}>Busca la empresa, califícala y deja tu comentario</h1>
               <h2 className={classes.dscrText}>Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.</h2>
-              <Autocomplete
-                className={classes.search}
-                id="free-solo-demo"
-                options={top100Films.map((option) => option.title)}
-                renderInput={(params) => (
-                  <TextField {...params} margin="none" variant="standard" />
-                )}
-              />
+              <Grid container alignItems="flex-end">
+                <SearchIcon fontSize="large" />
+                <Grid style={{ flexGrow: 1 }}>
+                  <Autocomplete
+                    className={classes.search}
+                    id="free-solo-demo"
+                    options={top100Films.map((option) => option.title)}
+                    fullWidth
+                    renderInput={(params) => (
+                      <TextField {...params} margin="none" variant="standard" />
+                    )}
+                  />
+                </Grid>
+
+              </Grid>
+
               <Grid container className={classes.addLink}>
-              <Link className={classes.addLink} href="#" color="primary" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
+                <Link className={classes.addLink} href="#" color="primary" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
               </Grid>
             </Grid>
             <Grid container item>
