@@ -66,7 +66,9 @@ const pageStyle = {
     paddingBottom: 15
   },
   logContainer: {
-    background: "#222222 0% 0% no-repeat padding-box",
+    background: "#FFFFFF 0% 0% no-repeat padding-box",
+    boxShadow: "0px 6px 9px #00000029",
+    color: "#717171",
     width: 84,
     height: 84,
     opacity: 1,
@@ -78,10 +80,10 @@ const pageStyle = {
     textShadow: "0px 6px 9px #00000029"
   },
   buttonGroup: {
-    width:200
+    width: 200
   }
 };
-//box-shadow: "0px 0px 6px 9px #000029",
+
 const SurveyFinal = (props: any) => {
 
   const { classes } = props;
@@ -101,14 +103,14 @@ const SurveyFinal = (props: any) => {
               <Grid item><h2 className={classes.downloadText}>Descárgala ahora!</h2></Grid>
               <Grid item className={classes.logGroup}>
                 <Grid container className={classes.logContainer} alignItems="center" justify="center">
-                    <img src={imgLog} alt="Can not load image!"/>
+                  <img src={imgLog} alt="Can not load image!" />
                 </Grid>
               </Grid>
               <Grid item className={classes.logGroup}><p className={classes.qubuText}>QUBU<CopyrightIcon style={{ fontSize: 10 }}></CopyrightIcon></p></Grid>
               <Grid item>
                 <Grid container className={classes.buttonGroup} justify="space-around">
-                  <img src={imgApple1} alt="Can not load image!"/>
-                  <img src={imgGoogle1} alt="Can not load image!"/>
+                  <img src={imgApple1} alt="Can not load image!" />
+                  <img src={imgGoogle1} alt="Can not load image!" />
                 </Grid>
               </Grid>
             </Grid>
@@ -120,40 +122,6 @@ const SurveyFinal = (props: any) => {
           <img src={imgPhone2} alt="Can not load image!" />
         </Grid>
       </Grid>
-
-      {/* <Grid container justify="center" className={classes.content}>
-        <Grid item></Grid>
-        <Grid container justify="center" className={classes.leftPart}>
-          <Grid item className={classes.titleGroup}>
-            <h1 className={classes.titleText}>Gracias! Hemos</h1>
-            <h1 className={classes.titleText}>recibido tus</h1>
-            <h1 className={classes.titleText}>comentarios</h1>
-          </Grid>
-          <Grid item className={classes.dscrGroup}>
-            <h3 className={classes.dscrText}>Mira tu opinión y la de otros usuarios en</h3>
-            <h3 className={classes.dscrText}>nuestra app. Califica, Comenta y Gana</h3>
-            <h3 className={classes.dscrText}>cupones de descuento por tus comentarios.</h3>
-          </Grid>
-          <Grid container justify="center" className={classes.downloadGroup}>
-            <h2>Descárgala ahora!</h2>
-            <Grid item className={classes.logContainer}>
-              <img src={imgLog} alt="Can not load image!" />
-            </Grid>
-            <Grid container direction="column">
-              <p className={classes.qubuText}>QUBU</p>
-              <CopyrightIcon></CopyrightIcon>
-            </Grid>
-            <Grid item>
-              <img src={imgApple2} alt="Can not load image!" className={classes.ImgSize} />
-              <img src={imgGoogle2} alt="Can not load image!" className={classes.ImgSize} />
-            </Grid>
-          </Grid>
-        </Grid>
-
-        <Grid item md={4} className={classes.paddingH1}>
-          <img src={imgPhone2} alt="Can not load image!" />
-        </Grid>
-      </Grid> */}
     </Grid>
   );
 }
