@@ -14,8 +14,9 @@ var CardContent_1 = require("@material-ui/core/CardContent");
 var ArrowBackIos_1 = require("@material-ui/icons/ArrowBackIos");
 var ArrowForward_1 = require("@material-ui/icons/ArrowForward");
 var SettingsBackupRestore_1 = require("@material-ui/icons/SettingsBackupRestore");
-var LinearProgress_1 = require("@material-ui/core/LinearProgress");
-var Box_1 = require("@material-ui/core/Box");
+var Checkbox_1 = require("@material-ui/core/Checkbox");
+var FormControlLabel_1 = require("@material-ui/core/FormControlLabel");
+var TextareaAutosize_1 = require("@material-ui/core/TextareaAutosize");
 var car_png_1 = require("../assets/img/car.png");
 var styles_2 = require("@material-ui/core/styles");
 var purple_1 = require("@material-ui/core/colors/purple");
@@ -55,6 +56,10 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
             color: "#ffffff"
         }
     },
+    checkStyle: {
+        color: "#8a56ac !important",
+        padding: "10px"
+    },
     btnClient: {
         backgroundColor: "#8a56ac"
     },
@@ -63,6 +68,18 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
     },
     btnProvider: {
         backgroundColor: "#998FA2"
+    },
+    formCtl: {
+        marginBottom: "40px"
+    },
+    checkout: {
+        // backgroundColor: "#8a56ac",
+        color: "#8a56ac"
+    },
+    comment: {
+        width: "100%",
+        height: "150px",
+        fontSize: "20px"
     },
     skip: {
         maxWidth: 101,
@@ -270,6 +287,57 @@ function RecipeReviewCard() {
     //   </Grid>
     // </ThemeProvider>
     // #################  Question 3 Page  #################
+    // <ThemeProvider theme={theme}>
+    //   <Grid container>
+    //     <AppBar position="static" color="inherit">
+    //       <Toolbar variant="dense">
+    //         <IconButton edge="start" aria-label="menu">
+    //           <ArrowBackIosIcon />SALIR
+    //         </IconButton>
+    //       </Toolbar>
+    //     </AppBar>
+    //     <Card className={classes.root}>
+    //       <CardHeader
+    //         avatar={
+    //           <img src={imgLog} className={classes.avatar} />
+    //         }
+    //         action={
+    //           <Card className={classes.return}>
+    //             <IconButton aria-label="menu">
+    //               <SettingsBackupRestoreIcon />Regresar
+    //             </IconButton>
+    //           </Card>
+    //         }
+    //         titleTypographyProps={{variant:'h5' }}
+    //         title="Company Name"
+    //         subheaderTypographyProps={{variant:'h6' }}
+    //         subheader="Survey Name"
+    //       />
+    //       <CardContent>
+    //         <Typography variant="h6" color="textSecondary" component="p">
+    //           Question 3
+    //         </Typography>
+    //         <LinearProgress variant="buffer" value={100} className={classes.progBar} />
+    //         <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
+    //           <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
+    //             Te gusto el servicio en tu última experiencia con nuestra empresa?
+    //           </Typography>
+    //           <Grid container direction="column" className={classes.btnGroup}>
+    //             <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN A</Button>
+    //             <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN B</Button>
+    //             <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN C</Button>
+    //           </Grid>
+    //         </Box>
+    //         <Card className={classes.skip}>
+    //           <IconButton aria-label="skip">
+    //             Omitir<ArrowForwardIcon />
+    //           </IconButton>
+    //         </Card>
+    //       </CardContent>
+    //     </Card>
+    //   </Grid>
+    // </ThemeProvider>
+    // #################  Question 3 Page  #################
     react_1["default"].createElement(styles_1.ThemeProvider, { theme: theme },
         react_1["default"].createElement(Grid_1["default"], { container: true },
             react_1["default"].createElement(AppBar_1["default"], { position: "static", color: "inherit" },
@@ -283,14 +351,11 @@ function RecipeReviewCard() {
                             react_1["default"].createElement(SettingsBackupRestore_1["default"], null),
                             "Regresar")), titleTypographyProps: { variant: 'h5' }, title: "Company Name", subheaderTypographyProps: { variant: 'h6' }, subheader: "Survey Name" }),
                 react_1["default"].createElement(CardContent_1["default"], null,
-                    react_1["default"].createElement(Typography_1["default"], { variant: "h6", color: "textSecondary", component: "p" }, "Question 3"),
-                    react_1["default"].createElement(LinearProgress_1["default"], { variant: "buffer", value: 100, className: classes.progBar }),
-                    react_1["default"].createElement(Box_1["default"], { component: "fieldset", textAlign: "center", mb: 3, justifyContent: "center", borderColor: "transparent" },
-                        react_1["default"].createElement(Typography_1["default"], { variant: "h5", align: "center", color: "textSecondary", component: "p", className: classes.description }, "Te gusto el servicio en tu \u00FAltima experiencia con nuestra empresa?"),
-                        react_1["default"].createElement(Grid_1["default"], { container: true, direction: "column", className: classes.btnGroup },
-                            react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "primary", className: classes.btnClient }, "OPCI\u00D3N A"),
-                            react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "primary", className: classes.btnClient }, "OPCI\u00D3N B"),
-                            react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "primary", className: classes.btnClient }, "OPCI\u00D3N C"))),
+                    react_1["default"].createElement(Typography_1["default"], { variant: "subtitle1", color: "textSecondary", component: "p" }, "Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad."),
+                    react_1["default"].createElement(TextareaAutosize_1["default"], { rows: 5, "aria-label": "maximum height", placeholder: "Escribe tu comentario\u2026", defaultValue: "", className: classes.comment }),
+                    react_1["default"].createElement(FormControlLabel_1["default"], { control: react_1["default"].createElement(Checkbox_1["default"], { className: classes.checkStyle }), label: "Comentario privado", className: classes.formCtl }),
+                    react_1["default"].createElement(Grid_1["default"], { container: true, direction: "column", className: classes.btnGroup },
+                        react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "primary", className: classes.btnClient }, "COMENTAR")),
                     react_1["default"].createElement(Card_1["default"], { className: classes.skip },
                         react_1["default"].createElement(IconButton_1["default"], { "aria-label": "skip" },
                             "Omitir",

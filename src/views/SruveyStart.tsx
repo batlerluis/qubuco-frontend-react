@@ -12,6 +12,9 @@ import CardContent from '@material-ui/core/CardContent';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
@@ -60,6 +63,11 @@ const useStyles = makeStyles((theme) => ({
       color: "#ffffff",
     }
   },
+  checkStyle: {
+    color: "#8a56ac !important",
+    padding: "10px",
+    // marginBottom: "40px",
+  },
   btnClient: {
     backgroundColor: "#8a56ac",
   },
@@ -68,6 +76,18 @@ const useStyles = makeStyles((theme) => ({
   },
   btnProvider: {
     backgroundColor: "#998FA2",
+  },
+  formCtl: {
+    marginBottom: "40px",
+  },
+  checkout: {
+    // backgroundColor: "#8a56ac",
+    color: "#8a56ac",
+  },
+  comment: {
+    width: "100%",
+    height: "150px",
+    fontSize: "20px",
   },
   skip: {
     maxWidth: 101,
@@ -286,6 +306,59 @@ export default function RecipeReviewCard() {
 
     // #################  Question 3 Page  #################
 
+    // <ThemeProvider theme={theme}>
+    //   <Grid container>
+    //     <AppBar position="static" color="inherit">
+    //       <Toolbar variant="dense">
+    //         <IconButton edge="start" aria-label="menu">
+    //           <ArrowBackIosIcon />SALIR
+    //         </IconButton>
+    //       </Toolbar>
+    //     </AppBar>
+    //     <Card className={classes.root}>
+    //       <CardHeader
+    //         avatar={
+    //           <img src={imgLog} className={classes.avatar} />
+    //         }
+    //         action={
+    //           <Card className={classes.return}>
+    //             <IconButton aria-label="menu">
+    //               <SettingsBackupRestoreIcon />Regresar
+    //             </IconButton>
+    //           </Card>
+    //         }
+    //         titleTypographyProps={{variant:'h5' }}
+    //         title="Company Name"
+    //         subheaderTypographyProps={{variant:'h6' }}
+    //         subheader="Survey Name"
+    //       />
+    //       <CardContent>
+    //         <Typography variant="h6" color="textSecondary" component="p">
+    //           Question 3
+    //         </Typography>
+    //         <LinearProgress variant="buffer" value={100} className={classes.progBar} />
+    //         <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
+    //           <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
+    //             Te gusto el servicio en tu última experiencia con nuestra empresa?
+    //           </Typography>
+    //           <Grid container direction="column" className={classes.btnGroup}>
+    //             <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN A</Button>
+    //             <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN B</Button>
+    //             <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN C</Button>
+    //           </Grid>
+    //         </Box>
+    //         <Card className={classes.skip}>
+    //           <IconButton aria-label="skip">
+    //             Omitir<ArrowForwardIcon />
+    //           </IconButton>
+    //         </Card>
+    //       </CardContent>
+    //     </Card>
+    //   </Grid>
+    // </ThemeProvider>
+
+    // #################  Question 3 Page  #################
+
     <ThemeProvider theme={theme}>
       <Grid container>
         <AppBar position="static" color="inherit">
@@ -313,20 +386,24 @@ export default function RecipeReviewCard() {
             subheader="Survey Name"
           />
           <CardContent>
-            <Typography variant="h6" color="textSecondary" component="p">
-              Question 3
+            <Typography variant="subtitle1" color="textSecondary" component="p">
+              Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.
             </Typography>
-            <LinearProgress variant="buffer" value={100} className={classes.progBar} />
-            <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
-              <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
-                Te gusto el servicio en tu última experiencia con nuestra empresa?
-              </Typography>
-              <Grid container direction="column" className={classes.btnGroup}>
-                <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN A</Button>
-                <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN B</Button>
-                <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN C</Button>
-              </Grid>
-            </Box>
+            <TextareaAutosize
+              rows={5}
+              aria-label="maximum height"
+              placeholder="Escribe tu comentario…"
+              defaultValue=""
+              className={classes.comment}
+            />
+            <FormControlLabel
+              control={<Checkbox className={classes.checkStyle}/>}
+              label="Comentario privado"
+              className={classes.formCtl}
+            />
+            <Grid container direction="column" className={classes.btnGroup}>
+              <Button variant="contained" color="primary" className={classes.btnClient}>COMENTAR</Button>
+            </Grid>
             <Card className={classes.skip}>
               <IconButton aria-label="skip">
                 Omitir<ArrowForwardIcon />
@@ -336,6 +413,7 @@ export default function RecipeReviewCard() {
         </Card>
       </Grid>
     </ThemeProvider>
+
 
   );
 }
