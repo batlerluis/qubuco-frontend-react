@@ -11,7 +11,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-import imgLog from "../assets/img/log.png"
+import imgLog from "../assets/img/car.png"
 
 const useStyles = makeStyles((theme) => ({
 

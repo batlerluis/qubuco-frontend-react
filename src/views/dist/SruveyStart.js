@@ -12,7 +12,7 @@ var Button_1 = require("@material-ui/core/Button");
 var CardHeader_1 = require("@material-ui/core/CardHeader");
 var CardContent_1 = require("@material-ui/core/CardContent");
 var ArrowBackIos_1 = require("@material-ui/icons/ArrowBackIos");
-var log_png_1 = require("../assets/img/log.png");
+var car_png_1 = require("../assets/img/car.png");
 var useStyles = styles_1.makeStyles(function (theme) { return ({
     root: {
         maxWidth: 550,
@@ -76,7 +76,7 @@ function RecipeReviewCard() {
                     react_1["default"].createElement(ArrowBackIos_1["default"], null),
                     "SALIR"))),
         react_1["default"].createElement(Card_1["default"], { className: classes.root },
-            react_1["default"].createElement(CardHeader_1["default"], { avatar: react_1["default"].createElement("img", { src: log_png_1["default"], className: classes.avatar }), titleTypographyProps: { variant: 'h5' }, title: "Company Name", subheaderTypographyProps: { variant: 'subtitle2' }, subheader: "Escoge la opci\u00F3n que m\u00E1s se ajuste al comentario que har\u00E1s sobre esta empresa." }),
+            react_1["default"].createElement(CardHeader_1["default"], { avatar: react_1["default"].createElement("img", { src: car_png_1["default"], className: classes.avatar }), titleTypographyProps: { variant: 'h5' }, title: "Company Name", subheaderTypographyProps: { variant: 'subtitle2' }, subheader: "Escoge la opci\u00F3n que m\u00E1s se ajuste al comentario que har\u00E1s sobre esta empresa." }),
             react_1["default"].createElement(CardContent_1["default"], null,
                 react_1["default"].createElement(Typography_1["default"], { variant: "subtitle1", color: "textSecondary", component: "p" }, "Quiero opinar esta empresa como:"),
                 react_1["default"].createElement(Grid_1["default"], { container: true, direction: "column", className: classes.btnGroup },
