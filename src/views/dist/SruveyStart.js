@@ -168,7 +168,7 @@ function RecipeReviewCard() {
     //     </CardContent>
     //   </Card>
     // </Grid>
-    // #################  Raging Page  #################
+    // #################  Rating Page  #################
     // <ThemeProvider theme={theme}>
     //   <Grid container>
     //     <AppBar position="static" color="inherit">
@@ -219,7 +219,57 @@ function RecipeReviewCard() {
     //     </Card>
     //   </Grid>
     // </ThemeProvider>
-    // #################  Raging Page  #################
+    // #################  Ques 2 Page  #################
+    // <ThemeProvider theme={theme}>
+    //   <Grid container>
+    //     <AppBar position="static" color="inherit">
+    //       <Toolbar variant="dense">
+    //         <IconButton edge="start" aria-label="menu">
+    //           <ArrowBackIosIcon />SALIR
+    //         </IconButton>
+    //       </Toolbar>
+    //     </AppBar>
+    //     <Card className={classes.root}>
+    //       <CardHeader
+    //         avatar={
+    //           <img src={imgLog} className={classes.avatar} />
+    //         }
+    //         action={
+    //           <Card className={classes.return}>
+    //             <IconButton aria-label="menu">
+    //               <SettingsBackupRestoreIcon />Regresar
+    //             </IconButton>
+    //           </Card>
+    //         }
+    //         titleTypographyProps={{variant:'h5' }}
+    //         title="Company Name"
+    //         subheaderTypographyProps={{variant:'h6' }}
+    //         subheader="Survey Name"
+    //       />
+    //       <CardContent>
+    //         <Typography variant="h6" color="textSecondary" component="p">
+    //           Question 2
+    //         </Typography>
+    //         <LinearProgress variant="buffer" value={67} className={classes.progBar} />
+    //         <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
+    //           <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
+    //             Te gusto el servicio en tu última experiencia con nuestra empresa?
+    //           </Typography>
+    //           <Grid container direction="column" className={classes.btnGroup}>
+    //             <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN POSITIVA</Button>
+    //             <Button variant="contained" color="inherit" className={classes.btnProvider}>OPCIÓN NEGATIVA</Button>
+    //           </Grid>
+    //         </Box>
+    //         <Card className={classes.skip}>
+    //           <IconButton aria-label="skip">
+    //             Omitir<ArrowForwardIcon />
+    //           </IconButton>
+    //         </Card>
+    //       </CardContent>
+    //     </Card>
+    //   </Grid>
+    // </ThemeProvider>
+    // #################  Question 3 Page  #################
     react_1["default"].createElement(styles_1.ThemeProvider, { theme: theme },
         react_1["default"].createElement(Grid_1["default"], { container: true },
             react_1["default"].createElement(AppBar_1["default"], { position: "static", color: "inherit" },
@@ -233,13 +283,14 @@ function RecipeReviewCard() {
                             react_1["default"].createElement(SettingsBackupRestore_1["default"], null),
                             "Regresar")), titleTypographyProps: { variant: 'h5' }, title: "Company Name", subheaderTypographyProps: { variant: 'h6' }, subheader: "Survey Name" }),
                 react_1["default"].createElement(CardContent_1["default"], null,
-                    react_1["default"].createElement(Typography_1["default"], { variant: "h6", color: "textSecondary", component: "p" }, "Question 2"),
-                    react_1["default"].createElement(LinearProgress_1["default"], { variant: "buffer", value: 67, className: classes.progBar }),
+                    react_1["default"].createElement(Typography_1["default"], { variant: "h6", color: "textSecondary", component: "p" }, "Question 3"),
+                    react_1["default"].createElement(LinearProgress_1["default"], { variant: "buffer", value: 100, className: classes.progBar }),
                     react_1["default"].createElement(Box_1["default"], { component: "fieldset", textAlign: "center", mb: 3, justifyContent: "center", borderColor: "transparent" },
                         react_1["default"].createElement(Typography_1["default"], { variant: "h5", align: "center", color: "textSecondary", component: "p", className: classes.description }, "Te gusto el servicio en tu \u00FAltima experiencia con nuestra empresa?"),
                         react_1["default"].createElement(Grid_1["default"], { container: true, direction: "column", className: classes.btnGroup },
-                            react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "primary", className: classes.btnClient }, "OPCI\u00D3N POSITIVA"),
-                            react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "inherit", className: classes.btnProvider }, "OPCI\u00D3N NEGATIVA"))),
+                            react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "primary", className: classes.btnClient }, "OPCI\u00D3N A"),
+                            react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "primary", className: classes.btnClient }, "OPCI\u00D3N B"),
+                            react_1["default"].createElement(Button_1["default"], { variant: "contained", color: "primary", className: classes.btnClient }, "OPCI\u00D3N C"))),
                     react_1["default"].createElement(Card_1["default"], { className: classes.skip },
                         react_1["default"].createElement(IconButton_1["default"], { "aria-label": "skip" },
                             "Omitir",

@@ -180,7 +180,7 @@ export default function RecipeReviewCard() {
     //   </Card>
     // </Grid>
 
-    // #################  Raging Page  #################
+    // #################  Rating Page  #################
     // <ThemeProvider theme={theme}>
     //   <Grid container>
     //     <AppBar position="static" color="inherit">
@@ -231,7 +231,61 @@ export default function RecipeReviewCard() {
     //     </Card>
     //   </Grid>
     // </ThemeProvider>
-    // #################  Raging Page  #################
+
+    // #################  Ques 2 Page  #################
+
+    // <ThemeProvider theme={theme}>
+    //   <Grid container>
+    //     <AppBar position="static" color="inherit">
+    //       <Toolbar variant="dense">
+    //         <IconButton edge="start" aria-label="menu">
+    //           <ArrowBackIosIcon />SALIR
+    //         </IconButton>
+    //       </Toolbar>
+    //     </AppBar>
+    //     <Card className={classes.root}>
+    //       <CardHeader
+    //         avatar={
+    //           <img src={imgLog} className={classes.avatar} />
+    //         }
+    //         action={
+    //           <Card className={classes.return}>
+    //             <IconButton aria-label="menu">
+    //               <SettingsBackupRestoreIcon />Regresar
+    //             </IconButton>
+    //           </Card>
+    //         }
+    //         titleTypographyProps={{variant:'h5' }}
+    //         title="Company Name"
+    //         subheaderTypographyProps={{variant:'h6' }}
+    //         subheader="Survey Name"
+    //       />
+    //       <CardContent>
+    //         <Typography variant="h6" color="textSecondary" component="p">
+    //           Question 2
+    //         </Typography>
+    //         <LinearProgress variant="buffer" value={67} className={classes.progBar} />
+    //         <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
+    //           <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
+    //             Te gusto el servicio en tu última experiencia con nuestra empresa?
+    //           </Typography>
+    //           <Grid container direction="column" className={classes.btnGroup}>
+    //             <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN POSITIVA</Button>
+    //             <Button variant="contained" color="inherit" className={classes.btnProvider}>OPCIÓN NEGATIVA</Button>
+    //           </Grid>
+    //         </Box>
+    //         <Card className={classes.skip}>
+    //           <IconButton aria-label="skip">
+    //             Omitir<ArrowForwardIcon />
+    //           </IconButton>
+    //         </Card>
+    //       </CardContent>
+    //     </Card>
+    //   </Grid>
+    // </ThemeProvider>
+
+    // #################  Question 3 Page  #################
+
     <ThemeProvider theme={theme}>
       <Grid container>
         <AppBar position="static" color="inherit">
@@ -260,16 +314,17 @@ export default function RecipeReviewCard() {
           />
           <CardContent>
             <Typography variant="h6" color="textSecondary" component="p">
-              Question 2
+              Question 3
             </Typography>
-            <LinearProgress variant="buffer" value={67} className={classes.progBar} />
+            <LinearProgress variant="buffer" value={100} className={classes.progBar} />
             <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
               <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
                 Te gusto el servicio en tu última experiencia con nuestra empresa?
               </Typography>
               <Grid container direction="column" className={classes.btnGroup}>
-                <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN POSITIVA</Button>
-                <Button variant="contained" color="inherit" className={classes.btnProvider}>OPCIÓN NEGATIVA</Button>
+                <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN A</Button>
+                <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN B</Button>
+                <Button variant="contained" color="primary" className={classes.btnClient}>OPCIÓN C</Button>
               </Grid>
             </Box>
             <Card className={classes.skip}>
@@ -281,5 +336,6 @@ export default function RecipeReviewCard() {
         </Card>
       </Grid>
     </ThemeProvider>
+
   );
 }
