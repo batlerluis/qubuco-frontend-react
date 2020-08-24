@@ -1,11 +1,13 @@
 import React from 'react';
-import { withStyles, AppBar, Grid, Button } from '@material-ui/core';
+import { withStyles, AppBar, Grid, Button, Icon } from '@material-ui/core';
 import PropTypes from "prop-types";
 import { useLocation } from 'react-router-dom';
 
+import imgLogo from "../assets/img/logo.png";
+
 const pageRoutes = [
-  { path: "/home", label: "Comentar empresa" },
-  { path: "/home/c", label: "Qué es" },
+  { path: "/home/c", label: "Comentar empresa" },
+  { path: "/home", label: "Qué es" },
   { path: "/home/a", label: "Empresas" },
   { path: "/home/b", label: "Contacto" },
 ];
@@ -77,12 +79,15 @@ const MainHeader = (props: any) => {
     return location.pathname.indexOf(routeName) > -1 ? true : false;
   }
 
+  const logoIcon = () => <Icon> <img src={imgLogo} /> </Icon>
+
   return (
     <AppBar className={classes.root}>
       <Grid container className={classes.wrapper} alignItems="stretch">
         <Grid item className={classes.logo}>
           <Grid container alignItems="center" className={classes.fullHeight}>
-            QUBU
+            <Button><img src={imgLogo} />QUBU</Button>
+
           </Grid>
         </Grid>
         <Grid item className={classes.rest}>
@@ -101,18 +106,6 @@ const MainHeader = (props: any) => {
                 <Button className={classes.companyLink}>Acceder como empresa</Button>
               </Grid>
             </Grid>
-            {/* <Button className={classes.navLink}>Comentar empresa</Button>
-            <Button className={classes.navLink}>Qué es</Button>
-            <Button className={classes.navLink}>Empresas</Button>
-            <Button className={classes.navLink}>Contacto</Button>
-            <Button className={classes.navLink}>Acceder</Button>
-            <Button className={classes.navLink}>Acceder como empresa</Button> */}
-            {/* <Grid item>Comentar empresa</Grid>
-            <Grid item>Qué es</Grid>
-            <Grid item>Empresas</Grid>
-            <Grid item>Contacto</Grid>
-            <Grid item>Acceder</Grid>
-            <Grid item>Acceder como empresa</Grid> */}
           </Grid>
         </Grid>
       </Grid>
