@@ -10,13 +10,16 @@ var pageStyle = {
         flexGrow: 1,
         minHeight: "100vh",
         height: "auto",
-        background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box"
+        paddingTop: "120px"
     },
     cardcontent: {
         padding: "20px",
         '& > div': {
             margin: "5px"
-        }
+        },
+        background: "#FFFFFF 0% 0% no-repeat padding-box",
+        boxShadow: "0px 9px 12px #00000029",
+        color: "#717171"
     },
     fullHeight: {
         height: "100%"
@@ -66,6 +69,8 @@ var pageStyle = {
     tabItem: {
         fontWeight: 500,
         fontSize: "22px",
+        padding: "5px 0",
+        margin: "0 20px",
         border: "none",
         '& > span: focus': {
             borderBottom: "2px solid #8a56ac"
