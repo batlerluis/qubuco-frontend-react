@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {ButtonGroup, Grid, Card, Tab, Tabs, OutlinedInput, Link, Checkbox, FormControlLabel, Button, GridList } from '@material-ui/core';
-import { NONAME } from 'dns';
+import { Grid, Card, Tab, Tabs, OutlinedInput, Link, Checkbox, FormControlLabel, Button, GridList } from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
+
 const pageStyle = {
-  
   wrapper: {
     flexGrow: 1,
     minHeight: "100vh",
@@ -13,15 +13,33 @@ const pageStyle = {
   },
   cardcontent: {
     padding: "20px",
-    '& div': {
+    '& > div': {
       margin: "5px",
-    }
+    },
   },
   fullHeight: {
     height: "100%",
   },
+  bara: {
+    fontSize: "30px",
+  },
+  lineItem: {
+    width: "45%",
+    // width: "700",?
+  },
   forgot: {
     padding: "10px 0",
+    "& > *": {
+      color: "#8a56ac",
+    }
+  },
+  checkStyle: {
+    color: "#8a56ac !important",
+  },
+  facebookBtn: {
+    display: "flex",
+    paddingRight: "25px !important",
+    justifyContent: "space-between",
   },
   paddingH1: {
     paddingLeft: 80,
@@ -40,6 +58,11 @@ const pageStyle = {
     color: "#707070",
     opacity: 1,
   },
+  lineGroup: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+  },
   tabItem: {
     fontWeight: 500,
     fontSize: "22px",
@@ -51,14 +74,16 @@ const pageStyle = {
   buttonbar: {
     width: "100%",
     display: "block",
-    '& *': {
+    '& button': {
       width: "100%",
-      // borderRadius: "none"
+      margin: "10px 0",
+      padding: "10px",
+      border: "1px solid grey",
     },
-    // flexDirection: 'column',
   },
   buttonItem: {
     width: "100%",
+    color: "white",
     backgroundColor: "#8A56AC",
     "&:hover": {
       opacity: 0.9,
@@ -84,37 +109,36 @@ const LoginPage = (props: any) => {
             <Tabs
               value={currentTab}
               onChange={handleChange}
-              textColor="primary"
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: "#8a56ac"
+                }
+              }}
             >
               <Tab label="Ingresar" className={classes.tabItem}></Tab>
+              <span className={classes.bara}>|</span>
               <Tab label="Registrarse" className={classes.tabItem}></Tab>
             </Tabs>
             <OutlinedInput fullWidth placeholder="Correo electrónico" />
             <OutlinedInput fullWidth placeholder="Contraseña" />
             <Grid container justify="space-between" >
               <FormControlLabel
-                control={<Checkbox checked={keepSigned} onChange={(event: any, newValue) => setSign(newValue)} />}
+                control={<Checkbox className={classes.checkStyle} checked={keepSigned} onChange={(event: any, newValue) => setSign(newValue)} />}
                 label="Permanecer conectado"
               />
               <div className={classes.forgot}>
                 <Link href="#" color="primary" onClick={(e: any) => e.preventDefault()}>Olvidé contraseña</Link>
               </div>
             </Grid>
-            {/* <GridList className={classes.buttonbar}>
-              <Button className={classes.buttonItem}>Ingresar</Button>
-              <Button className={classes.buttonItem}>Facebook</Button>
-            </GridList> */}
-            {/* <ButtonGroup
-              orientation="vertical"
-              color="primary"
-              aria-label="vertical outlined primary button group"
-              className={classes.buttonbar}
-            > */}
             <div className={classes.buttonbar} >
               <Button className={classes.buttonItem}>Ingresar</Button>
-              <Button >Facebook</Button>
+              <div className={classes.lineGroup}>
+                <div className={classes.lineItem}><hr /></div>
+                <span>O</span>
+                <div className={classes.lineItem}><hr /></div>
+              </div>
+              <Button className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
             </div>
-            {/* </ButtonGroup> */}
           </Grid>
         </Card>
       </Grid>
