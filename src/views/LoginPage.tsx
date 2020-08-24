@@ -67,6 +67,8 @@ const pageStyle = {
   tabItem: {
     fontWeight: 500,
     fontSize: "22px",
+    padding: "5px 0",
+    margin: "0 20px",
     border: "none",
     '& > span: focus': {
       borderBottom: "2px solid #8a56ac",
