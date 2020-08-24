@@ -47,9 +47,6 @@ const pageStyle = {
   addLink: {
     paddingTop: 25,
   },
-  // resize: {
-  //   font: "normal normal normal 20px/52px Quicksand",
-  // },
 };
 
 const top100Films = [
@@ -87,16 +84,10 @@ const Home = (props: any) => {
                     fullWidth
                     renderInput={(params) => (
                       <TextField
-                      {...params}
-                      // size="medium"
-                      placeholder="Ingresa el nombre de la em…"
-                      margin="none"
-                      variant="standard"
-                      // InputProps={{
-                      //   classes: {
-                      //     input: classes.resize,
-                      //   },
-                      // }}
+                        {...params}
+                        placeholder="Ingresa el nombre de la em…"
+                        margin="none"
+                        variant="standard"
                       />
                     )}
                   />
