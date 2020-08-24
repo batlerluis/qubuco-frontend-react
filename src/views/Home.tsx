@@ -8,7 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import imgApple from "../assets/img/appstore.png";
 import imgGoogle from "../assets/img/googlestore.png";
-import imgPhone from "../assets/img/phone.png"
+import imgPhone1 from "../assets/img/phone1.png"
 
 
 const pageStyle = {
@@ -122,7 +122,7 @@ const Home = (props: any) => {
         </Grid>
 
         <Grid item md={4} className={classes.paddingH1}>
-          <img src={imgPhone} alt="Can not load image!" />
+          <img src={imgPhone1} alt="Can not load image!" />
         </Grid>
       </Grid>
     </Grid>
