@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { Grid, Card, Tab, Tabs, OutlinedInput, Link, Checkbox, FormControlLabel, Button } from '@material-ui/core';
+import { Grid, Card, Tab, Tabs, OutlinedInput, Link, Checkbox, FormControlLabel, Button, GridList } from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 const pageStyle = {
   wrapper: {
@@ -9,10 +10,36 @@ const pageStyle = {
     minHeight: "100vh",
     height: "auto",
     background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
-    paddingTop: 120,
+  },
+  cardcontent: {
+    padding: "20px",
+    '& > div': {
+      margin: "5px",
+    },
   },
   fullHeight: {
     height: "100%",
+  },
+  bara: {
+    fontSize: "30px",
+  },
+  lineItem: {
+    width: "45%",
+    // width: "700",?
+  },
+  forgot: {
+    padding: "10px 0",
+    "& > *": {
+      color: "#8a56ac",
+    }
+  },
+  checkStyle: {
+    color: "#8a56ac !important",
+  },
+  facebookBtn: {
+    display: "flex",
+    paddingRight: "25px !important",
+    justifyContent: "space-between",
   },
   paddingH1: {
     paddingLeft: 80,
@@ -31,6 +58,38 @@ const pageStyle = {
     color: "#707070",
     opacity: 1,
   },
+  lineGroup: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  tabItem: {
+    fontWeight: 500,
+    fontSize: "22px",
+    border: "none",
+    '& > span: focus': {
+      borderBottom: "2px solid #8a56ac",
+    }
+  },
+  buttonbar: {
+    width: "100%",
+    display: "block",
+    '& button': {
+      width: "100%",
+      margin: "10px 0",
+      padding: "10px",
+      border: "1px solid grey",
+    },
+  },
+  buttonItem: {
+    width: "100%",
+    color: "white",
+    backgroundColor: "#8A56AC",
+    "&:hover": {
+      opacity: 0.9,
+      backgroundColor: "#8A56AC",
+    }
+  }
 };
 
 const LoginPage = (props: any) => {
@@ -46,26 +105,40 @@ const LoginPage = (props: any) => {
     <Grid container className={classes.wrapper} justify="center" alignItems="center">
       <Grid item xs={12} sm={6} md={4}>
         <Card>
-          <Grid container justify="center">
+          <Grid container justify="center" className={classes.cardcontent}>
             <Tabs
               value={currentTab}
               onChange={handleChange}
-              textColor="primary"
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: "#8a56ac"
+                }
+              }}
             >
-              <Tab label="Ingresar"></Tab>
-              <Tab label="Registrarse"></Tab>
+              <Tab label="Ingresar" className={classes.tabItem}></Tab>
+              <span className={classes.bara}>|</span>
+              <Tab label="Registrarse" className={classes.tabItem}></Tab>
             </Tabs>
             <OutlinedInput fullWidth placeholder="Correo electrónico" />
             <OutlinedInput fullWidth placeholder="Contraseña" />
-            <Grid container justify="space-between">
+            <Grid container justify="space-between" >
               <FormControlLabel
-                control={<Checkbox checked={keepSigned} onChange={(event: any, newValue) => setSign(newValue)} />}
+                control={<Checkbox className={classes.checkStyle} checked={keepSigned} onChange={(event: any, newValue) => setSign(newValue)} />}
                 label="Permanecer conectado"
               />
-              <Link href="#" color="primary" onClick={(e: any) => e.preventDefault()}>Olvidé contraseña</Link>
+              <div className={classes.forgot}>
+                <Link href="#" color="primary" onClick={(e: any) => e.preventDefault()}>Olvidé contraseña</Link>
+              </div>
             </Grid>
-            <Button>Ingresar</Button>
-            <Button>Facebook</Button>
+            <div className={classes.buttonbar} >
+              <Button className={classes.buttonItem}>Ingresar</Button>
+              <div className={classes.lineGroup}>
+                <div className={classes.lineItem}><hr /></div>
+                <span>O</span>
+                <div className={classes.lineItem}><hr /></div>
+              </div>
+              <Button className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+            </div>
           </Grid>
         </Card>
       </Grid>
