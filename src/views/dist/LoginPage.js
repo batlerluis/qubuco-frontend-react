@@ -16,7 +16,10 @@ var pageStyle = {
         padding: "20px",
         '& > div': {
             margin: "5px"
-        }
+        },
+        background: "#FFFFFF 0% 0% no-repeat padding-box",
+        boxShadow: "0px 9px 12px #00000029",
+        color: "#717171"
     },
     fullHeight: {
         height: "100%"

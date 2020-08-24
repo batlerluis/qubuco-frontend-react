@@ -10,6 +10,7 @@ const pageStyle = {
     minHeight: "100vh",
     height: "auto",
     paddingTop: "120px",
+    
     // background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
   },
   cardcontent: {
@@ -17,6 +18,9 @@ const pageStyle = {
     '& > div': {
       margin: "5px",
     },
+    background: "#FFFFFF 0% 0% no-repeat padding-box",
+    boxShadow: "0px 9px 12px #00000029",
+    color: "#717171",
   },
   fullHeight: {
     height: "100%",
@@ -26,7 +30,6 @@ const pageStyle = {
   },
   lineItem: {
     width: "45%",
-    // width: "700",?
   },
   forgot: {
     padding: "10px 0",
