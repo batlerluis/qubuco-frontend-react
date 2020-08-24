@@ -79,7 +79,8 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
     comment: {
         width: "100%",
         height: "150px",
-        fontSize: "20px"
+        fontSize: "20px",
+        padding: "15px"
     },
     skip: {
         maxWidth: 101,
