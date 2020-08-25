@@ -39,10 +39,9 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
 
   root: {
-    maxWidth: 500,
-    minWidth: 450,
-    maxHeight: 560,
-    padding: "100px 60px",
+    width: 450,
+    minHeight: 480,
+    padding: "20px 25px",
     margin: "120px auto",
     boxShadow: "0px 5px 10px #00000029;",
     border: "2px solid #EEEEEE",
@@ -69,16 +68,28 @@ const useStyles = makeStyles((theme) => ({
     // marginBottom: "40px",
   },
   btnClient: {
-    backgroundColor: "#8a56ac",
+    backgroundColor: "#8a56ac !important",
+    opacity: 0.8,
+    "&:hover": {
+      opacity: 1
+    },
   },
   btnEmployee: {
-    backgroundColor: "#D47FA6",
+    backgroundColor: "#D47FA6 !important",
+    opacity: 0.8,
+    "&:hover": {
+      opacity: 1
+    },
   },
   btnProvider: {
-    backgroundColor: "#998FA2",
+    backgroundColor: "#998FA2 !important",
+    opacity: 0.8,
+    "&:hover": {
+      opacity: 1
+    },
   },
   formCtl: {
-    marginBottom: "40px",
+    marginBottom: "50px !important",
   },
   checkout: {
     // backgroundColor: "#8a56ac",
@@ -97,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 36,
     minHeight: 35,
     '& > *': {
-      padding: "7px 15px",
+      padding: "7px 15px 7px 25px",
       margin: "auto",
       fontSize: "16px",
     },
@@ -109,11 +120,11 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px",
   },
   rating: {
-    margin: "20px 0",
+    margin: "60px 0",
     fontSize: "45px",
   },
   description: {
-    margin: "10px 0 40px",
+    margin: "10px 0 80px",
     // fontSize: "45px",
   },
   progBar: {
@@ -161,15 +172,10 @@ export default function RecipeReviewCard() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [ratingvalue, setRatingValue] = React.useState(0);
-  const [step, setStep] = React.useState(0);
+  const [step, setStep] = React.useState(1);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
-
-  const SelectType = (nType: number) => {
-    console.log(nType);
-    setStep(1);
   };
 
   const SelectRating = (nValue: any) => {
@@ -187,31 +193,7 @@ export default function RecipeReviewCard() {
 
   let cardBody;
 
-  if (step == 0) {
-    cardBody =
-      (
-        <div>
-          <CardHeader
-            avatar={
-              <img src={imgLog} className={classes.avatar} />
-            }
-            titleTypographyProps={{ variant: 'h5' }}
-            title="Company Name"
-            subheaderTypographyProps={{ variant: 'subtitle2' }}
-            subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
-          />
-          <CardContent>
-            <Typography variant="subtitle1" color="textSecondary" component="p">
-              Quiero opinar esta empresa como:
-          </Typography>
-            <Grid container direction="column" className={classes.btnGroup}>
-              <Button variant="contained" color="primary" onClick={() => SelectType(0)} className={classes.btnClient}>CLIENTE</Button>
-              <Button variant="contained" color="secondary" onClick={() => SelectType(1)} className={classes.btnEmployee}>EMPLEADO</Button>
-              <Button variant="contained" color="inherit" onClick={() => SelectType(2)} className={classes.btnProvider}>PROVEEDOR</Button>
-            </Grid>
-          </CardContent></div>
-      );
-  } else if (step == 1) {
+  if (step == 1) {
     console.log("sdadfsdadf");
     cardBody = (
       <div>
@@ -237,7 +219,7 @@ export default function RecipeReviewCard() {
           </Typography>
           <LinearProgress variant="buffer" value={33} className={classes.progBar} />
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
-            <Typography variant="h5" align="center" color="textSecondary" component="p">
+            <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
               Cómo te sientes con las políticas de calidad de la empresa?
               </Typography>
             <Rating

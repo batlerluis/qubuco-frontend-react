@@ -14,7 +14,6 @@ const pageStyle = {
     flexGrow: 1,
     minHeight: "100vh",
     height: "auto",
-    // background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
     paddingTop: 112,
   },
   content: {
