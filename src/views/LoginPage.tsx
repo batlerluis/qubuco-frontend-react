@@ -1,70 +1,79 @@
 import React, { useState } from 'react';
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Grid, Card, Tab, Tabs, OutlinedInput, Link, Checkbox, FormControlLabel, Button, GridList } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField, FormControl, Link, Grid, Card, CardContent, CardHeader, Typography, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
-const pageStyle = {
-  wrapper: {
-    flexGrow: 1,
-    minHeight: "100vh",
-    height: "auto",
-    paddingTop: "120px",
-    
-    // background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 500,
+    minWidth: 330,
+    maxHeight: 560,
+    padding: "40px",
+    margin: "200px auto",
+    boxShadow: "0px 5px 10px #00000029;",
+    border: "2px solid #EEEEEE",
+    borderRadius: "9px",
+    opacity: 1,
+    position: "relative",
+    justifyContent: "center",
+    action: {
+      margin: 0,
+    }
   },
-  cardcontent: {
-    padding: "20px",
-    '& > div': {
-      margin: "5px",
+  formGroup: {
+    width: "100%",
+    '& > *': {
+      margin: "5px 0",
+    }
+  },
+  textInput: {
+    width: "100%",
+    '& label.Mui-focused': {
+      color: '#8a56ac',
     },
-    background: "#FFFFFF 0% 0% no-repeat padding-box",
-    boxShadow: "0px 9px 12px #00000029",
-    color: "#717171",
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#8a56ac',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'grey',
+      },
+      '&:hover fieldset': {
+        borderColor: '#000',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#8a56ac',
+      },
+    },
   },
-  fullHeight: {
-    height: "100%",
+  seperator: {
+    fontSize: "32px",
   },
-  bara: {
-    fontSize: "30px",
+  forgot: {
+    color: "#8a56ac",
+    fontSize: "16px",
+    padding: "20px 25px",
+    textAlign: "end",
+    boxSizing: "border-box",
+  },
+  checkBox: {
+    color: "#8a56ac !important",
+    marginLeft: "-12px",
   },
   lineItem: {
     width: "45%",
   },
-  forgot: {
-    padding: "10px 0",
-    "& > *": {
-      color: "#8a56ac",
-    }
-  },
-  checkStyle: {
-    color: "#8a56ac !important",
-  },
   facebookBtn: {
     display: "flex",
+    color: "grey !important",
+    backgroundColor: "white",
     paddingRight: "25px !important",
     justifyContent: "space-between",
-  },
-  paddingH1: {
-    paddingLeft: 80,
-    paddingRight: 80,
-    paddingTop: 30,
-  },
-  titleText: {
-    font: "normal normal normal 46px/52px Helvetica Neue",
-    letterSpacing: "-0.46px",
-    color: "#202124",
-    opacity: 1,
-  },
-  dscrText: {
-    font: "normal normal normal 20px/25px Quicksand",
-    letterSpacing: "-1px",
-    color: "#707070",
-    opacity: 1,
   },
   lineGroup: {
     width: "100%",
     display: "flex",
+    margin: "20px 0",
     justifyContent: "space-between",
   },
   tabItem: {
@@ -73,6 +82,7 @@ const pageStyle = {
     padding: "5px 0",
     margin: "0 20px",
     border: "none",
+    textTransform: "none",
     '& > span: focus': {
       borderBottom: "2px solid #8a56ac",
     }
@@ -80,80 +90,91 @@ const pageStyle = {
   buttonbar: {
     width: "100%",
     display: "block",
+    marginTop: "-10px",
     '& button': {
+      color: "white",
       width: "100%",
       margin: "10px 0",
       padding: "10px",
       border: "1px solid grey",
+      fontSize: "18px",
+      textTransform: "none",
     },
   },
   buttonItem: {
     width: "100%",
-    color: "white",
+    opacity: 1,
     backgroundColor: "#8A56AC",
     "&:hover": {
       opacity: 0.9,
       backgroundColor: "#8A56AC",
     }
   }
-};
+}));
 
-const LoginPage = (props: any) => {
+export default function LoginPage(props: any) {
 
   const [currentTab, setTab] = useState(0);
   const [keepSigned, setSign] = useState(false);
-
-  const { classes } = props;
+  const classes = useStyles();
 
   const handleChange = (event: any, newValue: number) => setTab(newValue);
 
   return (
-    <Grid container className={classes.wrapper} justify="center" alignItems="center">
-      <Grid item xs={12} sm={6} md={4}>
-        <Card>
-          <Grid container justify="center" className={classes.cardcontent}>
+    
+    <Grid alignItems="center">
+      <Card className={classes.root}>
+        <CardHeader
+          titleTypographyProps={{ variant: 'h5' }}
+          title={
             <Tabs
               value={currentTab}
+              centered
               onChange={handleChange}
               TabIndicatorProps={{
                 style: {
-                  backgroundColor: "#8a56ac"
+                  backgroundColor: "#8a56ac",
+                  height: "3px",
+                  borderRadius: "2px",
                 }
               }}
             >
               <Tab label="Ingresar" className={classes.tabItem}></Tab>
-              <span className={classes.bara}>|</span>
+              <span className={classes.seperator}>|</span>
               <Tab label="Registrarse" className={classes.tabItem}></Tab>
-            </Tabs>
-            <OutlinedInput fullWidth placeholder="Correo electrónico" />
-            <OutlinedInput fullWidth placeholder="Contraseña" />
-            <Grid container justify="space-between" >
-              <FormControlLabel
-                control={<Checkbox className={classes.checkStyle} checked={keepSigned} onChange={(event: any, newValue) => setSign(newValue)} />}
-                label="Permanecer conectado"
-              />
-              <div className={classes.forgot}>
-                <Link href="#" color="primary" onClick={(e: any) => e.preventDefault()}>Olvidé contraseña</Link>
-              </div>
+            </Tabs>}
+        />
+        <CardContent>
+          <FormControl className={classes.formGroup}>
+            <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
+            <TextField label="Contraseña" variant="outlined" className={classes.textInput} />
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <FormControlLabel
+                  control={<Checkbox className={classes.checkBox} />}
+                  label="Permanecer conectado"
+
+                />
+              </Grid>
+              <Grid xs={12} sm={6} className={classes.forgot}>
+                <a href="#">Olvidé contraseña</a>
+              </Grid>
             </Grid>
-            <div className={classes.buttonbar} >
-              <Button className={classes.buttonItem}>Ingresar</Button>
-              <div className={classes.lineGroup}>
-                <div className={classes.lineItem}><hr /></div>
+            <Grid className={classes.buttonbar} >
+              <Link href="/survey/start" underline="none">
+                <Button variant="contained"  className={classes.buttonItem}>Ingresar</Button>
+              </Link>
+              <Grid className={classes.lineGroup}>
+                <Grid className={classes.lineItem}><hr /></Grid>
                 <span>O</span>
-                <div className={classes.lineItem}><hr /></div>
-              </div>
-              <Button className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
-            </div>
-          </Grid>
-        </Card>
-      </Grid>
+                <Grid className={classes.lineItem}><hr /></Grid>
+              </Grid>
+              <Button variant="contained" className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+            </Grid>
+          </FormControl>
+        </CardContent>
+      </Card>
     </Grid>
   );
 }
 
-LoginPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(pageStyle)(LoginPage);
