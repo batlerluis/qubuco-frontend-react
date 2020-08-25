@@ -376,7 +376,7 @@ export default function RecipeReviewCard() {
             className={classes.formCtl}
           />
           <Grid container direction="column" className={classes.btnGroup}>
-            <Button variant="contained" color="primary" className={classes.btnClient}>COMENTAR</Button>
+            <Button variant="contained" href="/survey/final" color="primary" className={classes.btnClient}>COMENTAR</Button>
           </Grid>
           <Card className={classes.skip}>
             <IconButton aria-label="skip">
@@ -393,7 +393,7 @@ export default function RecipeReviewCard() {
       <Grid container>
         <AppBar position="static" color="inherit">
           <Toolbar variant="dense">
-            <IconButton edge="start" aria-label="menu">
+            <IconButton edge="start" href="/home" aria-label="menu">
               <ArrowBackIosIcon />SALIR
             </IconButton>
           </Toolbar>
