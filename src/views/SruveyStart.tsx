@@ -167,7 +167,7 @@ export default function RecipeReviewCard() {
           <Toolbar variant="dense">
             <IconButton edge="start" aria-label="menu">
               <ArrowBackIosIcon />SALIR
-          </IconButton>
+            </IconButton>
           </Toolbar>
         </AppBar>
         <Card className={classes.root}>

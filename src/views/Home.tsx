@@ -16,7 +16,7 @@ const pageStyle = {
   wrapper: {
     minHeight: "100vh",
     height: "auto",
-    background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
+    // background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
     paddingTop: 120,
   },
   content: {

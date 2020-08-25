@@ -1,5 +1,13 @@
 import React from 'react';
 import { withStyles, AppBar, Grid, Button, Icon } from '@material-ui/core';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Tabs from '@material-ui/core/Tabs';
+import TabList from '@material-ui/lab/TabList';
+import Tab from '@material-ui/core/Tab';
+import Link from '@material-ui/core/Link';
+import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from "prop-types";
 import { useLocation } from 'react-router-dom';
 
@@ -17,12 +25,15 @@ const headerStyle = {
     background: "#FFFFFF 0% 0% no-repeat padding-box",
     boxShadow: "0px 3px 6px #00000029",
     color: "#717171",
+    backgroundColor: "#ffffff",
     paddingLeft: 26,
     paddingRight: 29,
   },
-  wrapper: {
-    minHeight: 70,
-    // height: "100%",
+  appBar: {
+    height: "70px",
+    background: "#FFFFFF 0% 0% no-repeat padding-box !important",
+    boxShadow: "0px 3px 6px #00000029",
+    opacity: 1,
   },
   fullHeight: {
     height: "100%",
@@ -110,6 +121,20 @@ const MainHeader = (props: any) => {
         </Grid>
       </Grid>
     </AppBar>
+  // <AppBar position="static" color="inherit" className={classes.appBar}>
+  //   <Toolbar>
+  //     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+  //       <img src={imgLogo} />
+  //     </IconButton>
+  //     <Typography variant="h6" className={classes.title}>
+  //       QUBU
+  //     </Typography>
+  //     <Grid container>
+  //       <Link href="#"></Link>
+  //     </Grid>
+  //     <Button color="inherit">Login</Button>
+  //   </Toolbar>
+  // </AppBar>
   );
 }
 

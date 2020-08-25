@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     }
     // boxShadow: "",
   },
+  appBar: {
+    height: "70px",
+    padding: "10px 0",
+  },
   btnGroup: {
     padding: '10px 0', // 16:9
     '& > *': {
@@ -194,7 +198,6 @@ export default function RecipeReviewCard() {
   let cardBody;
 
   if (step == 1) {
-    console.log("sdadfsdadf");
     cardBody = (
       <div>
         <CardHeader
@@ -368,7 +371,7 @@ export default function RecipeReviewCard() {
   return (
     <ThemeProvider theme={theme}>
       <Grid container>
-        <AppBar position="static" color="inherit">
+        <AppBar position="static" color="inherit" className={classes.appBar} >
           <Toolbar variant="dense">
             <IconButton edge="start" href="/home" aria-label="menu">
               <ArrowBackIosIcon />SALIR
