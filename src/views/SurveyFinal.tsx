@@ -91,8 +91,9 @@ const SurveyFinal = (props: any) => {
   const { classes } = props;
 
   return (
-    <Grid container justify-xs-space-between className={classes.wrapper} justify="space-evenly">
-      <Grid item sm={10} md={4} >
+    <Grid container justify-xs-space-between className={classes.wrapper}>
+      <Grid md={2} sm={1}></Grid>
+      <Grid item sm={9} md={4} >
         <Grid container  direction="column">
           <Grid item alignContent="center" className={classes.titleGroup}>
             <h1 className={classes.titleText}>Gracias! Hemos recibido tus comentarios</h1>
@@ -119,11 +120,13 @@ const SurveyFinal = (props: any) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item sm={10} md={3}>
+      <Grid sm={1} md={1}></Grid>
+      <Grid item sm={12} md={3}>
         <Grid container justify="center">
           <img src={imgPhone2} alt="Can not load image!" />
         </Grid>
       </Grid>
+      <Grid md={2} sm={2}></Grid>
     </Grid>
   );
 }
