@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#8a56ac",
   },
   comment: {
-    width: "100%",
+    width: "385px",
     height: "150px",
     fontSize: "20px",
     padding: "15px"
@@ -360,11 +360,6 @@ export default function RecipeReviewCard() {
           <Grid container direction="column" className={classes.btnGroup}>
             <Button variant="contained" href="/survey/final" color="primary" className={classes.btnClient}>COMENTAR</Button>
           </Grid>
-          <Card className={classes.skip}>
-            <IconButton aria-label="skip">
-              Omitir<ArrowForwardIcon />
-            </IconButton>
-          </Card>
         </CardContent>
       </div>
     );

@@ -91,7 +91,7 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
         color: "#8a56ac"
     },
     comment: {
-        width: "100%",
+        width: "385px",
         height: "150px",
         fontSize: "20px",
         padding: "15px"
@@ -250,11 +250,7 @@ function RecipeReviewCard() {
                 react_1["default"].createElement(TextareaAutosize_1["default"], { rows: 5, "aria-label": "maximum height", placeholder: "Escribe tu comentario\u2026", defaultValue: "", className: classes.comment }),
                 react_1["default"].createElement(FormControlLabel_1["default"], { control: react_1["default"].createElement(Checkbox_1["default"], { className: classes.checkStyle }), label: "Comentario privado", className: classes.formCtl }),
                 react_1["default"].createElement(Grid_1["default"], { container: true, direction: "column", className: classes.btnGroup },
-                    react_1["default"].createElement(Button_1["default"], { variant: "contained", href: "/survey/final", color: "primary", className: classes.btnClient }, "COMENTAR")),
-                react_1["default"].createElement(Card_1["default"], { className: classes.skip },
-                    react_1["default"].createElement(IconButton_1["default"], { "aria-label": "skip" },
-                        "Omitir",
-                        react_1["default"].createElement(ArrowForward_1["default"], null))))));
+                    react_1["default"].createElement(Button_1["default"], { variant: "contained", href: "/survey/final", color: "primary", className: classes.btnClient }, "COMENTAR")))));
     }
     return (react_1["default"].createElement(styles_1.ThemeProvider, { theme: theme },
         react_1["default"].createElement(Grid_1["default"], { container: true },

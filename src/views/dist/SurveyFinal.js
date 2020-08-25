@@ -14,7 +14,10 @@ var pageStyle = {
         flexGrow: 1,
         minHeight: "100vh",
         height: "auto",
-        paddingTop: 112
+        paddingTop: 112,
+        '& > *': {
+            padding: "20px 0"
+        }
     },
     content: {
         height: "fit-content",
@@ -83,10 +86,10 @@ var pageStyle = {
 };
 var SurveyFinal = function (props) {
     var classes = props.classes;
-    return (react_1["default"].createElement(core_1.Grid, { container: true, className: classes.wrapper, justify: "center" },
-        react_1["default"].createElement(core_1.Grid, { item: true, sm: 10, md: 3 },
+    return (react_1["default"].createElement(core_1.Grid, { container: true, "justify-xs-space-between": true, className: classes.wrapper, justify: "space-evenly" },
+        react_1["default"].createElement(core_1.Grid, { item: true, sm: 10, md: 4 },
             react_1["default"].createElement(core_1.Grid, { container: true, direction: "column" },
-                react_1["default"].createElement(core_1.Grid, { item: true, className: classes.titleGroup },
+                react_1["default"].createElement(core_1.Grid, { item: true, alignContent: "center", className: classes.titleGroup },
                     react_1["default"].createElement("h1", { className: classes.titleText }, "Gracias! Hemos recibido tus comentarios")),
                 react_1["default"].createElement(core_1.Grid, { item: true, className: classes.dscrGroup },
                     react_1["default"].createElement("h3", { className: classes.dscrText }, "Mira tu opini\u00F3n y la de otros usuarios en nuestra app. Califica, Comenta y Gana cupones de descuento por tus comentarios.")),
@@ -106,7 +109,7 @@ var SurveyFinal = function (props) {
                                 react_1["default"].createElement("img", { src: appstore1_png_1["default"], alt: "Can not load image!" }),
                                 react_1["default"].createElement("img", { src: googlestore1_png_1["default"], alt: "Can not load image!" }))))))),
         react_1["default"].createElement(core_1.Grid, { item: true, sm: 10, md: 3 },
-            react_1["default"].createElement(core_1.Grid, { container: true, justify: "flex-end" },
+            react_1["default"].createElement(core_1.Grid, { container: true, justify: "center" },
                 react_1["default"].createElement("img", { src: phone2_png_1["default"], alt: "Can not load image!" })))));
 };
 SurveyFinal.propTypes = {
