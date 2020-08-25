@@ -161,45 +161,85 @@ export default function RecipeReviewCard() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [value, setValue] = React.useState(2);
+  const [step, setStep] = React.useState(0);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const SelectType = (nType: number) => {
+    console.log(nType);
+    setStep(1);
+
+  };
+
+  let cardBody;
+
+  if (step == 0) {
+    cardBody =
+      (
+        <div>
+          <CardHeader
+            avatar={
+              <img src={imgLog} className={classes.avatar} />
+            }
+            titleTypographyProps={{ variant: 'h5' }}
+            title="Company Name"
+            subheaderTypographyProps={{ variant: 'subtitle2' }}
+            subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
+          />
+          <CardContent>
+            <Typography variant="subtitle1" color="textSecondary" component="p">
+              Quiero opinar esta empresa como:
+    </Typography>
+            <Grid container direction="column" className={classes.btnGroup}>
+              <Button variant="contained" color="primary" onClick={() => SelectType(0)} className={classes.btnClient}>CLIENTE</Button>
+              <Button variant="contained" color="secondary" onClick={() => SelectType(1)} className={classes.btnEmployee}>EMPLEADO</Button>
+              <Button variant="contained" color="inherit" onClick={() => SelectType(2)} className={classes.btnProvider}>PROVEEDOR</Button>
+            </Grid>
+          </CardContent></div>);
+  } else if (step == 1) {
+
+  } else if (step == 2) {
+
+  }
+
   return (
 
     // ##########  Survey Start  ##############
 
-    // <Grid container>
-    //   <AppBar position="static" color="inherit">
-    //     <Toolbar variant="dense">
-    //       <IconButton edge="start" aria-label="menu">
-    //         <ArrowBackIosIcon />SALIR
-    //       </IconButton>
-    //     </Toolbar>
-    //   </AppBar>
-    //   <Card className={classes.root}>
-    //     <CardHeader
-    //       avatar={
-    //         <img src={imgLog} className={classes.avatar} />
-    //       }
-    //       titleTypographyProps={{variant:'h5' }}
-    //       title="Company Name"
-    //       subheaderTypographyProps={{variant:'subtitle2' }}
-    //       subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
-    //     />
-    //     <CardContent>
-    //       <Typography variant="subtitle1" color="textSecondary" component="p">
-    //         Quiero opinar esta empresa como:
-    //       </Typography>
-    //       <Grid container direction="column" className={classes.btnGroup}>
-    //         <Button variant="contained" color="primary" className={classes.btnClient}>CLIENTE</Button>
-    //         <Button variant="contained" color="secondary" className={classes.btnEmployee}>EMPLEADO</Button>
-    //         <Button variant="contained" color="inherit" className={classes.btnProvider}>PROVEEDOR</Button>
-    //       </Grid>
-    //     </CardContent>
-    //   </Card>
-    // </Grid>
+    <Grid container>
+      <AppBar position="static" color="inherit">
+        <Toolbar variant="dense">
+          <IconButton edge="start" aria-label="menu">
+            <ArrowBackIosIcon />SALIR
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Card className={classes.root}>
+        {/* <CardHeader
+          avatar={
+            <img src={imgLog} className={classes.avatar} />
+          }
+          titleTypographyProps={{ variant: 'h5' }}
+          title="Company Name"
+          subheaderTypographyProps={{ variant: 'subtitle2' }}
+          subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
+        />
+        <CardContent>
+          <Typography variant="subtitle1" color="textSecondary" component="p">
+            Quiero opinar esta empresa como:
+          </Typography>
+          <Grid container direction="column" className={classes.btnGroup}>
+            <Button variant="contained" color="primary" onClick={() => SelectType(0)} className={classes.btnClient}>CLIENTE</Button>
+            <Button variant="contained" color="secondary" onClick={() => SelectType(1)} className={classes.btnEmployee}>EMPLEADO</Button>
+            <Button variant="contained" color="inherit" onClick={() => SelectType(2)} className={classes.btnProvider}>PROVEEDOR</Button>
+          </Grid>
+        </CardContent> */}
+        {cardBody}
+      </Card>
+
+    </Grid>
 
     // #################  Rating Page  #################
     // <ThemeProvider theme={theme}>
@@ -360,60 +400,60 @@ export default function RecipeReviewCard() {
 
     // #################  Question 3 Page  #################
 
-    <ThemeProvider theme={theme}>
-      <Grid container>
-        <AppBar position="static" color="inherit">
-          <Toolbar variant="dense">
-            <IconButton edge="start" aria-label="menu">
-              <ArrowBackIosIcon />SALIR
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Card className={classes.root}>
-          <CardHeader
-            avatar={
-              <img src={imgLog} className={classes.avatar} />
-            }
-            action={
-              <Card className={classes.return}>
-                <IconButton aria-label="menu">
-                  <SettingsBackupRestoreIcon />Regresar
-                </IconButton>
-              </Card>
-            }
-            titleTypographyProps={{variant:'h5' }}
-            title="Company Name"
-            subheaderTypographyProps={{variant:'h6' }}
-            subheader="Survey Name"
-          />
-          <CardContent>
-            <Typography variant="subtitle1" color="textSecondary" component="p">
-              Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.
-            </Typography>
-            <TextareaAutosize
-              rows={5}
-              aria-label="maximum height"
-              placeholder="Escribe tu comentario…"
-              defaultValue=""
-              className={classes.comment}
-            />
-            <FormControlLabel
-              control={<Checkbox className={classes.checkStyle}/>}
-              label="Comentario privado"
-              className={classes.formCtl}
-            />
-            <Grid container direction="column" className={classes.btnGroup}>
-              <Button variant="contained" color="primary" className={classes.btnClient}>COMENTAR</Button>
-            </Grid>
-            <Card className={classes.skip}>
-              <IconButton aria-label="skip">
-                Omitir<ArrowForwardIcon />
-              </IconButton>
-            </Card>
-          </CardContent>
-        </Card>
-      </Grid>
-    </ThemeProvider>
+    // <ThemeProvider theme={theme}>
+    //   <Grid container>
+    //     <AppBar position="static" color="inherit">
+    //       <Toolbar variant="dense">
+    //         <IconButton edge="start" aria-label="menu">
+    //           <ArrowBackIosIcon />SALIR
+    //         </IconButton>
+    //       </Toolbar>
+    //     </AppBar>
+    //     <Card className={classes.root}>
+    //       <CardHeader
+    //         avatar={
+    //           <img src={imgLog} className={classes.avatar} />
+    //         }
+    //         action={
+    //           <Card className={classes.return}>
+    //             <IconButton aria-label="menu">
+    //               <SettingsBackupRestoreIcon />Regresar
+    //             </IconButton>
+    //           </Card>
+    //         }
+    //         titleTypographyProps={{variant:'h5' }}
+    //         title="Company Name"
+    //         subheaderTypographyProps={{variant:'h6' }}
+    //         subheader="Survey Name"
+    //       />
+    //       <CardContent>
+    //         <Typography variant="subtitle1" color="textSecondary" component="p">
+    //           Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.
+    //         </Typography>
+    //         <TextareaAutosize
+    //           rows={5}
+    //           aria-label="maximum height"
+    //           placeholder="Escribe tu comentario…"
+    //           defaultValue=""
+    //           className={classes.comment}
+    //         />
+    //         <FormControlLabel
+    //           control={<Checkbox className={classes.checkStyle}/>}
+    //           label="Comentario privado"
+    //           className={classes.formCtl}
+    //         />
+    //         <Grid container direction="column" className={classes.btnGroup}>
+    //           <Button variant="contained" color="primary" className={classes.btnClient}>COMENTAR</Button>
+    //         </Grid>
+    //         <Card className={classes.skip}>
+    //           <IconButton aria-label="skip">
+    //             Omitir<ArrowForwardIcon />
+    //           </IconButton>
+    //         </Card>
+    //       </CardContent>
+    //     </Card>
+    //   </Grid>
+    // </ThemeProvider>
 
 
   );
