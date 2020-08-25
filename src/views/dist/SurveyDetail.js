@@ -48,6 +48,10 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
         }
         // boxShadow: "",
     },
+    appBar: {
+        height: "70px",
+        padding: "10px 0"
+    },
     btnGroup: {
         padding: '10px 0',
         '& > *': {
@@ -91,7 +95,7 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
         color: "#8a56ac"
     },
     comment: {
-        width: "100%",
+        width: "385px",
         height: "150px",
         fontSize: "20px",
         padding: "15px"
@@ -181,7 +185,6 @@ function RecipeReviewCard() {
     };
     var cardBody;
     if (step == 1) {
-        console.log("sdadfsdadf");
         cardBody = (react_1["default"].createElement("div", null,
             react_1["default"].createElement(CardHeader_1["default"], { avatar: react_1["default"].createElement("img", { src: car_png_1["default"], className: classes.avatar }), action: react_1["default"].createElement(Card_1["default"], { className: classes["return"] },
                     react_1["default"].createElement(IconButton_1["default"], { "aria-label": "menu", onClick: function () { return setStep(step - 1); } },
@@ -250,15 +253,11 @@ function RecipeReviewCard() {
                 react_1["default"].createElement(TextareaAutosize_1["default"], { rows: 5, "aria-label": "maximum height", placeholder: "Escribe tu comentario\u2026", defaultValue: "", className: classes.comment }),
                 react_1["default"].createElement(FormControlLabel_1["default"], { control: react_1["default"].createElement(Checkbox_1["default"], { className: classes.checkStyle }), label: "Comentario privado", className: classes.formCtl }),
                 react_1["default"].createElement(Grid_1["default"], { container: true, direction: "column", className: classes.btnGroup },
-                    react_1["default"].createElement(Button_1["default"], { variant: "contained", href: "/survey/final", color: "primary", className: classes.btnClient }, "COMENTAR")),
-                react_1["default"].createElement(Card_1["default"], { className: classes.skip },
-                    react_1["default"].createElement(IconButton_1["default"], { "aria-label": "skip" },
-                        "Omitir",
-                        react_1["default"].createElement(ArrowForward_1["default"], null))))));
+                    react_1["default"].createElement(Button_1["default"], { variant: "contained", href: "/survey/final", color: "primary", className: classes.btnClient }, "COMENTAR")))));
     }
     return (react_1["default"].createElement(styles_1.ThemeProvider, { theme: theme },
         react_1["default"].createElement(Grid_1["default"], { container: true },
-            react_1["default"].createElement(AppBar_1["default"], { position: "static", color: "inherit" },
+            react_1["default"].createElement(AppBar_1["default"], { position: "static", color: "inherit", className: classes.appBar },
                 react_1["default"].createElement(Toolbar_1["default"], { variant: "dense" },
                     react_1["default"].createElement(IconButton_1["default"], { edge: "start", href: "/home", "aria-label": "menu" },
                         react_1["default"].createElement(ArrowBackIos_1["default"], null),

@@ -15,6 +15,9 @@ const pageStyle = {
     minHeight: "100vh",
     height: "auto",
     paddingTop: 112,
+    '& > *': {
+      padding: "20px 0",
+    },
   },
   content: {
     height: "fit-content",
@@ -29,7 +32,7 @@ const pageStyle = {
     height: "100%",
   },
   titleGroup: {
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   dscrGroup: {
     height: 120,
@@ -88,10 +91,11 @@ const SurveyFinal = (props: any) => {
   const { classes } = props;
 
   return (
-    <Grid container className={classes.wrapper} justify="center">
-      <Grid item sm={10} md={3} >
-        <Grid container direction="column">
-          <Grid item className={classes.titleGroup}>
+    <Grid container justify-xs-space-between className={classes.wrapper}>
+      <Grid md={2} sm={1}></Grid>
+      <Grid item sm={9} md={4} >
+        <Grid container  direction="column">
+          <Grid item alignContent="center" className={classes.titleGroup}>
             <h1 className={classes.titleText}>Gracias! Hemos recibido tus comentarios</h1>
           </Grid>
           <Grid item className={classes.dscrGroup}>
@@ -116,11 +120,13 @@ const SurveyFinal = (props: any) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item sm={10} md={3}>
-        <Grid container justify="flex-end">
+      <Grid sm={1} md={1}></Grid>
+      <Grid item sm={12} md={3}>
+        <Grid container justify="center">
           <img src={imgPhone2} alt="Can not load image!" />
         </Grid>
       </Grid>
+      <Grid md={2} sm={2}></Grid>
     </Grid>
   );
 }

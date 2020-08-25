@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     }
     // boxShadow: "",
   },
+  appBar: {
+    height: "70px",
+    padding: "10px 0",
+  },
   btnGroup: {
     padding: '10px 0', // 16:9
     '& > *': {
@@ -96,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#8a56ac",
   },
   comment: {
-    width: "100%",
+    width: "385px",
     height: "150px",
     fontSize: "20px",
     padding: "15px"
@@ -194,7 +198,6 @@ export default function RecipeReviewCard() {
   let cardBody;
 
   if (step == 1) {
-    console.log("sdadfsdadf");
     cardBody = (
       <div>
         <CardHeader
@@ -360,11 +363,6 @@ export default function RecipeReviewCard() {
           <Grid container direction="column" className={classes.btnGroup}>
             <Button variant="contained" href="/survey/final" color="primary" className={classes.btnClient}>COMENTAR</Button>
           </Grid>
-          <Card className={classes.skip}>
-            <IconButton aria-label="skip">
-              Omitir<ArrowForwardIcon />
-            </IconButton>
-          </Card>
         </CardContent>
       </div>
     );
@@ -373,7 +371,7 @@ export default function RecipeReviewCard() {
   return (
     <ThemeProvider theme={theme}>
       <Grid container>
-        <AppBar position="static" color="inherit">
+        <AppBar position="static" color="inherit" className={classes.appBar} >
           <Toolbar variant="dense">
             <IconButton edge="start" href="/home" aria-label="menu">
               <ArrowBackIosIcon />SALIR
