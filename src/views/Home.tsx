@@ -9,6 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import imgApple from "../assets/img/appstore.png";
 import imgGoogle from "../assets/img/googlestore.png";
 import imgPhone1 from "../assets/img/phone1.png"
+import { useHistory } from 'react-router-dom';
 
 
 const pageStyle = {
@@ -64,6 +65,8 @@ const Home = (props: any) => {
 
   const { classes } = props;
 
+  const history = useHistory();
+
   const handleLink = (event: any) => event.preventDefault();
 
   return (
@@ -82,6 +85,7 @@ const Home = (props: any) => {
                     id="free-solo-demo"
                     options={top100Films.map((option) => option.title)}
                     fullWidth
+                    onChange={(event: object, value: any, reason: string) => history.push("/home/login")}
                     renderInput={(params) => (
                       <TextField
                         {...params}
