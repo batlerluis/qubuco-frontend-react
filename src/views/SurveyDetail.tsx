@@ -189,7 +189,7 @@ export default function RecipeReviewCard() {
           }
           action={
             <Card className={classes.return}>
-              <IconButton aria-label="menu" onClick={() => setStep(step - 1)}>
+              <IconButton aria-label="menu"  href="/survey/start">
                 <SettingsBackupRestoreIcon />Regresar
               </IconButton>
             </Card>
