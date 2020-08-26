@@ -46,7 +46,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
         action: {
             margin: 0
         }
-        // boxShadow: "",
     },
     appBar: {
         height: "70px",
@@ -73,13 +72,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
             opacity: 1
         }
     },
-    btnEmployee: {
-        backgroundColor: "#D47FA6 !important",
-        opacity: 0.8,
-        "&:hover": {
-            opacity: 1
-        }
-    },
     btnProvider: {
         backgroundColor: "#998FA2 !important",
         opacity: 0.8,
@@ -89,10 +81,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
     },
     formCtl: {
         marginBottom: "50px !important"
-    },
-    checkout: {
-        // backgroundColor: "#8a56ac",
-        color: "#8a56ac"
     },
     comment: {
         width: "385px",
@@ -111,7 +99,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
             margin: "auto",
             fontSize: "16px"
         },
-        // margin: "120px auto",
         boxShadow: "0px 2px 5px #00000029;",
         border: "1px solid #EEEEEE",
         borderRadius: "5px",
@@ -151,7 +138,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
             margin: "auto",
             fontSize: "16px"
         },
-        // margin: "120px auto",
         boxShadow: "0px 2px 5px #00000029;",
         border: "1px solid #EEEEEE",
         borderRadius: "5px",
@@ -159,7 +145,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
         margin: "10px"
     },
     avatar: {
-        // backgroundColor: red[500],
         backgroundImage: "url()",
         width: "70px",
         height: "70px"

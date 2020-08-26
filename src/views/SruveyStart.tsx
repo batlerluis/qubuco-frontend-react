@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,11 +10,10 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 import imgLog from "../assets/img/car.png"
-import { createMuiTheme } from '@material-ui/core/styles';
-import deepPurple from '@material-ui/core/colors/purple';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,16 +25,18 @@ const useStyles = makeStyles((theme) => ({
     padding: "70px 60px 50px",
     margin: "120px auto",
     boxShadow: "0px 5px 10px #00000029;",
-    border: "2px solid #EEEEEE",
     borderRadius: "9px",
     opacity: 1,
     action: {
       margin: 0,
     }
-    // boxShadow: "",
+  },
+  appBar: {
+    // height: "70px",
+    padding: "10px 0",
   },
   btnGroup: {
-    padding: '10px 0', // 16:9
+    padding: '10px 0', 
     '& > *': {
       padding: "10px 0",
       margin: "10px 0",
@@ -72,7 +74,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "40px",
   },
   checkout: {
-    // backgroundColor: "#8a56ac",
     color: "#8a56ac",
   },
   comment: {
@@ -92,7 +93,6 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto",
       fontSize: "16px",
     },
-    // margin: "120px auto",
     boxShadow: "0px 2px 5px #00000029;",
     border: "1px solid #EEEEEE",
     borderRadius: "5px",
@@ -105,7 +105,6 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     margin: "10px 0 40px",
-    // fontSize: "45px",
   },
   progBar: {
     backgroundColor: "#F0E6FF",
@@ -133,7 +132,6 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto",
       fontSize: "16px",
     },
-    // margin: "120px auto",
     boxShadow: "0px 2px 5px #00000029;",
     border: "1px solid #EEEEEE",
     borderRadius: "5px",
@@ -141,7 +139,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px",
   },
   avatar: {
-    // backgroundColor: red[500],
     backgroundImage: "url()",
     width: "70px",
     height: "70px",
@@ -163,13 +160,15 @@ export default function RecipeReviewCard() {
 
   return (
       <Grid container>
-        <AppBar position="static" color="inherit">
+        
+        <AppBar position="static" color="inherit"  className={classes.appBar}>
           <Toolbar variant="dense">
             <IconButton edge="start" aria-label="menu">
               <ArrowBackIosIcon />SALIR
             </IconButton>
           </Toolbar>
         </AppBar>
+        
         <Card className={classes.root}>
           <CardHeader
             avatar={
@@ -180,10 +179,12 @@ export default function RecipeReviewCard() {
             subheaderTypographyProps={{ variant: 'subtitle2' }}
             subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
           />
+          
           <CardContent>
             <Typography variant="subtitle1" color="textSecondary" component="p">
               Quiero opinar esta empresa como:
-          </Typography>
+            </Typography>
+           
             <Grid container direction="column" className={classes.btnGroup}>
               <Button variant="contained" href="/survey/detail" onClick={() => SelectType(0)} className={classes.btnClient}>CLIENTE</Button>
               <Button variant="contained" href="/survey/detail" onClick={() => SelectType(1)} className={classes.btnEmployee}>EMPLEADO</Button>

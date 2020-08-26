@@ -24,10 +24,6 @@ var pageStyle = {
         paddingTop: 135,
         paddingLeft: 230
     },
-    leftPart: {
-        width: 390,
-        height: 535
-    },
     fullHeight: {
         height: "100%"
     },
@@ -43,7 +39,8 @@ var pageStyle = {
         letterSpacing: "-0.46px",
         color: "#202124",
         opacity: 1,
-        margin: 0
+        margin: 0,
+        padding: 10
     },
     dscrText: {
         font: "normal normal normal 20px/25px Quicksand",
@@ -58,10 +55,6 @@ var pageStyle = {
         color: "#000000",
         opacity: 1,
         margin: 0
-    },
-    downloadGroup: {
-        width: 195,
-        height: 170
     },
     logGroup: {
         paddingBottom: 15
@@ -87,8 +80,8 @@ var pageStyle = {
 var SurveyFinal = function (props) {
     var classes = props.classes;
     return (react_1["default"].createElement(core_1.Grid, { container: true, "justify-xs-space-between": true, className: classes.wrapper },
-        react_1["default"].createElement(core_1.Grid, { md: 2, sm: 1 }),
-        react_1["default"].createElement(core_1.Grid, { item: true, sm: 9, md: 4 },
+        react_1["default"].createElement(core_1.Grid, { md: 2, sm: 2, xs: 1 }),
+        react_1["default"].createElement(core_1.Grid, { item: true, sm: 8, md: 4, xs: 10 },
             react_1["default"].createElement(core_1.Grid, { container: true, direction: "column" },
                 react_1["default"].createElement(core_1.Grid, { item: true, alignContent: "center", className: classes.titleGroup },
                     react_1["default"].createElement("h1", { className: classes.titleText }, "Gracias! Hemos recibido tus comentarios")),
@@ -109,8 +102,8 @@ var SurveyFinal = function (props) {
                             react_1["default"].createElement(core_1.Grid, { container: true, className: classes.buttonGroup, justify: "space-around" },
                                 react_1["default"].createElement("img", { src: appstore1_png_1["default"], alt: "Can not load image!" }),
                                 react_1["default"].createElement("img", { src: googlestore1_png_1["default"], alt: "Can not load image!" }))))))),
-        react_1["default"].createElement(core_1.Grid, { sm: 1, md: 1 }),
-        react_1["default"].createElement(core_1.Grid, { item: true, sm: 12, md: 3 },
+        react_1["default"].createElement(core_1.Grid, { sm: 1, md: 1, xs: 1 }),
+        react_1["default"].createElement(core_1.Grid, { item: true, sm: 12, md: 3, xs: 12, "justify-xs-center": true },
             react_1["default"].createElement(core_1.Grid, { container: true, justify: "center" },
                 react_1["default"].createElement("img", { src: phone2_png_1["default"], alt: "Can not load image!" }))),
         react_1["default"].createElement(core_1.Grid, { md: 2, sm: 2 })));

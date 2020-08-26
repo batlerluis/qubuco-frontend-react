@@ -2,7 +2,11 @@
 exports.__esModule = true;
 var react_1 = require("react");
 var core_1 = require("@material-ui/core");
-var prop_types_1 = require("prop-types");
+var Toolbar_1 = require("@material-ui/core/Toolbar");
+var Hidden_1 = require("@material-ui/core/Hidden");
+var Menu_1 = require("@material-ui/icons/Menu");
+var Menu_2 = require("@material-ui/core/Menu");
+var MenuItem_1 = require("@material-ui/core/MenuItem");
 var react_router_dom_1 = require("react-router-dom");
 var logo_png_1 = require("../assets/img/logo.png");
 var pageRoutes = [
@@ -11,7 +15,7 @@ var pageRoutes = [
     { path: "/home/a", label: "Empresas" },
     { path: "/home/b", label: "Contacto" },
 ];
-var headerStyle = {
+var useStyles = core_1.makeStyles({
     root: {
         background: "#FFFFFF 0% 0% no-repeat padding-box",
         boxShadow: "0px 3px 6px #00000029",
@@ -21,29 +25,39 @@ var headerStyle = {
         paddingRight: 29
     },
     appBar: {
-        height: "70px",
         background: "#FFFFFF 0% 0% no-repeat padding-box !important",
         boxShadow: "0px 3px 6px #00000029",
-        opacity: 1
+        opacity: 1,
+        width: "100%",
+        height: "70px",
+        padding: "5px 10px 5px 0",
+        justifyContent: "space-between"
+    },
+    container: {
+        display: "flex",
+        justifyContent: "space-between",
+        paddingRight: "15px",
+        paddingLeft: "15px",
+        "&:after": {
+            clear: "both"
+        },
+        minHeight: "50px"
     },
     fullHeight: {
         height: "100%"
     },
     logo: {
-        paddingRight: 150,
-        color: "#202124"
-    },
-    rest: {
-        flexGrow: 1
+        color: "#202124",
+        width: "150px"
     },
     navLink: {
-        padding: "0px 20px",
+        padding: "22px 20px",
         font: "normal normal normal 15px/17px Helvetica Neue",
         letterSpacing: -0.15,
         color: "#717171"
     },
     activeLink: {
-        padding: "0px 20px",
+        padding: "22px 20px",
         font: "normal normal medium 15px/17px Helvetica Neue",
         letterSpacing: -0.15,
         color: "#202124",
@@ -63,9 +77,9 @@ var headerStyle = {
         letterSpacing: -0.18,
         color: "#FFFFFF"
     }
-};
-var MainHeader = function (props) {
-    var classes = props.classes;
+});
+function LoginPage(props) {
+    var classes = useStyles();
     var location = react_router_dom_1.useLocation();
     console.log(location);
     var activeRoute = function (routeName) {
@@ -73,46 +87,48 @@ var MainHeader = function (props) {
         console.log(routeName);
         return location.pathname.indexOf(routeName) > -1 ? true : false;
     };
-    var logoIcon = function () { return react_1["default"].createElement(core_1.Icon, null,
-        " ",
-        react_1["default"].createElement("img", { src: logo_png_1["default"] }),
-        " "); };
-    return (react_1["default"].createElement(core_1.AppBar, { className: classes.root },
-        react_1["default"].createElement(core_1.Grid, { container: true, className: classes.wrapper, alignItems: "stretch" },
+    var _a = react_1["default"].useState(null), anchorEl = _a[0], setAnchorEl = _a[1];
+    var handleClick = function (event) {
+        setAnchorEl(event.currentTarget);
+    };
+    var handleClose = function () {
+        setAnchorEl(null);
+    };
+    // var list = () => {
+    //   pageRoutes.map(item => {
+    //     if (activeRoute(item.path)) {
+    //       return <MenuItem onClick={handleClose}>{item.path}</MenuItem>
+    //     }
+    //     console.log(item.path);
+    //     return <MenuItem onClick={handleClose}>{item.path}</MenuItem>
+    //   })
+    // }
+    return (react_1["default"].createElement(core_1.AppBar, { className: classes.appBar },
+        react_1["default"].createElement(Toolbar_1["default"], { className: classes.container },
             react_1["default"].createElement(core_1.Grid, { item: true, className: classes.logo },
                 react_1["default"].createElement(core_1.Grid, { container: true, alignItems: "center", className: classes.fullHeight },
                     react_1["default"].createElement(core_1.Button, null,
                         react_1["default"].createElement("img", { src: logo_png_1["default"] }),
                         "QUBU"))),
-            react_1["default"].createElement(core_1.Grid, { item: true, className: classes.rest },
-                react_1["default"].createElement(core_1.Grid, { container: true, justify: "space-between", alignItems: "stretch", className: classes.fullHeight },
-                    pageRoutes.map(function (prop, key) {
-                        if (activeRoute(prop.path)) {
-                            return react_1["default"].createElement(core_1.Button, { className: classes.activeLink, key: key }, prop.label);
-                        }
-                        return react_1["default"].createElement(core_1.Button, { className: classes.navLink, key: key }, prop.label);
-                    }),
-                    react_1["default"].createElement(core_1.Button, { className: classes.accessLink }, "Acceder"),
-                    react_1["default"].createElement(core_1.Grid, { item: true },
-                        react_1["default"].createElement(core_1.Grid, { container: true, alignItems: "center", className: classes.fullHeight },
-                            react_1["default"].createElement(core_1.Button, { className: classes.companyLink }, "Acceder como empresa")))))))
-    // <AppBar position="static" color="inherit" className={classes.appBar}>
-    //   <Toolbar>
-    //     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-    //       <img src={imgLogo} />
-    //     </IconButton>
-    //     <Typography variant="h6" className={classes.title}>
-    //       QUBU
-    //     </Typography>
-    //     <Grid container>
-    //       <Link href="#"></Link>
-    //     </Grid>
-    //     <Button color="inherit">Login</Button>
-    //   </Toolbar>
-    // </AppBar>
-    );
-};
-MainHeader.propTypes = {
-    classes: prop_types_1["default"].object.isRequired
-};
-exports["default"] = core_1.withStyles(headerStyle)(MainHeader);
+            react_1["default"].createElement(Hidden_1["default"], { smDown: true },
+                pageRoutes.map(function (prop, key) {
+                    if (activeRoute(prop.path)) {
+                        return react_1["default"].createElement(core_1.Button, { className: classes.activeLink, key: key }, prop.label);
+                    }
+                    return react_1["default"].createElement(core_1.Button, { className: classes.navLink, key: key }, prop.label);
+                }),
+                react_1["default"].createElement(core_1.Button, { className: classes.accessLink }, "Acceder"),
+                react_1["default"].createElement(core_1.Grid, { item: true },
+                    react_1["default"].createElement(core_1.Grid, { container: true, alignItems: "center", className: classes.fullHeight },
+                        react_1["default"].createElement(core_1.Button, { className: classes.companyLink }, "Acceder como empresa")))),
+            react_1["default"].createElement(Hidden_1["default"], { mdUp: true },
+                react_1["default"].createElement(core_1.Button, { "aria-controls": "simple-menu", "aria-haspopup": "true", onClick: handleClick },
+                    react_1["default"].createElement(Menu_1["default"], null))),
+            react_1["default"].createElement(Menu_2["default"], { id: "simple-menu", anchorEl: anchorEl, keepMounted: true, open: Boolean(anchorEl), onClose: handleClose }, pageRoutes.map(function (prop, key) {
+                if (activeRoute(prop.path)) {
+                    return react_1["default"].createElement(MenuItem_1["default"], { key: key, onClick: handleClose }, prop.label);
+                }
+                return react_1["default"].createElement(MenuItem_1["default"], { key: key, onClick: handleClose }, prop.label);
+            })))));
+}
+exports["default"] = LoginPage;

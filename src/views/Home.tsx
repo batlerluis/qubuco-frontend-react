@@ -28,6 +28,9 @@ const pageStyle = {
   paddingH1: {
     paddingLeft: 80,
     paddingRight: 80,
+    minWidth: 540,
+    marginBottom: 50,
+    justifyContent: "center",
   },
   search: {
     paddingTop: 35,
@@ -72,11 +75,13 @@ const Home = (props: any) => {
   return (
     <Grid container className={classes.wrapper} justify="center">
       <Grid container justify="center" className={classes.content}>
-        <Grid item sm={10} md={4} className={classes.paddingH1}>
+        <Grid item sm={7} md={4} className={classes.paddingH1}>
           <Grid container direction="column" alignItems="flex-end" justify="space-between" className={classes.fullHeight}>
             <Grid item>
+              
               <h1 className={classes.titleText}>Busca la empresa, califícala y deja tu comentario</h1>
               <h2 className={classes.dscrText}>Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.</h2>
+              
               <Grid container alignItems="flex-end">
                 <SearchIcon fontSize="large" />
                 <Grid style={{ flexGrow: 1 }}>
@@ -96,15 +101,15 @@ const Home = (props: any) => {
                     )}
                   />
                 </Grid>
-
               </Grid>
-
+              
               <Grid container className={classes.addLink}>
                 <Link className={classes.addLink} href="#" color="primary" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
               </Grid>
             </Grid>
+            
             <Grid container item>
-              <Grid container justify="space-between">
+              <Grid container justify="space-around">
                 <Grid item>
                   <img src={imgApple} alt="Can not load image!" />
                 </Grid>
@@ -113,11 +118,14 @@ const Home = (props: any) => {
                 </Grid>
               </Grid>
             </Grid>
+           
           </Grid>
         </Grid>
 
-        <Grid item md={4} className={classes.paddingH1}>
-          <img src={imgPhone1} alt="Can not load image!" />
+        <Grid container md={4} sm={5} className={classes.paddingH1} alignContent="center" >
+          <Grid item>
+            <img src={imgPhone1} alt="Can not load image!" />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

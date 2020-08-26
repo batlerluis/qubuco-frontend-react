@@ -21,13 +21,15 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
         padding: "70px 60px 50px",
         margin: "120px auto",
         boxShadow: "0px 5px 10px #00000029;",
-        border: "2px solid #EEEEEE",
         borderRadius: "9px",
         opacity: 1,
         action: {
             margin: 0
         }
-        // boxShadow: "",
+    },
+    appBar: {
+        // height: "70px",
+        padding: "10px 0"
     },
     btnGroup: {
         padding: '10px 0',
@@ -68,7 +70,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
         marginBottom: "40px"
     },
     checkout: {
-        // backgroundColor: "#8a56ac",
         color: "#8a56ac"
     },
     comment: {
@@ -88,7 +89,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
             margin: "auto",
             fontSize: "16px"
         },
-        // margin: "120px auto",
         boxShadow: "0px 2px 5px #00000029;",
         border: "1px solid #EEEEEE",
         borderRadius: "5px",
@@ -128,7 +128,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
             margin: "auto",
             fontSize: "16px"
         },
-        // margin: "120px auto",
         boxShadow: "0px 2px 5px #00000029;",
         border: "1px solid #EEEEEE",
         borderRadius: "5px",
@@ -136,7 +135,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
         margin: "10px"
     },
     avatar: {
-        // backgroundColor: red[500],
         backgroundImage: "url()",
         width: "70px",
         height: "70px"
@@ -153,7 +151,7 @@ function RecipeReviewCard() {
         console.log(nType);
     };
     return (react_1["default"].createElement(Grid_1["default"], { container: true },
-        react_1["default"].createElement(AppBar_1["default"], { position: "static", color: "inherit" },
+        react_1["default"].createElement(AppBar_1["default"], { position: "static", color: "inherit", className: classes.appBar },
             react_1["default"].createElement(Toolbar_1["default"], { variant: "dense" },
                 react_1["default"].createElement(IconButton_1["default"], { edge: "start", "aria-label": "menu" },
                     react_1["default"].createElement(ArrowBackIos_1["default"], null),

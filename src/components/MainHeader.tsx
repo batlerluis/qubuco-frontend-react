@@ -1,14 +1,10 @@
 import React from 'react';
-import { withStyles, AppBar, Grid, Button, Icon } from '@material-ui/core';
+import { makeStyles, AppBar, Grid, Button, Icon } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Tabs from '@material-ui/core/Tabs';
-import TabList from '@material-ui/lab/TabList';
-import Tab from '@material-ui/core/Tab';
-import Link from '@material-ui/core/Link';
+import Hidden from "@material-ui/core/Hidden";
 import MenuIcon from '@material-ui/icons/Menu';
-import PropTypes from "prop-types";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import { useLocation } from 'react-router-dom';
 
 import imgLogo from "../assets/img/logo.png";
@@ -20,7 +16,8 @@ const pageRoutes = [
   { path: "/home/b", label: "Contacto" },
 ];
 
-const headerStyle = {
+const useStyles = makeStyles({
+
   root: {
     background: "#FFFFFF 0% 0% no-repeat padding-box",
     boxShadow: "0px 3px 6px #00000029",
@@ -30,29 +27,39 @@ const headerStyle = {
     paddingRight: 29,
   },
   appBar: {
-    height: "70px",
     background: "#FFFFFF 0% 0% no-repeat padding-box !important",
     boxShadow: "0px 3px 6px #00000029",
     opacity: 1,
+    width: "100%",
+    height: "70px",
+    padding: "5px 10px 5px 0",
+    justifyContent: "space-between",
+  },
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+    paddingRight: "15px",
+    paddingLeft: "15px",
+    "&:after": {
+      clear: "both"
+    },
+    minHeight: "50px"
   },
   fullHeight: {
     height: "100%",
   },
   logo: {
-    paddingRight: 150,
     color: "#202124",
-  },
-  rest: {
-    flexGrow: 1,
+    width: "150px",
   },
   navLink: {
-    padding: "0px 20px",
+    padding: "22px 20px",
     font: "normal normal normal 15px/17px Helvetica Neue",
     letterSpacing: -0.15,
     color: "#717171",
   },
   activeLink: {
-    padding: "0px 20px",
+    padding: "22px 20px",
     font: "normal normal medium 15px/17px Helvetica Neue",
     letterSpacing: -0.15,
     color: "#202124",
@@ -72,13 +79,13 @@ const headerStyle = {
     letterSpacing: -0.18,
     color: "#FFFFFF",
   },
-};
+});
 
 
 
-const MainHeader = (props: any) => {
+export default function LoginPage(props: any) {
 
-  const { classes } = props;
+  const classes = useStyles();
 
   let location = useLocation();
 
@@ -90,56 +97,83 @@ const MainHeader = (props: any) => {
     return location.pathname.indexOf(routeName) > -1 ? true : false;
   }
 
-  const logoIcon = () => <Icon> <img src={imgLogo} /> </Icon>
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  // var list = () => {
+  //   pageRoutes.map(item => {
+  //     if (activeRoute(item.path)) {
+  //       return <MenuItem onClick={handleClose}>{item.path}</MenuItem>
+  //     }
+
+  //     console.log(item.path);
+  //     return <MenuItem onClick={handleClose}>{item.path}</MenuItem>
+  //   })
+  // }
 
   return (
-    <AppBar className={classes.root}>
-      <Grid container className={classes.wrapper} alignItems="stretch">
+    <AppBar className={classes.appBar}>
+      {/* <Grid container className={classes.wrapper} alignItems="stretch"> */}
+      <Toolbar className={classes.container}>
+
         <Grid item className={classes.logo}>
           <Grid container alignItems="center" className={classes.fullHeight}>
             <Button><img src={imgLogo} />QUBU</Button>
-
           </Grid>
         </Grid>
-        <Grid item className={classes.rest}>
-          <Grid container justify="space-between" alignItems="stretch" className={classes.fullHeight}>
-            {
-              pageRoutes.map((prop, key) => {
-                if (activeRoute(prop.path)) {
-                  return <Button className={classes.activeLink} key={key}>{prop.label}</Button>
-                }
-                return <Button className={classes.navLink} key={key}>{prop.label}</Button>
-              })
-            }
-            <Button className={classes.accessLink}>Acceder</Button>
-            <Grid item>
-              <Grid container alignItems="center" className={classes.fullHeight}>
-                <Button className={classes.companyLink}>Acceder como empresa</Button>
-              </Grid>
+        
+        <Hidden smDown>
+          {
+            pageRoutes.map((prop, key) => {
+              if (activeRoute(prop.path)) {
+                return <Button className={classes.activeLink} key={key}>{prop.label}</Button>
+              }
+              return <Button className={classes.navLink} key={key}>{prop.label}</Button>
+            })
+          }
+          <Button className={classes.accessLink}>Acceder</Button>
+          <Grid item>
+            <Grid container alignItems="center" className={classes.fullHeight}>
+              <Button className={classes.companyLink}>Acceder como empresa</Button>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+        </Hidden>
+
+        <Hidden mdUp>
+          <Button
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MenuIcon />
+          </Button>
+        </Hidden>
+        
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {
+            pageRoutes.map((prop, key) => {
+              if (activeRoute(prop.path)) {
+                return <MenuItem key={key} onClick={handleClose}>{prop.label}</MenuItem>
+              }
+              return <MenuItem key={key} onClick={handleClose}>{prop.label}</MenuItem>
+            })
+          }
+        </Menu>
+      </Toolbar>
     </AppBar>
-  // <AppBar position="static" color="inherit" className={classes.appBar}>
-  //   <Toolbar>
-  //     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-  //       <img src={imgLogo} />
-  //     </IconButton>
-  //     <Typography variant="h6" className={classes.title}>
-  //       QUBU
-  //     </Typography>
-  //     <Grid container>
-  //       <Link href="#"></Link>
-  //     </Grid>
-  //     <Button color="inherit">Login</Button>
-  //   </Toolbar>
-  // </AppBar>
   );
 }
 
-MainHeader.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(headerStyle)(MainHeader);

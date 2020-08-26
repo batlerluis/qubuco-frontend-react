@@ -114,7 +114,6 @@ var useStyles = styles_1.makeStyles(function (theme) { return ({
 }); });
 function LoginPage(props) {
     var _a = react_1.useState(0), currentTab = _a[0], setTab = _a[1];
-    var _b = react_1.useState(false), keepSigned = _b[0], setSign = _b[1];
     var classes = useStyles();
     var handleChange = function (event, newValue) { return setTab(newValue); };
     return (react_1["default"].createElement(core_1.Grid, { alignItems: "center" },
