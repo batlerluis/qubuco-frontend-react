@@ -37,7 +37,10 @@ var pageStyle = {
     },
     paddingH1: {
         paddingLeft: 80,
-        paddingRight: 80
+        paddingRight: 80,
+        minWidth: 540,
+        marginBottom: 50,
+        justifyContent: "center"
     },
     search: {
         paddingTop: 35
@@ -74,7 +77,7 @@ var Home = function (props) {
     var handleLink = function (event) { return event.preventDefault(); };
     return (react_1["default"].createElement(core_1.Grid, { container: true, className: classes.wrapper, justify: "center" },
         react_1["default"].createElement(core_1.Grid, { container: true, justify: "center", className: classes.content },
-            react_1["default"].createElement(core_1.Grid, { item: true, sm: 10, md: 4, className: classes.paddingH1 },
+            react_1["default"].createElement(core_1.Grid, { item: true, sm: 7, md: 4, className: classes.paddingH1 },
                 react_1["default"].createElement(core_1.Grid, { container: true, direction: "column", alignItems: "flex-end", justify: "space-between", className: classes.fullHeight },
                     react_1["default"].createElement(core_1.Grid, { item: true },
                         react_1["default"].createElement("h1", { className: classes.titleText }, "Busca la empresa, calif\u00EDcala y deja tu comentario"),
@@ -86,13 +89,14 @@ var Home = function (props) {
                         react_1["default"].createElement(core_1.Grid, { container: true, className: classes.addLink },
                             react_1["default"].createElement(core_1.Link, { className: classes.addLink, href: "#", color: "primary", onClick: function (e) { return handleLink(e); } }, "Agregar mi empresa a QUBU"))),
                     react_1["default"].createElement(core_1.Grid, { container: true, item: true },
-                        react_1["default"].createElement(core_1.Grid, { container: true, justify: "space-between" },
+                        react_1["default"].createElement(core_1.Grid, { container: true, justify: "space-around" },
                             react_1["default"].createElement(core_1.Grid, { item: true },
                                 react_1["default"].createElement("img", { src: appstore_png_1["default"], alt: "Can not load image!" })),
                             react_1["default"].createElement(core_1.Grid, { item: true },
                                 react_1["default"].createElement("img", { src: googlestore_png_1["default"], alt: "Can not load image!" })))))),
-            react_1["default"].createElement(core_1.Grid, { item: true, md: 4, className: classes.paddingH1 },
-                react_1["default"].createElement("img", { src: phone1_png_1["default"], alt: "Can not load image!" })))));
+            react_1["default"].createElement(core_1.Grid, { container: true, md: 4, sm: 5, className: classes.paddingH1, alignContent: "center" },
+                react_1["default"].createElement(core_1.Grid, { item: true },
+                    react_1["default"].createElement("img", { src: phone1_png_1["default"], alt: "Can not load image!" }))))));
 };
 Home.propTypes = {
     classes: prop_types_1["default"].object.isRequired

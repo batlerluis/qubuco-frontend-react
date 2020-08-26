@@ -115,7 +115,6 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginPage(props: any) {
 
   const [currentTab, setTab] = useState(0);
-  const [keepSigned, setSign] = useState(false);
   const classes = useStyles();
 
   const handleChange = (event: any, newValue: number) => setTab(newValue);
@@ -146,8 +145,10 @@ export default function LoginPage(props: any) {
         />
         <CardContent>
           <FormControl className={classes.formGroup}>
+            
             <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
             <TextField label="Contraseña" variant="outlined" className={classes.textInput} />
+            
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <FormControlLabel
@@ -160,6 +161,7 @@ export default function LoginPage(props: any) {
                 <a href="#">Olvidé contraseña</a>
               </Grid>
             </Grid>
+            
             <Grid className={classes.buttonbar} >
               <Link href="/survey/start" underline="none">
                 <Button variant="contained"  className={classes.buttonItem}>Ingresar</Button>
@@ -171,6 +173,7 @@ export default function LoginPage(props: any) {
               </Grid>
               <Button variant="contained" className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
             </Grid>
+         
           </FormControl>
         </CardContent>
       </Card>

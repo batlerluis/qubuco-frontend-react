@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { Grid, Card, Tab, Tabs, OutlinedInput, Link, Checkbox, FormControlLabel, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import CopyrightIcon from '@material-ui/icons/Copyright';
 
 import imgGoogle1 from "../assets/img/googlestore1.png";
@@ -24,10 +24,6 @@ const pageStyle = {
     paddingTop: 135,
     paddingLeft: 230
   },
-  leftPart: {
-    width: 390,
-    height: 535,
-  },
   fullHeight: {
     height: "100%",
   },
@@ -43,7 +39,8 @@ const pageStyle = {
     letterSpacing: "-0.46px",
     color: "#202124",
     opacity: 1,
-    margin: 0
+    margin: 0,
+    padding: 10,
 
   },
   dscrText: {
@@ -59,10 +56,6 @@ const pageStyle = {
     color: "#000000",
     opacity: 1,
     margin: 0,
-  },
-  downloadGroup: {
-    width: 195,
-    height: 170,
   },
   logGroup: {
     paddingBottom: 15
@@ -92,41 +85,57 @@ const SurveyFinal = (props: any) => {
 
   return (
     <Grid container justify-xs-space-between className={classes.wrapper}>
-      <Grid md={2} sm={1}></Grid>
-      <Grid item sm={9} md={4} >
+
+      <Grid md={2} sm={2} xs={1} />
+      <Grid item sm={8} md={4} xs={10}>
         <Grid container  direction="column">
+          
           <Grid item alignContent="center" className={classes.titleGroup}>
             <h1 className={classes.titleText}>Gracias! Hemos recibido tus comentarios</h1>
           </Grid>
+
           <Grid item className={classes.dscrGroup}>
             <h3 className={classes.dscrText}>Mira tu opinión y la de otros usuarios en nuestra app. Califica, Comenta y Gana cupones de descuento por tus comentarios.</h3>
           </Grid>
+
           <Grid item>
             <Grid container direction="column" alignItems="center">
               <Grid item><h2 className={classes.downloadText}>Descárgala ahora!</h2></Grid>
+              
               <Grid item className={classes.logGroup}>
                 <Grid container className={classes.logContainer} alignItems="center" justify="center">
                   <img src={imgLog} alt="Can not load image!" />
                 </Grid>
               </Grid>
-              <Grid item className={classes.logGroup}><p className={classes.qubuText}>QUBU<CopyrightIcon style={{ fontSize: 10 }}></CopyrightIcon></p></Grid>
+
+              <Grid item className={classes.logGroup}>
+                <p className={classes.qubuText}>
+                  QUBU
+                  <CopyrightIcon style={{ fontSize: 10 }}></CopyrightIcon>
+                </p>
+              </Grid>
+
               <Grid item>
                 <Grid container className={classes.buttonGroup} justify="space-around">
                   <img src={imgApple1} alt="Can not load image!" />
                   <img src={imgGoogle1} alt="Can not load image!" />
                 </Grid>
               </Grid>
+
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Grid sm={1} md={1}></Grid>
-      <Grid item sm={12} md={3}>
+
+      <Grid sm={1} md={1} xs={1} />
+
+      <Grid item sm={12} md={3} xs={12} justify-xs-center>
         <Grid container justify="center">
           <img src={imgPhone2} alt="Can not load image!" />
         </Grid>
       </Grid>
-      <Grid md={2} sm={2}></Grid>
+
+      <Grid md={2} sm={2} />
     </Grid>
   );
 }

@@ -50,14 +50,13 @@ const useStyles = makeStyles((theme) => ({
     action: {
       margin: 0,
     }
-    // boxShadow: "",
   },
   appBar: {
     height: "70px",
     padding: "10px 0",
   },
   btnGroup: {
-    padding: '10px 0', // 16:9
+    padding: '10px 0', 
     '& > *': {
       padding: "10px 0",
       margin: "10px 0",
@@ -69,17 +68,9 @@ const useStyles = makeStyles((theme) => ({
   checkStyle: {
     color: "#8a56ac !important",
     padding: "10px",
-    // marginBottom: "40px",
   },
   btnClient: {
     backgroundColor: "#8a56ac !important",
-    opacity: 0.8,
-    "&:hover": {
-      opacity: 1
-    },
-  },
-  btnEmployee: {
-    backgroundColor: "#D47FA6 !important",
     opacity: 0.8,
     "&:hover": {
       opacity: 1
@@ -94,10 +85,6 @@ const useStyles = makeStyles((theme) => ({
   },
   formCtl: {
     marginBottom: "50px !important",
-  },
-  checkout: {
-    // backgroundColor: "#8a56ac",
-    color: "#8a56ac",
   },
   comment: {
     width: "385px",
@@ -116,7 +103,6 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto",
       fontSize: "16px",
     },
-    // margin: "120px auto",
     boxShadow: "0px 2px 5px #00000029;",
     border: "1px solid #EEEEEE",
     borderRadius: "5px",
@@ -129,7 +115,6 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     margin: "10px 0 80px",
-    // fontSize: "45px",
   },
   progBar: {
     backgroundColor: "#F0E6FF",
@@ -157,7 +142,6 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto",
       fontSize: "16px",
     },
-    // margin: "120px auto",
     boxShadow: "0px 2px 5px #00000029;",
     border: "1px solid #EEEEEE",
     borderRadius: "5px",
@@ -165,7 +149,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px",
   },
   avatar: {
-    // backgroundColor: red[500],
     backgroundImage: "url()",
     width: "70px",
     height: "70px",
@@ -216,11 +199,14 @@ export default function RecipeReviewCard() {
           subheaderTypographyProps={{ variant: 'h6' }}
           subheader="Survey Name"
         />
+       
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
             Question 1
           </Typography>
+          
           <LinearProgress variant="buffer" value={33} className={classes.progBar} />
+          
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
               Cómo te sientes con las políticas de calidad de la empresa?
@@ -234,6 +220,7 @@ export default function RecipeReviewCard() {
               }}
             />
           </Box>
+          
           <Card className={classes.skip}>
             <IconButton aria-label="skip" onClick={() => setStep(step + 1)}>
               Omitir<ArrowForwardIcon />
@@ -264,17 +251,21 @@ export default function RecipeReviewCard() {
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
             Question 2
-            </Typography>
+          </Typography>
+
           <LinearProgress variant="buffer" value={67} className={classes.progBar} />
+
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
               Te gusto el servicio en tu última experiencia con nuestra empresa?
-              </Typography>
+            </Typography>
+
             <Grid container direction="column" className={classes.btnGroup}>
               <Button variant="contained" color="primary" onClick={() => SelectExp(0)} className={classes.btnClient}>OPCIÓN POSITIVA</Button>
               <Button variant="contained" color="inherit" onClick={() => SelectExp(1)} className={classes.btnProvider}>OPCIÓN NEGATIVA</Button>
             </Grid>
           </Box>
+
           <Card className={classes.skip}>
             <IconButton aria-label="skip" onClick={() => setStep(step + 1)}>
               Omitir<ArrowForwardIcon />
@@ -294,7 +285,7 @@ export default function RecipeReviewCard() {
             <Card className={classes.return}>
               <IconButton aria-label="menu" onClick={() => setStep(step - 1)}>
                 <SettingsBackupRestoreIcon />Regresar
-                </IconButton>
+              </IconButton>
             </Card>
           }
           titleTypographyProps={{ variant: 'h5' }}
@@ -302,21 +293,25 @@ export default function RecipeReviewCard() {
           subheaderTypographyProps={{ variant: 'h6' }}
           subheader="Survey Name"
         />
+
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
             Question 3
-            </Typography>
+          </Typography>
+
           <LinearProgress variant="buffer" value={100} className={classes.progBar} />
+
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
               Te gusto el servicio en tu última experiencia con nuestra empresa?
-              </Typography>
+            </Typography>
             <Grid container direction="column" className={classes.btnGroup}>
               <Button variant="contained" color="primary" onClick={() => SelectFinal(0)} className={classes.btnClient}>OPCIÓN A</Button>
               <Button variant="contained" color="primary" onClick={() => SelectFinal(1)} className={classes.btnClient}>OPCIÓN B</Button>
               <Button variant="contained" color="primary" onClick={() => SelectFinal(2)} className={classes.btnClient}>OPCIÓN C</Button>
             </Grid>
           </Box>
+
           <Card className={classes.skip}>
             <IconButton aria-label="skip" onClick={() => setStep(step + 1)}>
               Omitir<ArrowForwardIcon />
@@ -347,7 +342,8 @@ export default function RecipeReviewCard() {
         <CardContent>
           <Typography variant="subtitle1" color="textSecondary" component="p">
             Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.
-            </Typography>
+          </Typography>
+
           <TextareaAutosize
             rows={5}
             aria-label="maximum height"
@@ -355,11 +351,13 @@ export default function RecipeReviewCard() {
             defaultValue=""
             className={classes.comment}
           />
+
           <FormControlLabel
             control={<Checkbox className={classes.checkStyle} />}
             label="Comentario privado"
             className={classes.formCtl}
           />
+
           <Grid container direction="column" className={classes.btnGroup}>
             <Button variant="contained" href="/survey/final" color="primary" className={classes.btnClient}>COMENTAR</Button>
           </Grid>
@@ -378,10 +376,10 @@ export default function RecipeReviewCard() {
             </IconButton>
           </Toolbar>
         </AppBar>
+
         <Card className={classes.root}>
           {cardBody}
         </Card>
-
       </Grid>
     </ThemeProvider>
   );
