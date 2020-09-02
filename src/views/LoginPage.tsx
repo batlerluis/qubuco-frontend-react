@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, FormControl, Link, Grid, Card, CardContent, CardHeader, Typography, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -119,9 +119,37 @@ export default function LoginPage(props: any) {
 
   const handleChange = (event: any, newValue: number) => setTab(newValue);
 
+  const handleLogin = () => {
+    const axios = require('axios').default;
+
+    axios.get('http://localhost:8000/api/login', {
+      data: 'AutoComplete'
+    })
+      .then(function (response: any) {
+        console.log(response.data);
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
+  }
+
+  const handleRegister = () => {
+    const axios = require('axios').default;
+
+    axios.get('http://localhost:8000/api/register', {
+      data: 'AutoComplete'
+    })
+      .then(function (response: any) {
+        console.log(response.data);
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
+  }
+
   return (
     
-    <Grid alignItems="center">
+    <Grid container alignItems="center">
       <Card className={classes.root}>
         <CardHeader
           titleTypographyProps={{ variant: 'h5' }}
@@ -157,21 +185,21 @@ export default function LoginPage(props: any) {
 
                 />
               </Grid>
-              <Grid xs={12} sm={6} className={classes.forgot}>
+              <Grid item xs={12} sm={6} className={classes.forgot}>
                 <a href="#">Olvidé contraseña</a>
               </Grid>
             </Grid>
             
-            <Grid className={classes.buttonbar} >
+            <Grid container className={classes.buttonbar} >
               <Link href="/survey/start" underline="none">
-                <Button variant="contained"  className={classes.buttonItem}>Ingresar</Button>
+                <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
               </Link>
               <Grid className={classes.lineGroup}>
                 <Grid className={classes.lineItem}><hr /></Grid>
                 <span>O</span>
                 <Grid className={classes.lineItem}><hr /></Grid>
               </Grid>
-              <Button variant="contained" className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+              <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
             </Grid>
          
           </FormControl>

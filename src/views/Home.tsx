@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Grid, Link } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
+import Typography from '@material-ui/core/Typography';
 
 import imgApple from "../assets/img/appstore.png";
 import imgGoogle from "../assets/img/googlestore.png";
@@ -63,8 +64,23 @@ const top100Films = [
 ];
 
 // const imgPhone = "http://localhost:3000/phone.png";
+const filter = createFilterOptions();
 
 const Home = (props: any) => {
+
+  useEffect(() => {
+    const axios = require('axios').default;
+
+    axios.get('http://localhost:8000/api/company', {
+      data: 'AutoComplete'
+    })
+      .then(function (response: any) {
+        console.log(response.data);
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
+  });
 
   const { classes } = props;
 
@@ -78,19 +94,48 @@ const Home = (props: any) => {
         <Grid item sm={7} md={4} className={classes.paddingH1}>
           <Grid container direction="column" alignItems="flex-end" justify="space-between" className={classes.fullHeight}>
             <Grid item>
-              
+
               <h1 className={classes.titleText}>Busca la empresa, califícala y deja tu comentario</h1>
               <h2 className={classes.dscrText}>Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.</h2>
-              
+
               <Grid container alignItems="flex-end">
                 <SearchIcon fontSize="large" />
                 <Grid style={{ flexGrow: 1 }}>
                   <Autocomplete
                     className={classes.search}
                     id="free-solo-demo"
-                    options={top100Films.map((option) => option.title)}
-                    fullWidth
-                    onChange={(event: object, value: any, reason: string) => history.push("/home/login")}
+                    options={top100Films.map((option) => option)}
+                    // fullWidth
+                    onChange={() => history.push("/home/login")}
+                    filterOptions={(options: any, params: any) => {
+                      const filtered = filter(options, params);
+              
+                      // Suggest the creation of a new value
+                      if (params.inputValue !== '') {
+                        filtered.push({
+                          inputValue: params.inputValue,
+                          title: `${params.inputValue} \n\rAdd`,
+                          body: 'afds'
+                        });
+                      }
+              
+                      return filtered;
+                    }}
+                    getOptionLabel={(option: any) => option.title}
+                    renderOption={(option: any) => {
+                      return (
+                        <Grid container alignItems="center">
+                          <Grid item xs>
+                            <span style={{ fontWeight: 700 }}>
+                              {option.title}
+                            </span>
+                            <Typography variant="body2" color="textSecondary">
+                              {option.year}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      );
+                    }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -102,12 +147,12 @@ const Home = (props: any) => {
                   />
                 </Grid>
               </Grid>
-              
+
               <Grid container className={classes.addLink}>
                 <Link className={classes.addLink} href="#" color="primary" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
               </Grid>
             </Grid>
-            
+
             <Grid container item>
               <Grid container justify="space-around">
                 <Grid item>
@@ -118,15 +163,18 @@ const Home = (props: any) => {
                 </Grid>
               </Grid>
             </Grid>
-           
+
           </Grid>
         </Grid>
 
-        <Grid container md={4} sm={5} className={classes.paddingH1} alignContent="center" >
-          <Grid item>
-            <img src={imgPhone1} alt="Can not load image!" />
+        <Grid item md={4} sm={5}>
+          <Grid container className={classes.paddingH1} alignContent="center" >
+            <Grid item>
+              <img src={imgPhone1} alt="Can not load image!" />
+            </Grid>
           </Grid>
         </Grid>
+
       </Grid>
     </Grid>
   );
