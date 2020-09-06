@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   forgot: {
     color: "#8a56ac",
     fontSize: "16px",
-    padding: "20px 25px",
+    padding: "25px 25px 25px 10px !important",
     textAlign: "end",
     boxSizing: "border-box",
   },
@@ -117,6 +117,8 @@ export default function LoginPage(props: any) {
   const [currentTab, setTab] = useState(0);
   const classes = useStyles();
 
+  const [logged, setLogged] = useState(false);
+
   const handleChange = (event: any, newValue: number) => setTab(newValue);
 
   const handleLogin = () => {
@@ -147,6 +149,66 @@ export default function LoginPage(props: any) {
       });
   }
 
+  const toggleLog = () => {
+    setLogged(!logged);
+  }
+
+  let LogAndRegister;
+
+  if (logged == false) {
+    LogAndRegister = (
+      <FormControl className={classes.formGroup}>
+        
+        <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
+        <TextField label="Contraseña" variant="outlined" className={classes.textInput} />
+        
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={7}>
+            <FormControlLabel
+              control={<Checkbox className={classes.checkBox} />}
+              label="Permanecer conectado"
+            />
+          </Grid>
+          <Grid item xs={12} sm={5} className={classes.forgot}>
+            <a href="#">Olvidé contraseña</a>
+          </Grid>
+        </Grid>
+        
+        <Grid container className={classes.buttonbar} >
+          <Link href="/survey/start" underline="none">
+            <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
+          </Link>
+          <Grid className={classes.lineGroup}>
+            <Grid className={classes.lineItem}><hr /></Grid>
+            <span>0</span>
+            <Grid className={classes.lineItem}><hr /></Grid>
+          </Grid>
+          <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+        </Grid>
+      
+      </FormControl>
+    )
+  } else {
+    LogAndRegister = (
+     
+      <FormControl className={classes.formGroup}>
+        
+        <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
+        <TextField label="Contraseña" variant="outlined" className={classes.textInput} />
+        <TextField label="Password" type="password" variant="outlined" className={classes.textInput} />
+        <TextField label="Confirm Password" type="password" variant="outlined" className={classes.textInput} />
+        <br></br>
+        <Grid container className={classes.buttonbar} >
+          <Link href="/survey/start" underline="none">
+            <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
+          </Link>
+          <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+        </Grid>
+      
+      </FormControl>
+    );
+  }
+
   return (
     
     <Grid container alignItems="center">
@@ -166,43 +228,14 @@ export default function LoginPage(props: any) {
                 }
               }}
             >
-              <Tab label="Ingresar" className={classes.tabItem}></Tab>
+              <Tab label="Ingresar" onClick={() => toggleLog()} className={classes.tabItem}></Tab>
               <span className={classes.seperator}>|</span>
-              <Tab label="Registrarse" className={classes.tabItem}></Tab>
-            </Tabs>}
+              <Tab label="Registrarse" onClick={() => toggleLog()} className={classes.tabItem}></Tab>
+            </Tabs>
+            }
         />
         <CardContent>
-          <FormControl className={classes.formGroup}>
-            
-            <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
-            <TextField label="Contraseña" variant="outlined" className={classes.textInput} />
-            
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <FormControlLabel
-                  control={<Checkbox className={classes.checkBox} />}
-                  label="Permanecer conectado"
-
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} className={classes.forgot}>
-                <a href="#">Olvidé contraseña</a>
-              </Grid>
-            </Grid>
-            
-            <Grid container className={classes.buttonbar} >
-              <Link href="/survey/start" underline="none">
-                <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
-              </Link>
-              <Grid className={classes.lineGroup}>
-                <Grid className={classes.lineItem}><hr /></Grid>
-                <span>O</span>
-                <Grid className={classes.lineItem}><hr /></Grid>
-              </Grid>
-              <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
-            </Grid>
-         
-          </FormControl>
+          {LogAndRegister}
         </CardContent>
       </Card>
     </Grid>

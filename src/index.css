@@ -1,8 +1,54 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, 'HelveticaNeueInterface', 'HelveticaNeue', 'Helvetica', 'Quicksand_Bold', 'Quicksand_Bold_Oblique',
+   'Quicksand_Book', 'Quicksand_Book_Oblique', 'Quicksand_Dash', 'Quicksand_Light', 'Quicksand_Light_Oblique', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+
+  @font-face {
+    font-family: "Helvetica";
+    src: url("./fonts/Helvetica.ttc");
+  }
+
+  @font-face {
+    font-family: "HelveticaNeue";
+    src: url("./fonts/HelveticaNeue.ttc");
+  }
+
+  @font-face {
+    font-family: "HelveticaNeueInterface";
+    src: url("./fonts/HelveticaNeueDeskInterface.ttc");
+  }
+    @font-face {
+      font-family: "Quicksand_Bold";
+      src: url("./fonts/Quicksand_Bold.otf");
+    }
+    @font-face {
+      font-family: "Quicksand_Bold_Oblique";
+      src: url("./fonts/Quicksand_Bold_Oblique.otf");
+    }
+    @font-face {
+      font-family: "Quicksand_Book";
+      src: url("./fonts/Quicksand_Book.otf");
+    }
+    @font-face {
+      font-family: "Quicksand_Book_Oblique";
+      src: url("./fonts/Quicksand_Book_Oblique.otf");
+    }
+    
+    @font-face {
+      font-family: "Quicksand_Dash";
+      src: url("./fonts/Quicksand_Dash.otf");
+    }
+    @font-face {
+      font-family: "Quicksand_Light";
+      src: url("./fonts/Quicksand_Light.otf");
+    }
+    @font-face {
+      font-family: "Quicksand_Light_Oblique";
+      src: url("./fonts/Quicksand_Light_Oblique.otf");
+    }
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

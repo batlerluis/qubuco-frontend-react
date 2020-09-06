@@ -20,6 +20,10 @@ const pageStyle = {
     // background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
     paddingTop: 120,
   },
+  "@font-face": {
+    fontFamily: "myFirstFont",
+    src: 'url(../fonts/HelveticaNeue.ttf)',
+  },
   content: {
     height: "fit-content",
   },
@@ -37,15 +41,52 @@ const pageStyle = {
     paddingTop: 35,
   },
   titleText: {
-    font: "normal normal normal 46px/52px Helvetica Neue",
+    // font: "normal normal normal 46px/52px Helvetica Neue",
     letterSpacing: "-0.46px",
+    fontSize: "46px",
+    fontFamily: "HelveticaNeue",
+    fontWeight: 300,
     color: "#202124",
     opacity: 1,
+    "font-weight": "400",
+    "font-width": "scaleY(0.95)",
   },
   dscrText: {
-    font: "normal normal normal 20px/25px Quicksand",
+    // font: "normal normal normal 20px/25px Quicksand",
+  //   '@font-face': [{
+  //     fontFamily: "Quicksand_Bold",
+  //     src: 'url(../fonts/Quicksand_Bold.otf)',
+  //   },
+  //   {
+  //     fontFamily: "Quicksand_Bold_Oblique",
+  //     src: 'url(../fonts/Quicksand_Bold_Oblique.otf)',
+  //   },
+  //   {
+  //     fontFamily: "Quicksand_Book",
+  //     src: 'url(../fonts/Quicksand_Book.otf)',
+  //   },
+  //   {
+  //     fontFamily: "Quicksand_Book_Oblique",
+  //     src: 'url(../fonts/Quicksand_Book_Oblique.otf)',
+  //   },
+  //   {
+  //     fontFamily: "Quicksand_Dash",
+  //     src: 'url(../fonts/Quicksand_Dash.otf)',
+  //   },
+  //   {
+  //     fontFamily: "Quicksand_Light",
+  //     src: 'url(../fonts/Quicksand_Light.otf)',
+  //   },
+  //   {
+  //     fontFamily: "Quicksand_Light_Oblique",
+  //     src: 'url(../fonts/Quicksand_Light_Oblique.otf)',
+  //   }
+  // ],
+    // fontFamily: "Quicksand_Dash",
     letterSpacing: "-1px",
     color: "#707070",
+    fontSize: "20px",
+    fontWeight: 200,
     opacity: 1,
     paddingBottom: 19,
   },
@@ -114,11 +155,10 @@ const Home = (props: any) => {
                       if (params.inputValue !== '') {
                         filtered.push({
                           inputValue: params.inputValue,
-                          title: `${params.inputValue} \n\rAdd`,
-                          body: 'afds'
+                          title: `${params.inputValue} `,
+                          year: "Add",
                         });
                       }
-              
                       return filtered;
                     }}
                     getOptionLabel={(option: any) => option.title}
