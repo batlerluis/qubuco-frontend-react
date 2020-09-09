@@ -196,8 +196,8 @@ export default function LoginPage(props: any) {
         </Grid>
         
         <Grid container className={classes.buttonbar} >
-          {/* <Link href="/survey/start" underline="none"> */}
-          <Link underline="none">
+          <Link href="/survey/start" underline="none">
+          {/* <Link underline="none"> */}
             <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
           </Link>
           <Grid className={classes.lineGroup}>
@@ -215,10 +215,10 @@ export default function LoginPage(props: any) {
      
       <FormControl className={classes.formGroup}>
         
+        <TextField label="Nombre" variant="outlined" className={classes.textInput} />
         <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
-        <TextField label="Contraseña" variant="outlined" className={classes.textInput} />
-        <TextField label="Password" type="password" variant="outlined" className={classes.textInput} />
-        <TextField label="Confirm Password" type="password" variant="outlined" className={classes.textInput} />
+        <TextField label="Contraseña" type="password" variant="outlined" className={classes.textInput} />
+        <TextField label="Confirmar contraseña" type="password" variant="outlined" className={classes.textInput} />
         <br></br>
         <Grid container className={classes.buttonbar} >
           <Link href="/survey/start" underline="none">

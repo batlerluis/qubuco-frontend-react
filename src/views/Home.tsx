@@ -65,6 +65,7 @@ const pageStyle = {
     paddingBottom: 19,
   },
   addLink: {
+    fontSize: '18px',
     paddingTop: 25,
     fontWeight: 400,
     color: "#8A56AC",
