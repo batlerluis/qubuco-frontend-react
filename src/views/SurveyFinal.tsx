@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Grid } from '@material-ui/core';
 import CopyrightIcon from '@material-ui/icons/Copyright';
+import "./HomeStyle.css";
 
 import imgGoogle1 from "../assets/img/googlestore1.png";
 import imgApple1 from "../assets/img/appstore1.png";
