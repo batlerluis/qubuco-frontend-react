@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
+import './HomeStyle.css';
 
 import imgApple from "../assets/img/appstore.png";
 import imgGoogle from "../assets/img/googlestore.png";

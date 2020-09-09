@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, FormControl, Link, Grid, Card, CardContent, CardHeader, Typography, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import Axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,13 +120,31 @@ export default function LoginPage(props: any) {
 
   const [logged, setLogged] = useState(false);
 
+  const [signUpData, setSignUpData] = useState({
+    name: "a",
+    email: "b",
+    phone: "",
+    password: "",
+    isLoading: "",
+  });
+
+  const onChangehandler = (e: Event, key: string) => {
+    const signupdata = signUpData;
+    console.log('name: ' + signupdata.name);
+    console.log('email: ' + signupdata['email']);
+    console.log(e.target);
+    // signupdata[`${e.target.name}`] = e.target.value;
+    // signupdata[`${fieldName}`] = e.target.value;
+    // this.setState({ signupData });
+    // setSignUpData(signupdata);
+  };
+
   const handleChange = (event: any, newValue: number) => setTab(newValue);
 
   const handleLogin = () => {
-    const axios = require('axios').default;
-
-    axios.get('http://localhost:8000/api/login', {
-      data: 'AutoComplete'
+    Axios.post('http://localhost:8000/api/login', {
+      'email': 'jacksmith199742@gmail.com',
+      'password': '123'
     })
       .then(function (response: any) {
         console.log(response.data);
@@ -135,10 +154,12 @@ export default function LoginPage(props: any) {
       });
   }
 
-  const handleRegister = () => {
-    const axios = require('axios').default;
+  const handleNameChanged = (val: string) => {
 
-    axios.get('http://localhost:8000/api/register', {
+  };
+
+  const handleRegister = () => {
+    Axios.get('http://localhost:8000/api/register', {
       data: 'AutoComplete'
     })
       .then(function (response: any) {
@@ -175,7 +196,8 @@ export default function LoginPage(props: any) {
         </Grid>
         
         <Grid container className={classes.buttonbar} >
-          <Link href="/survey/start" underline="none">
+          {/* <Link href="/survey/start" underline="none"> */}
+          <Link underline="none">
             <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
           </Link>
           <Grid className={classes.lineGroup}>
@@ -183,7 +205,7 @@ export default function LoginPage(props: any) {
             <span>0</span>
             <Grid className={classes.lineItem}><hr /></Grid>
           </Grid>
-          <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+          <Button variant="contained" onClick={() => handleLogin()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
         </Grid>
       
       </FormControl>
@@ -200,7 +222,7 @@ export default function LoginPage(props: any) {
         <br></br>
         <Grid container className={classes.buttonbar} >
           <Link href="/survey/start" underline="none">
-            <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
+            <Button variant="contained" onClick={() => handleRegister()} className={classes.buttonItem}>Ingresar</Button>
           </Link>
           <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
         </Grid>
