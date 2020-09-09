@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
+import "./HomeStyle.css";
 
 import imgApple from "../assets/img/appstore.png";
 import imgGoogle from "../assets/img/googlestore.png";
@@ -20,10 +21,10 @@ const pageStyle = {
     // background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
     paddingTop: 120,
   },
-  "@font-face": {
-    fontFamily: "myFirstFont",
-    src: 'url(../fonts/HelveticaNeue.ttf)',
-  },
+  // "@font-face": {
+  //   fontFamily: "HelveticaNeue",
+  //   src: 'url(./Quicksand_Bold_Oblique.otf)',
+  // },
   content: {
     height: "fit-content",
   },
@@ -39,59 +40,34 @@ const pageStyle = {
   },
   search: {
     paddingTop: 35,
+    width: "80%",
   },
   titleText: {
     // font: "normal normal normal 46px/52px Helvetica Neue",
     letterSpacing: "-0.46px",
     fontSize: "46px",
-    fontFamily: "HelveticaNeue",
-    fontWeight: 300,
+    fontWeight: 400,
     color: "#202124",
     opacity: 1,
-    "font-weight": "400",
     "font-width": "scaleY(0.95)",
+  },
+  filterContent: {
+    padding: 10,
   },
   dscrText: {
     // font: "normal normal normal 20px/25px Quicksand",
-  //   '@font-face': [{
-  //     fontFamily: "Quicksand_Bold",
-  //     src: 'url(../fonts/Quicksand_Bold.otf)',
-  //   },
-  //   {
-  //     fontFamily: "Quicksand_Bold_Oblique",
-  //     src: 'url(../fonts/Quicksand_Bold_Oblique.otf)',
-  //   },
-  //   {
-  //     fontFamily: "Quicksand_Book",
-  //     src: 'url(../fonts/Quicksand_Book.otf)',
-  //   },
-  //   {
-  //     fontFamily: "Quicksand_Book_Oblique",
-  //     src: 'url(../fonts/Quicksand_Book_Oblique.otf)',
-  //   },
-  //   {
-  //     fontFamily: "Quicksand_Dash",
-  //     src: 'url(../fonts/Quicksand_Dash.otf)',
-  //   },
-  //   {
-  //     fontFamily: "Quicksand_Light",
-  //     src: 'url(../fonts/Quicksand_Light.otf)',
-  //   },
-  //   {
-  //     fontFamily: "Quicksand_Light_Oblique",
-  //     src: 'url(../fonts/Quicksand_Light_Oblique.otf)',
-  //   }
-  // ],
     // fontFamily: "Quicksand_Dash",
     letterSpacing: "-1px",
     color: "#707070",
     fontSize: "20px",
-    fontWeight: 200,
+    // fontWeight: 300,
     opacity: 1,
     paddingBottom: 19,
   },
   addLink: {
     paddingTop: 25,
+    fontWeight: 400,
+    color: "#8A56AC",
   },
 };
 
@@ -104,7 +80,6 @@ const top100Films = [
   { title: "Schindler's List", year: 1993, year1: 'Brazil' },
 ];
 
-// const imgPhone = "http://localhost:3000/phone.png";
 const filter = createFilterOptions();
 
 const Home = (props: any) => {
@@ -164,7 +139,7 @@ const Home = (props: any) => {
                     getOptionLabel={(option: any) => option.title}
                     renderOption={(option: any) => {
                       return (
-                        <Grid container alignItems="center">
+                        <Grid container className={classes.filterContent} alignItems="center">
                           <Grid item xs>
                             <span style={{ fontWeight: 700 }}>
                               {option.title}
@@ -192,7 +167,7 @@ const Home = (props: any) => {
               </Grid>
 
               <Grid container className={classes.addLink}>
-                <Link className={classes.addLink} href="#" color="primary" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
+                <Link className={classes.addLink} href="#" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
               </Grid>
             </Grid>
 
@@ -210,7 +185,7 @@ const Home = (props: any) => {
           </Grid>
         </Grid>
 
-        <Grid item md={4} sm={5}>
+        <Grid item md={4} sm={8}>
           <Grid container className={classes.paddingH1} alignContent="center" >
             <Grid item>
               <img src={imgPhone1} alt="Can not load image!" />
