@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   appBar: {
-    // height: "70px",
     padding: "10px 0",
   },
   btnGroup: {

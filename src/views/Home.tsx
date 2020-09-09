@@ -18,13 +18,8 @@ const pageStyle = {
   wrapper: {
     minHeight: "100vh",
     height: "auto",
-    // background: "transparent linear-gradient(180deg, #FFFFFF 0%, #8A56AC 100%) 0% 0% no-repeat padding-box",
     paddingTop: 120,
   },
-  // "@font-face": {
-  //   fontFamily: "HelveticaNeue",
-  //   src: 'url(./Quicksand_Bold_Oblique.otf)',
-  // },
   content: {
     height: "fit-content",
   },
@@ -55,12 +50,9 @@ const pageStyle = {
     padding: 10,
   },
   dscrText: {
-    // font: "normal normal normal 20px/25px Quicksand",
-    // fontFamily: "Quicksand_Dash",
     letterSpacing: "-1px",
     color: "#707070",
     fontSize: "20px",
-    // fontWeight: 300,
     opacity: 1,
     paddingBottom: 19,
   },
