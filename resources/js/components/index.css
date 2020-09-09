@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  font-family: -apple-system, 'HelveticaNeueInterface', 'HelveticaNeue', 'Helvetica', 'Quicksand_Bold', 'Quicksand_Bold_Oblique',
+   'Quicksand_Book', 'Quicksand_Book_Oblique', 'Quicksand_Dash', 'Quicksand_Light', 'Quicksand_Light_Oblique', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  }

@@ -1,0 +1,72 @@
+@font-face {
+    font-family: Quicksand_Bold;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Bold.otf');
+  }
+  
+  @font-face {
+    font-family: Quicksand_Bold_Oblique;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Bold_Oblique.otf');
+  }
+  
+  @font-face {
+    font-family: Quicksand_Book;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Book.otf');
+  }
+  
+  @font-face {
+    font-family: Quicksand_Book_Oblique;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Book_Oblique.otf');
+  }
+  
+  @font-face {
+    font-family: Quicksand_Dash;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Dash.otf');
+  }
+  
+  @font-face {
+    font-family: Quicksand_Light;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Light.otf');
+  }
+  
+  @font-face {
+    font-family: Quicksand_Light_Oblique;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Light_Oblique.otf');
+  }
+  
+  @font-face {
+    font-family: Helvetica_Neue;
+    font-weight: normal;
+    src: url('../fonts/HelveticaNeue-01.ttf');
+  }
+
+  h1, a {
+      font-family: Helvetica_Neue;
+  }
+
+  h2 {
+      font-family: Quicksand_Dash;
+  }
+
+  h3 {
+      font-family: Quicksand_Bold;
+  }
+
+  span {
+      text-transform: none;
+  }
+
+  header > * > button > span {
+      font-family: Helvetica_Neue;
+  }
+
+  #free-solo-demo {
+      font-family: Quicksand_Bold !important;
+      font-size: 20px ;
+  }
