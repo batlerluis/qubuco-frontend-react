@@ -34,7 +34,6 @@ const pageStyle = {
     justifyContent: "center",
   },
   search: {
-    paddingTop: 35,
     width: "80%",
   },
   titleText: {
@@ -59,11 +58,14 @@ const pageStyle = {
     textAlign: "left"
   },
   addLink: {
-    paddingTop: 25,
+    fontSize: '18px',
     fontWeight: 400,
-    color: "#8A56AC",
-    fontSize: "18px"
+    color: "#8A56AC"
   },
+  linkContainer: {
+    height: 130,
+    alignItems: 'center'
+  }
 };
 
 const top100Films = [
@@ -159,7 +161,7 @@ const Home = (props: any) => {
                 </Grid>
               </Grid>
 
-              <Grid container>
+              <Grid container className={classes.linkContainer}>
                 <Link href="#" className={classes.addLink} onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
               </Grid>
             </Grid>
