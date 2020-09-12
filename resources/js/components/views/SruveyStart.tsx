@@ -13,7 +13,8 @@ import CardContent from '@material-ui/core/CardContent';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-import imgLog from "../assets/img/car.png"
+import imgLog from "../assets/img/car.png";
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -153,7 +154,10 @@ export default function RecipeReviewCard() {
     setExpanded(!expanded);
   };
 
+  const history = useHistory();
+
   const SelectType = (nType: number) => {
+    history.push("/survey/detail");
     console.log(nType);
   };
 
@@ -185,9 +189,9 @@ export default function RecipeReviewCard() {
             </Typography>
            
             <Grid container direction="column" className={classes.btnGroup}>
-              <Button variant="contained" href="/survey/detail" onClick={() => SelectType(0)} className={classes.btnClient}>CLIENTE</Button>
-              <Button variant="contained" href="/survey/detail" onClick={() => SelectType(1)} className={classes.btnEmployee}>EMPLEADO</Button>
-              <Button variant="contained" href="/survey/detail" onClick={() => SelectType(2)} className={classes.btnProvider}>PROVEEDOR</Button>
+              <Button variant="contained" onClick={() => SelectType(0)} className={classes.btnClient}>CLIENTE</Button>
+              <Button variant="contained" onClick={() => SelectType(1)} className={classes.btnEmployee}>EMPLEADO</Button>
+              <Button variant="contained" onClick={() => SelectType(2)} className={classes.btnProvider}>PROVEEDOR</Button>
             </Grid>
           </CardContent>
         </Card>

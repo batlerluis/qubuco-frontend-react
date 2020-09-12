@@ -18,7 +18,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
-
+import { useHistory } from 'react-router-dom';
 
 
 import imgLog from "../assets/img/car.png"
@@ -177,6 +177,8 @@ export default function RecipeReviewCard() {
   const SelectFinal = (nValue: number) => {
     setStep(4);
   }
+
+  const history = useHistory();
 
   let cardBody;
 
@@ -359,7 +361,7 @@ export default function RecipeReviewCard() {
           />
 
           <Grid container direction="column" className={classes.btnGroup}>
-            <Button variant="contained" href="/survey/final" color="primary" className={classes.btnClient}>COMENTAR</Button>
+            <Button variant="contained" onClick={() => history.push("/survey/final")} color="primary" className={classes.btnClient}>COMENTAR</Button>
           </Grid>
         </CardContent>
       </div>

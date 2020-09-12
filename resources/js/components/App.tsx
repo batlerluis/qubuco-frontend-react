@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import HomePage from './pages/HomePage';
 import { createBrowserHistory } from 'history';
-import { Switch, BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { Switch, HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import SurveyPage from './pages/SurveyPage';
 
 const indexRoutes = [

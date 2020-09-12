@@ -12,7 +12,7 @@ import imgApple from "../assets/img/appstore.png";
 import imgGoogle from "../assets/img/googlestore.png";
 import imgPhone1 from "../assets/img/phone1.png"
 import { useHistory } from 'react-router-dom';
-
+import Axios from 'axios';
 
 const pageStyle = {
   wrapper: {
@@ -34,7 +34,6 @@ const pageStyle = {
     justifyContent: "center",
   },
   search: {
-    paddingTop: 35,
     width: "80%",
   },
   titleText: {
@@ -45,6 +44,7 @@ const pageStyle = {
     color: "#202124",
     opacity: 1,
     "font-width": "scaleY(0.95)",
+    textAlign: "left"
   },
   filterContent: {
     padding: 10,
@@ -55,12 +55,17 @@ const pageStyle = {
     fontSize: "20px",
     opacity: 1,
     paddingBottom: 19,
+    textAlign: "left"
   },
   addLink: {
-    paddingTop: 25,
+    fontSize: '18px',
     fontWeight: 400,
-    color: "#8A56AC",
+    color: "#8A56AC"
   },
+  linkContainer: {
+    height: 130,
+    alignItems: 'center'
+  }
 };
 
 const top100Films = [
@@ -77,9 +82,7 @@ const filter = createFilterOptions();
 const Home = (props: any) => {
 
   useEffect(() => {
-    const axios = require('axios').default;
-
-    axios.get('http://localhost:8000/api/company', {
+    Axios.get('http://localhost:8000/api/company', {
       data: 'AutoComplete'
     })
       .then(function (response: any) {
@@ -106,7 +109,7 @@ const Home = (props: any) => {
               <h1 className={classes.titleText}>Busca la empresa, califícala y deja tu comentario</h1>
               <h2 className={classes.dscrText}>Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.</h2>
 
-              <Grid container alignItems="flex-end">
+              <Grid container alignItems="center">
                 <SearchIcon fontSize="large" />
                 <Grid style={{ flexGrow: 1 }}>
                   <Autocomplete
@@ -117,7 +120,7 @@ const Home = (props: any) => {
                     onChange={() => history.push("/home/login")}
                     filterOptions={(options: any, params: any) => {
                       const filtered = filter(options, params);
-              
+
                       // Suggest the creation of a new value
                       if (params.inputValue !== '') {
                         filtered.push({
@@ -158,8 +161,8 @@ const Home = (props: any) => {
                 </Grid>
               </Grid>
 
-              <Grid container className={classes.addLink}>
-                <Link className={classes.addLink} href="#" onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
+              <Grid container className={classes.linkContainer}>
+                <Link href="#" className={classes.addLink} onClick={(e: any) => handleLink(e)}>Agregar mi empresa a QUBU</Link>
               </Grid>
             </Grid>
 

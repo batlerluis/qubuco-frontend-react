@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField, FormControl, Link, Grid, Card, CardContent, CardHeader, Typography, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,9 +54,9 @@ const useStyles = makeStyles((theme) => ({
   forgot: {
     color: "#8a56ac",
     fontSize: "16px",
-    padding: "25px 25px 25px 10px !important",
-    textAlign: "end",
-    boxSizing: "border-box",
+    // padding: "25px 25px 25px 10px !important",
+    textAlign: "right",
+    // boxSizing: "border-box",
   },
   checkBox: {
     color: "#8a56ac !important",
@@ -76,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     margin: "20px 0",
     justifyContent: "space-between",
+    fontSize: '20px'
   },
   tabItem: {
     fontWeight: 500,
@@ -119,6 +121,8 @@ export default function LoginPage(props: any) {
   const classes = useStyles();
 
   const [logged, setLogged] = useState(false);
+  const [name, setName] = useState('');
+  const [pass, setPass] = useState('');
 
   const [signUpData, setSignUpData] = useState({
     name: "a",
@@ -140,11 +144,12 @@ export default function LoginPage(props: any) {
   };
 
   const handleChange = (event: any, newValue: number) => setTab(newValue);
+  const history = useHistory();
 
   const handleLogin = () => {
     Axios.post('http://localhost:8000/api/login', {
-      'email': 'jacksmith199742@gmail.com',
-      'password': '123'
+      'email': name,
+      'password': pass
     })
       .then(function (response: any) {
         console.log(response.data);
@@ -152,6 +157,8 @@ export default function LoginPage(props: any) {
       .catch(function (error: any) {
         console.log(error);
       });
+
+    history.push("/survey/start");
   }
 
   const handleNameChanged = (val: string) => {
@@ -159,8 +166,10 @@ export default function LoginPage(props: any) {
   };
 
   const handleRegister = () => {
-    Axios.get('http://localhost:8000/api/register', {
-      data: 'AutoComplete'
+    Axios.post('http://localhost:8000/api/register', {
+      'name': name,
+      'email': name,
+      'password': pass
     })
       .then(function (response: any) {
         console.log(response.data);
@@ -171,7 +180,18 @@ export default function LoginPage(props: any) {
   }
 
   const toggleLog = () => {
+    console.log('tab: ' + currentTab);
     setLogged(!logged);
+  }
+
+  const OnChangeName = (event: object) => {
+    console.log('Name:' + event.target.value);
+    setName(event.target.value);
+  }
+
+  const OnChangePass = (event: object) => {
+    console.log('Pass:' + event.target.value);
+    setPass(event.target.value);
   }
 
   let LogAndRegister;
@@ -179,10 +199,10 @@ export default function LoginPage(props: any) {
   if (logged == false) {
     LogAndRegister = (
       <FormControl className={classes.formGroup}>
-        
-        <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
-        <TextField label="Contraseña" variant="outlined" className={classes.textInput} />
-        
+
+        <TextField label="Correo electrónico" onChange={(event: object) => OnChangeName(event)} variant="outlined" className={classes.textInput} />
+        <TextField label="Contraseña" onChange={(event: object) => OnChangePass(event)} variant="outlined" className={classes.textInput} />
+
         <Grid container spacing={3}>
           <Grid item xs={12} sm={7}>
             <FormControlLabel
@@ -190,49 +210,53 @@ export default function LoginPage(props: any) {
               label="Permanecer conectado"
             />
           </Grid>
-          <Grid item xs={12} sm={5} className={classes.forgot}>
-            <a href="#">Olvidé contraseña</a>
+          <Grid item xs={12} sm={5} alignItems="center">
+            <a className={classes.forgot} href="#">Olvidé contraseña</a>
           </Grid>
         </Grid>
-        
+
         <Grid container className={classes.buttonbar} >
-          {/* <Link href="/survey/start" underline="none"> */}
-          <Link underline="none">
+          <Link href="/survey/start" underline="none">
+          {/* <Link underline="none"> */}
             <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
           </Link>
           <Grid className={classes.lineGroup}>
             <Grid className={classes.lineItem}><hr /></Grid>
-            <span>0</span>
+            <span>O</span>
             <Grid className={classes.lineItem}><hr /></Grid>
           </Grid>
           <Button variant="contained" onClick={() => handleLogin()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
         </Grid>
-      
+
       </FormControl>
     )
   } else {
     LogAndRegister = (
-     
-      <FormControl className={classes.formGroup}>
-        
+
+      <FormControl className={classes.formGroup}>        
+        <TextField label="Nombre" variant="outlined" className={classes.textInput} />
         <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
-        <TextField label="Contraseña" variant="outlined" className={classes.textInput} />
-        <TextField label="Password" type="password" variant="outlined" className={classes.textInput} />
-        <TextField label="Confirm Password" type="password" variant="outlined" className={classes.textInput} />
+        <TextField label="Contraseña" type="password" variant="outlined" className={classes.textInput} />
+        <TextField label="Confirmar contraseña" type="password" variant="outlined" className={classes.textInput} />
         <br></br>
         <Grid container className={classes.buttonbar} >
-          <Link href="/survey/start" underline="none">
+          <Link underline="none">
             <Button variant="contained" onClick={() => handleRegister()} className={classes.buttonItem}>Ingresar</Button>
           </Link>
+          <Grid className={classes.lineGroup}>
+            <Grid className={classes.lineItem}><hr /></Grid>
+            <span>O</span>
+            <Grid className={classes.lineItem}><hr /></Grid>
+          </Grid>
           <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
         </Grid>
-      
+
       </FormControl>
     );
   }
 
   return (
-    
+
     <Grid container alignItems="center">
       <Card className={classes.root}>
         <CardHeader
@@ -254,7 +278,7 @@ export default function LoginPage(props: any) {
               <span className={classes.seperator}>|</span>
               <Tab label="Registrarse" onClick={() => toggleLog()} className={classes.tabItem}></Tab>
             </Tabs>
-            }
+          }
         />
         <CardContent>
           {LogAndRegister}
