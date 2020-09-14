@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, FormControl, Link, Grid, Card, CardContent, CardHeader, Typography, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
+import { TextField, FormControl, Grid, Card, CardContent, CardHeader, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import SnackBar from '../components/SnackBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,91 +118,141 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginPage(props: any) {
 
-  const [currentTab, setTab] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
   const classes = useStyles();
 
-  const [logged, setLogged] = useState(false);
   const [name, setName] = useState('');
-  const [pass, setPass] = useState('');
-
-  const [signUpData, setSignUpData] = useState({
-    name: "a",
-    email: "b",
-    phone: "",
-    password: "",
-    isLoading: "",
+  const [email, setEmail] = useState('');
+  const [pass1, setPass1] = useState('');
+  const [pass2, setPass2] = useState('');
+  const [snackOption, setSnackOption] = useState({
+    type: "",
+    msg: ""
   });
 
-  const onChangehandler = (e: Event, key: string) => {
-    const signupdata = signUpData;
-    console.log('name: ' + signupdata.name);
-    console.log('email: ' + signupdata['email']);
-    console.log(e.target);
-    // signupdata[`${e.target.name}`] = e.target.value;
-    // signupdata[`${fieldName}`] = e.target.value;
-    // this.setState({ signupData });
-    // setSignUpData(signupdata);
-  };
+  const [snackStatus, setSnackStatus] = React.useState(false);
 
-  const handleChange = (event: any, newValue: number) => setTab(newValue);
   const history = useHistory();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+
     Axios.post('http://localhost:8000/api/login', {
-      'email': name,
-      'password': pass
+      'email': email,
+      'password': pass1
     })
       .then(function (response: any) {
         console.log(response.data);
+        if (response.data.message == "Invalid Credentials") {
+          setSnackOption({
+            type: "error",
+            msg: "Login Failed! User not registered."
+          });
+          setSnackStatus(true);
+        }
+        else {
+          history.push("/survey/start");
+        }
       })
       .catch(function (error: any) {
-        console.log(error);
+        if (error.response.data.errors.hasOwnProperty('password')) {
+          setSnackOption({
+            type: "error",
+            msg: "LogIn Failed! " + error.response.data.errors.password[0]
+          });
+        }
+        else if (error.response.data.errors.hasOwnProperty('email')) {
+          setSnackOption({
+            type: "error",
+            msg: "LogIn Failed! " + error.response.data.errors.email[0]
+          });
+        }
+        setSnackStatus(true);
       });
-
-    history.push("/survey/start");
   }
-
-  const handleNameChanged = (val: string) => {
-
-  };
 
   const handleRegister = () => {
     Axios.post('http://localhost:8000/api/register', {
       'name': name,
-      'email': name,
-      'password': pass
+      'email': email,
+      'password': pass1,
+      'password_confirmation': pass2
     })
       .then(function (response: any) {
-        console.log(response.data);
+        setTabIndex(0);
+        setEmail('');
+        setPass1('');
+        setSnackOption({
+          type: "success",
+          msg: "Register Success!"
+        });
+        setSnackStatus(true);
       })
       .catch(function (error: any) {
-        console.log(error);
+        if (error.response.data.errors.hasOwnProperty('password')) {
+          setSnackOption({
+            type: "error",
+            msg: "Register Failed! " + error.response.data.errors.password[0]
+          });
+        }
+        else if (error.response.data.errors.hasOwnProperty('email')) {
+          setSnackOption({
+            type: "error",
+            msg: "Register Failed! " + error.response.data.errors.email[0]
+          });
+        }
+        setSnackStatus(true);
       });
+    // fetch('http://localhost:8000/api/register', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //       'name': name,
+    //       'email': email,
+    //       'password': pass1,
+    //       'password_confirmation': pass2
+    //   })
+    // })
+    // .then((response) => response.json())
+    // .then((responseJson) => {
+    //   console.log(responseJson);
+    // })
+    // .catch((error) => {
+    //   console.error(error);
+    // });
   }
 
-  const toggleLog = () => {
-    console.log('tab: ' + currentTab);
-    setLogged(!logged);
-  }
-
-  const OnChangeName = (event: object) => {
-    console.log('Name:' + event.target.value);
-    setName(event.target.value);
-  }
-
-  const OnChangePass = (event: object) => {
-    console.log('Pass:' + event.target.value);
-    setPass(event.target.value);
+  const OnTabChange = (event: object, value: any) => {
+    setTabIndex(value);
+    setName('');
+    setEmail('');
+    setPass1('');
+    setPass2('');
   }
 
   let LogAndRegister;
 
-  if (logged == false) {
+  if (tabIndex == 0) {
     LogAndRegister = (
       <FormControl className={classes.formGroup}>
 
-        <TextField label="Correo electrónico" onChange={(event: object) => OnChangeName(event)} variant="outlined" className={classes.textInput} />
-        <TextField label="Contraseña" onChange={(event: object) => OnChangePass(event)} variant="outlined" className={classes.textInput} />
+        <TextField
+          label="Correo electrónico"
+          variant="outlined"
+          value={email}
+          onChange={(event: any) => setEmail(event.target.value)}
+          className={classes.textInput}
+        />
+        <TextField
+          label="Contraseña"
+          variant="outlined"
+          type="password"
+          value={pass1}
+          onChange={(event: any) => setPass1(event.target.value)}
+          className={classes.textInput}
+        />
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={7}>
@@ -210,16 +261,15 @@ export default function LoginPage(props: any) {
               label="Permanecer conectado"
             />
           </Grid>
-          <Grid item xs={12} sm={5} alignItems="center">
-            <a className={classes.forgot} href="#">Olvidé contraseña</a>
+          <Grid item xs={12} sm={5}>
+            <Grid container alignItems="center">
+              <a className={classes.forgot} href="#">Olvidé contraseña</a>
+            </Grid>
           </Grid>
         </Grid>
 
         <Grid container className={classes.buttonbar} >
-          <Link href="/survey/start" underline="none">
-          {/* <Link underline="none"> */}
-            <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
-          </Link>
+          <Button variant="contained" onClick={() => handleLogin()} className={classes.buttonItem}>Ingresar</Button>
           <Grid className={classes.lineGroup}>
             <Grid className={classes.lineItem}><hr /></Grid>
             <span>O</span>
@@ -233,16 +283,40 @@ export default function LoginPage(props: any) {
   } else {
     LogAndRegister = (
 
-      <FormControl className={classes.formGroup}>        
-        <TextField label="Nombre" variant="outlined" className={classes.textInput} />
-        <TextField label="Correo electrónico" variant="outlined" className={classes.textInput} />
-        <TextField label="Contraseña" type="password" variant="outlined" className={classes.textInput} />
-        <TextField label="Confirmar contraseña" type="password" variant="outlined" className={classes.textInput} />
+      <FormControl className={classes.formGroup}>
+        <TextField
+          label="Nombre"
+          variant="outlined"
+          value={name}
+          onChange={(event: any) => setName(event.target.value)}
+          className={classes.textInput}
+        />
+        <TextField
+          label="Correo electrónico"
+          variant="outlined"
+          value={email}
+          onChange={(event: any) => setEmail(event.target.value)}
+          className={classes.textInput}
+        />
+        <TextField
+          label="Contraseña"
+          type="password"
+          value={pass1}
+          onChange={(event: any) => setPass1(event.target.value)}
+          variant="outlined"
+          className={classes.textInput}
+        />
+        <TextField
+          label="Confirmar contraseña"
+          type="password"
+          value={pass2}
+          variant="outlined"
+          onChange={(event: any) => setPass2(event.target.value)}
+          className={classes.textInput}
+        />
         <br></br>
         <Grid container className={classes.buttonbar} >
-          <Link underline="none">
-            <Button variant="contained" onClick={() => handleRegister()} className={classes.buttonItem}>Ingresar</Button>
-          </Link>
+          <Button variant="contained" onClick={() => handleRegister()} className={classes.buttonItem}>Ingresar</Button>
           <Grid className={classes.lineGroup}>
             <Grid className={classes.lineItem}><hr /></Grid>
             <span>O</span>
@@ -263,9 +337,9 @@ export default function LoginPage(props: any) {
           titleTypographyProps={{ variant: 'h5' }}
           title={
             <Tabs
-              value={currentTab}
+              value={tabIndex}
               centered
-              onChange={handleChange}
+              onChange={OnTabChange}
               TabIndicatorProps={{
                 style: {
                   backgroundColor: "#8a56ac",
@@ -274,9 +348,9 @@ export default function LoginPage(props: any) {
                 }
               }}
             >
-              <Tab label="Ingresar" onClick={() => toggleLog()} className={classes.tabItem}></Tab>
+              <Tab label="Ingresar" className={classes.tabItem}></Tab>
               <span className={classes.seperator}>|</span>
-              <Tab label="Registrarse" onClick={() => toggleLog()} className={classes.tabItem}></Tab>
+              <Tab label="Registrarse" className={classes.tabItem}></Tab>
             </Tabs>
           }
         />
@@ -284,6 +358,7 @@ export default function LoginPage(props: any) {
           {LogAndRegister}
         </CardContent>
       </Card>
+      {snackStatus == true ? <SnackBar type={snackOption.type} msg={snackOption.msg} /> : null}
     </Grid>
   );
 }

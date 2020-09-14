@@ -5,17 +5,17 @@ import { createBrowserHistory } from 'history';
 import { Switch, HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import SurveyPage from './pages/SurveyPage';
 
+
 const indexRoutes = [
   { path: "/home", component: HomePage },
   { path: "/survey", component: SurveyPage },
-  { path: "/", to: "/home", redirect: true }
+  { path: "/", to: "/home", redirect: true },
 ];
 
 // const hist = createBrowserHistory();
 
 const App = () => {
   return (
-    // <div className="App">
     <Router>
       <Switch>
         {indexRoutes.map((prop, key) => {
@@ -26,7 +26,6 @@ const App = () => {
         })}
       </Switch>
     </Router>
-    // </div>
   );
 }
 
