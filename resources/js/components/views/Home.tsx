@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Grid, Link } from '@material-ui/core';
@@ -68,6 +68,12 @@ const pageStyle = {
   }
 };
 
+interface Company {
+  id: number;
+  name: string;
+  location: string;
+}
+
 const top100Films = [
   { title: 'The Shawshank Redemption', year: 1994, year1: 'Belgium' },
   { title: 'The Godfather', year: 1972, year1: 'Australlia' },
@@ -80,24 +86,42 @@ const top100Films = [
 const filter = createFilterOptions();
 
 const Home = (props: any) => {
+  
+  const [companies, setCompanies] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  // let companies: any;
 
   useEffect(() => {
+    if (loaded) {
+      return;
+    }
     Axios.get('http://localhost:8000/api/company', {
-      data: 'AutoComplete'
+      
     })
       .then(function (response: any) {
         console.log(response.data);
+        // companies = JSON.parse(response.data);
+        setCompanies(response.data);
+        setLoaded(true);
       })
       .catch(function (error: any) {
         console.log(error);
       });
-  });
+  }, []);
 
   const { classes } = props;
 
   const history = useHistory();
 
   const handleLink = (event: any) => event.preventDefault();
+
+  const OnCompanyChange = (event: object, value: any) => {
+    if (value.location == 'Sé el primero en comentar sobre esta empresa') {
+      console.log('AAAAAAAAAAAAAAAAAAAA');
+    }
+
+    history.push("/home/login");
+  }
 
   return (
     <Grid container className={classes.wrapper} justify="center">
@@ -115,9 +139,8 @@ const Home = (props: any) => {
                   <Autocomplete
                     className={classes.search}
                     id="free-solo-demo"
-                    options={top100Films.map((option) => option)}
-                    // fullWidth
-                    onChange={() => history.push("/home/login")}
+                    options={companies.map((option) => option)}
+                    onChange={(event: object, value: any) => OnCompanyChange(event, value)}
                     filterOptions={(options: any, params: any) => {
                       const filtered = filter(options, params);
 
@@ -125,25 +148,22 @@ const Home = (props: any) => {
                       if (params.inputValue !== '') {
                         filtered.push({
                           inputValue: params.inputValue,
-                          title: `${params.inputValue} `,
-                          year: "Sé el primero en comentar sobre esta empresa",
+                          company_name: `${params.inputValue} `,
+                          location: "Sé el primero en comentar sobre esta empresa",
                         });
                       }
                       return filtered;
                     }}
-                    getOptionLabel={(option: any) => option.title}
+                    getOptionLabel={(option: any) => option.company_name}
                     renderOption={(option: any) => {
                       return (
                         <Grid container className={classes.filterContent} alignItems="center">
                           <Grid item xs>
                             <span style={{ fontWeight: 700 }}>
-                              {option.title}
+                              {option.company_name}
                             </span>
                             <Typography variant="body2" color="textSecondary">
-                              {option.year}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary">
-                              {option.year1}
+                              {option.location}
                             </Typography>
                           </Grid>
                         </Grid>

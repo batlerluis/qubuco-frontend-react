@@ -157,8 +157,8 @@ export default function RecipeReviewCard() {
   const history = useHistory();
 
   const SelectType = (nType: number) => {
-    history.push("/survey/detail");
     console.log(nType);
+    history.push("/survey/detail");
   };
 
   return (
