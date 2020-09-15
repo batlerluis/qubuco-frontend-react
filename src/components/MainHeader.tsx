@@ -89,11 +89,7 @@ export default function LoginPage(props: any) {
 
   let location = useLocation();
 
-  console.log(location);
-
   const activeRoute = (routeName: string) => {
-    console.log(location.pathname);
-    console.log(routeName);
     return location.pathname.indexOf(routeName) > -1 ? true : false;
   }
 
