@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, FormControl, Grid, Card, CardContent, CardHeader, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import SnackBar from '../components/SnackBar';
+import { useSelector } from 'react-redux';
+import { API_URL } from '../Config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -135,8 +138,17 @@ export default function LoginPage(props: any) {
 
   const history = useHistory();
 
-  const handleLogin = async () => {
-    axios.post('http://localhost:8000/api/login', {
+  const dispatch = useDispatch();
+
+  const companyInfo = useSelector((state: any) => {
+    return {
+      companyId: state.companyId,
+      companyName: state.companyName
+    };
+  });
+
+  const handleLogin = () => {
+    axios.post(API_URL + '/api/login', {
       'email': email,
       'password': pass1
     })
@@ -150,10 +162,29 @@ export default function LoginPage(props: any) {
           setSnackStatus(true);
         }
         else {
+          const userInfo = response.data.user;
+          dispatch({ type: 'USER_ID', uid: userInfo.user_id });
           history.push("/survey/start");
+
+          axios.put(API_URL + '/api/company/add', {
+            'userId': userInfo.user_id,
+            'companyId': companyInfo.companyId,
+            'companyName': companyInfo.companyName
+          })
+            .then(function (response: any) {
+              const companyInfo = response.data;
+              if (!companyInfo.msg) {
+                console.log("YYYYYYYYYYYYYYYYYYYYYYYYYY");
+                dispatch({ type: 'COMPANY_ADD', companyId: companyInfo.company_id, companyName: companyInfo.company_name });
+              }
+            })
+            .catch(function (error: any) {
+            });
         }
       })
       .catch(function (error: any) {
+        console.log(error);
+        console.log(error.response);
         let errObject: Object = error.response.data.errors;
         if (errObject.hasOwnProperty('password')) {
           setSnackOption({
@@ -171,8 +202,12 @@ export default function LoginPage(props: any) {
       });
   }
 
+  const handleFBLogin = () => {
+
+  }
+
   const handleRegister = () => {
-    axios.post('http://localhost:8000/api/register', {
+    axios.post(API_URL + '/api/register', {
       'name': name,
       'email': email,
       'password': pass1,
@@ -189,6 +224,8 @@ export default function LoginPage(props: any) {
         setSnackStatus(true);
       })
       .catch(function (error: any) {
+        console.log(error);
+        console.log(error.response);
         let errObject: Object = error.response.data.errors;
         if (errObject.hasOwnProperty('password')) {
           setSnackOption({
@@ -251,7 +288,7 @@ export default function LoginPage(props: any) {
             <span>O</span>
             <Grid className={classes.lineItem}><hr /></Grid>
           </Grid>
-          <Button variant="contained" onClick={() => handleLogin()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+          <Button variant="contained" onClick={() => handleFBLogin()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
         </Grid>
 
       </FormControl>
@@ -326,7 +363,7 @@ export default function LoginPage(props: any) {
               }}
             >
               <Tab label="Ingresar" className={classes.tabItem}></Tab>
-              <span className={classes.seperator}>|</span>
+              <p >|</p>
               <Tab label="Registrarse" className={classes.tabItem}></Tab>
             </Tabs>
           }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,12 +18,15 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
-
-
+import TextField from '@material-ui/core/TextField';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import imgLog from "../assets/img/car.png"
 import { createMuiTheme } from '@material-ui/core/styles';
 import deepPurple from '@material-ui/core/colors/purple';
+import { API_URL } from '../Config';
+import axios from 'axios';
 
 const theme = createMuiTheme({
   palette: {
@@ -56,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 0",
   },
   btnGroup: {
-    padding: '10px 0', 
+    padding: '10px 0',
     '& > *': {
       padding: "10px 0",
       margin: "10px 0",
@@ -88,9 +91,9 @@ const useStyles = makeStyles((theme) => ({
   },
   comment: {
     width: "385px",
-    height: "150px",
     fontSize: "20px",
-    padding: "15px"
+    paddingTop: "15px",
+    paddingLeft: "15px"
   },
   skip: {
     maxWidth: 101,
@@ -157,30 +160,108 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const [ratingvalue, setRatingValue] = React.useState(0);
-  const [step, setStep] = React.useState(1);
+  const [index, setIndex] = React.useState(0);
+  const [answers, setAnswers] = React.useState<string[]>([]);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const history = useHistory();
 
-  const SelectRating = (nValue: any) => {
-    setRatingValue(nValue);
-    setStep(2);
+  const textRef = useRef();
+
+  const surveys: any[] = useSelector((state: any) => {
+    return state.survies
+  });
+
+  const companyId = useSelector((state: any) => {
+    return state.companyId
+  });
+
+  const userId = useSelector((state: any) => {
+    return state.userId
+  });
+
+  let questionKind: string;
+  if (surveys.length == 0 || surveys.length <= index) {
+    questionKind = "final";
+  } else {
+    questionKind = surveys[index].kind_of_question;
   }
 
-  const SelectExp = (nValue: number) => {
-    setStep(3);
+  const questionCount: number = surveys.length;
+
+  const OnBack = (val: number) => {
+    if (val < 0) {
+      // history.back();
+      history.push('/survey/start');
+    } else {
+      setIndex(val);
+    }
   }
 
-  const SelectFinal = (nValue: number) => {
-    setStep(4);
+  const SelectRating = (val: any) => {
+    let newArray = [...answers];
+    newArray[index] = val;
+    setAnswers(newArray);
+
+    setIndex(index + 1);
+  }
+
+  const SelectPositive = (val: string) => {
+    let newArray = [...answers];
+    newArray[index] = val;
+    setAnswers(newArray);
+
+    setIndex(index + 1);
+  }
+
+  const SelectMulti = (val: string) => {
+    let newArray = [...answers];
+    newArray[index] = val;
+    setAnswers(newArray);
+
+    setIndex(index + 1);
+  }
+
+  const OnConfirm = () => {
+    const textVal: any = textRef.current;
+
+    let question: string = '';
+    for (let i = 0; i < surveys.length; i ++) {
+      question += surveys[i].question;
+      if (i < surveys.length - 1) {
+        question += '@#';
+      }
+    }
+
+    let answer: string = '';
+    for (let i = 0; i < answers.length; i ++) {
+      answer += answers[i];
+      if (i < answers.length - 1) {
+        answer += '@#';
+      }
+    }
+
+    axios.put(API_URL + '/api/comment/add', {
+      companyId: companyId,
+      userId: userId,
+      questions: question,
+      answers: answer,
+      comment: textVal.value
+    })
+      .then(function (response: any) {
+        console.log(response.data);
+
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
+    
+    history.push('/survey/final');
   }
 
   let cardBody;
 
-  if (step == 1) {
+  if (questionKind == "Rating") {
+    const val = parseInt(answers[index], 10);
     cardBody = (
       <div>
         <CardHeader
@@ -189,7 +270,7 @@ export default function RecipeReviewCard() {
           }
           action={
             <Card className={classes.return}>
-              <IconButton aria-label="menu"  href="/survey/start">
+              <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
                 <SettingsBackupRestoreIcon />Regresar
               </IconButton>
             </Card>
@@ -199,37 +280,37 @@ export default function RecipeReviewCard() {
           subheaderTypographyProps={{ variant: 'h6' }}
           subheader="Survey Name"
         />
-       
+
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
-            Question 1
+            {'Question ' + (index + 1)}
           </Typography>
-          
-          <LinearProgress variant="buffer" value={33} className={classes.progBar} />
-          
+
+          <LinearProgress variant="buffer" value={100 / questionCount * (index + 1)} className={classes.progBar} />
+
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
-              Cómo te sientes con las políticas de calidad de la empresa?
-              </Typography>
+              {surveys[index].question}
+            </Typography>
             <Rating
               name="simple-controlled"
-              value={ratingvalue}
+              value={val}
               className={classes.rating}
               onChange={(event, newValue) => {
                 SelectRating(newValue);
               }}
             />
           </Box>
-          
+
           <Card className={classes.skip}>
-            <IconButton aria-label="skip" onClick={() => setStep(step + 1)}>
+            <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
               Omitir<ArrowForwardIcon />
             </IconButton>
           </Card>
         </CardContent>
       </div>
     );
-  } else if (step == 2) {
+  } else if (questionKind == "Yes & No") {
     cardBody = (
       <div>
         <CardHeader
@@ -238,7 +319,7 @@ export default function RecipeReviewCard() {
           }
           action={
             <Card className={classes.return}>
-              <IconButton aria-label="menu" onClick={() => setStep(step - 1)}>
+              <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
                 <SettingsBackupRestoreIcon />Regresar
                 </IconButton>
             </Card>
@@ -250,31 +331,37 @@ export default function RecipeReviewCard() {
         />
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
-            Question 2
+            {'Question ' + (index + 1)}
           </Typography>
 
-          <LinearProgress variant="buffer" value={67} className={classes.progBar} />
+          <LinearProgress variant="buffer" value={100 / questionCount * (index + 1)} className={classes.progBar} />
 
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
-              Te gusto el servicio en tu última experiencia con nuestra empresa?
+              {surveys[index].question}
             </Typography>
 
             <Grid container direction="column" className={classes.btnGroup}>
-              <Button variant="contained" color="primary" onClick={() => SelectExp(0)} className={classes.btnClient}>OPCIÓN POSITIVA</Button>
-              <Button variant="contained" color="inherit" onClick={() => SelectExp(1)} className={classes.btnProvider}>OPCIÓN NEGATIVA</Button>
+              <Button variant="contained" color="primary" onClick={() => SelectPositive("yes")} className={classes.btnClient}>OPCIÓN POSITIVA</Button>
+              <Button variant="contained" color="inherit" onClick={() => SelectPositive("no")} className={classes.btnProvider}>OPCIÓN NEGATIVA</Button>
             </Grid>
           </Box>
 
           <Card className={classes.skip}>
-            <IconButton aria-label="skip" onClick={() => setStep(step + 1)}>
+            <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
               Omitir<ArrowForwardIcon />
             </IconButton>
           </Card>
         </CardContent>
       </div>
     )
-  } else if (step == 3) {
+  } else if (questionKind == "Multiple Question") {
+    const answer: string = surveys[index].answer;
+    const options: string[] = answer.split('@#');
+
+    const buttonList = options.map((option) =>
+      <Button variant="contained" color="primary" onClick={() => SelectMulti(option)} className={classes.btnClient}>{option}</Button>
+    );
     cardBody = (
       <div>
         <CardHeader
@@ -283,7 +370,7 @@ export default function RecipeReviewCard() {
           }
           action={
             <Card className={classes.return}>
-              <IconButton aria-label="menu" onClick={() => setStep(step - 1)}>
+              <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
                 <SettingsBackupRestoreIcon />Regresar
               </IconButton>
             </Card>
@@ -296,31 +383,32 @@ export default function RecipeReviewCard() {
 
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
-            Question 3
+            {'Question ' + (index + 1)}
           </Typography>
 
-          <LinearProgress variant="buffer" value={100} className={classes.progBar} />
+          <LinearProgress variant="buffer" value={100 / questionCount * (index + 1)} className={classes.progBar} />
 
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
-              Te gusto el servicio en tu última experiencia con nuestra empresa?
+              {surveys[index].question}
             </Typography>
             <Grid container direction="column" className={classes.btnGroup}>
-              <Button variant="contained" color="primary" onClick={() => SelectFinal(0)} className={classes.btnClient}>OPCIÓN A</Button>
-              <Button variant="contained" color="primary" onClick={() => SelectFinal(1)} className={classes.btnClient}>OPCIÓN B</Button>
-              <Button variant="contained" color="primary" onClick={() => SelectFinal(2)} className={classes.btnClient}>OPCIÓN C</Button>
+              {buttonList}
+              {/* <Button variant="contained" color="primary" onClick={() => SelectMulti("")} className={classes.btnClient}>OPCIÓN A</Button>
+              <Button variant="contained" color="primary" onClick={() => SelectMulti("")} className={classes.btnClient}>OPCIÓN B</Button>
+              <Button variant="contained" color="primary" onClick={() => SelectMulti("")} className={classes.btnClient}>OPCIÓN C</Button> */}
             </Grid>
           </Box>
 
           <Card className={classes.skip}>
-            <IconButton aria-label="skip" onClick={() => setStep(step + 1)}>
+            <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
               Omitir<ArrowForwardIcon />
             </IconButton>
           </Card>
         </CardContent>
       </div>
     );
-  } else if (step == 4) {
+  } else if (questionKind == "final") {
     cardBody = (
       <div>
         <CardHeader
@@ -329,7 +417,7 @@ export default function RecipeReviewCard() {
           }
           action={
             <Card className={classes.return}>
-              <IconButton aria-label="menu" onClick={() => setStep(step - 1)}>
+              <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
                 <SettingsBackupRestoreIcon />Regresar
                 </IconButton>
             </Card>
@@ -344,11 +432,13 @@ export default function RecipeReviewCard() {
             Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.
           </Typography>
 
-          <TextareaAutosize
-            rows={5}
-            aria-label="maximum height"
+          <TextField
+            id="outlined-multiline-static"
             placeholder="Escribe tu comentario…"
-            defaultValue=""
+            multiline
+            rows={5}
+            inputRef={textRef}
+            variant="outlined"
             className={classes.comment}
           />
 
@@ -359,7 +449,7 @@ export default function RecipeReviewCard() {
           />
 
           <Grid container direction="column" className={classes.btnGroup}>
-            <Button variant="contained" href="/survey/final" color="primary" className={classes.btnClient}>COMENTAR</Button>
+            <Button variant="contained" onClick={() => OnConfirm()} color="primary" className={classes.btnClient}>COMENTAR</Button>
           </Grid>
         </CardContent>
       </div>

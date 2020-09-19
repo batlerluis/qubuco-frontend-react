@@ -4,6 +4,8 @@ import { Switch, Route } from 'react-router-dom';
 import SruveyStart from "../views/SruveyStart";
 import SurveyDetail from '../views/SurveyDetail';
 import SurveyFinal from '../views/SurveyFinal';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const indexRoutes = [
   { path: "/survey/start", component: SruveyStart },
@@ -15,6 +17,11 @@ const pageStyle = {
 };
 
 const SurveyPage = () => {
+
+  const companyName = useSelector((state:any) => state.companyName);
+
+  const history = useHistory();
+
   return (
     <div>
       <Switch>

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-
+import axios from 'axios';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,9 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-
+import { useHistory } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
+import { API_URL } from '../Config';
 import imgLog from "../assets/img/car.png"
 
 
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 0",
   },
   btnGroup: {
-    padding: '10px 0', 
+    padding: '10px 0',
     '& > *': {
       padding: "10px 0",
       margin: "10px 0",
@@ -147,51 +149,69 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const [value, setValue] = React.useState(2);
+  
+  const history = useHistory();
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const dispatch = useDispatch();
+  
+  const companyId = useSelector((state: any) => {
+    return state.companyId;
+  });
+
+  const userId = useSelector((state: any) => {
+    return state.userId;
+  });
 
   const SelectType = (nType: number) => {
-    console.log(nType);
+    axios.post(API_URL + '/api/survey/load', {
+      'companyId': companyId,
+      'category': nType
+    })
+      .then(function (response: any) {
+        console.log(response.data);
+
+        dispatch({ type: 'SURVEY_LOAD', survies: response.data });
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
+
+    history.push('/survey/detail');
   };
 
   return (
-      <Grid container>
-        
-        <AppBar position="static" color="inherit"  className={classes.appBar}>
-          <Toolbar variant="dense">
-            <IconButton edge="start" href="/home" aria-label="menu">
-              <ArrowBackIosIcon />SALIR
+    <Grid container>
+      <AppBar position="static" color="inherit" className={classes.appBar}>
+        <Toolbar variant="dense">
+          <IconButton edge="start" href="/home" aria-label="menu">
+            <ArrowBackIosIcon />SALIR
             </IconButton>
-          </Toolbar>
-        </AppBar>
-        
-        <Card className={classes.root}>
-          <CardHeader
-            avatar={
-              <img src={imgLog} className={classes.avatar} />
-            }
-            titleTypographyProps={{ variant: 'h5' }}
-            title="Company Name"
-            subheaderTypographyProps={{ variant: 'subtitle2' }}
-            subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
-          />
-          
-          <CardContent>
-            <Typography variant="subtitle1" color="textSecondary" component="p">
-              Quiero opinar esta empresa como:
+        </Toolbar>
+      </AppBar>
+
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <img src={imgLog} className={classes.avatar} />
+          }
+          titleTypographyProps={{ variant: 'h5' }}
+          title="Company Name"
+          subheaderTypographyProps={{ variant: 'subtitle2' }}
+          subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
+        />
+
+        <CardContent>
+          <Typography variant="subtitle1" color="textSecondary" component="p">
+            Quiero opinar esta empresa como:
             </Typography>
-           
-            <Grid container direction="column" className={classes.btnGroup}>
-              <Button variant="contained" href="/survey/detail" onClick={() => SelectType(0)} className={classes.btnClient}>CLIENTE</Button>
-              <Button variant="contained" href="/survey/detail" onClick={() => SelectType(1)} className={classes.btnEmployee}>EMPLEADO</Button>
-              <Button variant="contained" href="/survey/detail" onClick={() => SelectType(2)} className={classes.btnProvider}>PROVEEDOR</Button>
-            </Grid>
-          </CardContent>
-        </Card>
-      </Grid>
+
+          <Grid container direction="column" className={classes.btnGroup}>
+            <Button variant="contained" onClick={() => SelectType(3)} className={classes.btnClient}>CLIENTE</Button>
+            <Button variant="contained" onClick={() => SelectType(2)} className={classes.btnEmployee}>EMPLEADO</Button>
+            <Button variant="contained" onClick={() => SelectType(1)} className={classes.btnProvider}>PROVEEDOR</Button>
+          </Grid>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 }
