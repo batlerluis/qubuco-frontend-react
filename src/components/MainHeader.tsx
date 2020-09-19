@@ -10,8 +10,8 @@ import { useLocation } from 'react-router-dom';
 import imgLogo from "../assets/img/logo.png";
 
 const pageRoutes = [
-  { path: "/home/c", label: "Comentar empresa" },
-  { path: "/home", label: "Qué es" },
+  { path: "/home", label: "Comentar empresa" },
+  { path: "/home/c", label: "Qué es" },
   { path: "/home/a", label: "Empresas" },
   { path: "/home/b", label: "Contacto" },
 ];

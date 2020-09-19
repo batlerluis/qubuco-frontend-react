@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Grid, Link } from '@material-ui/core';
@@ -13,6 +14,7 @@ import imgGoogle from "../assets/img/googlestore.png";
 import imgPhone1 from "../assets/img/phone1.png"
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../Config';
 
 const pageStyle = {
   wrapper: {
@@ -75,12 +77,13 @@ const Home = (props: any) => {
   const [companies, setCompanies] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    console.log('aAAAAAAAAAAAAA' + process.env.API_URL);
     if (loaded) {
       return;
     }
-    axios.get('http://localhost:8000/api/company', {
+    axios.get(API_URL + '/api/company/load', {
     })
       .then(function (response: any) {
         setCompanies(response.data);
@@ -98,10 +101,8 @@ const Home = (props: any) => {
   const handleLink = (event: any) => event.preventDefault();
 
   const OnCompanyChange = (event: object, value: any) => {
-    if (value.location == 'Sé el primero en comentar sobre esta empresa') {
-      console.log('AAAAAAAAAAAAAAAAAAAA');
-    }
-
+    dispatch({ type: 'COMPANY_NAME', companyId: value.company_id, companyName: value.company_name });
+    
     history.push("/home/login");
   }
 
@@ -141,6 +142,9 @@ const Home = (props: any) => {
                       return (
                         <Grid container className={classes.filterContent} alignItems="center">
                           <Grid item xs>
+                            <span hidden>
+                              {option.company_id}
+                            </span>
                             <span style={{ fontWeight: 700 }}>
                               {option.company_name}
                             </span>

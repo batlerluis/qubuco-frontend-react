@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Grid } from '@material-ui/core';
@@ -84,13 +86,14 @@ const SurveyFinal = (props: any) => {
 
   const { classes } = props;
 
+  const history = useHistory();
+
   return (
     <Grid container justify-xs-space-between className={classes.wrapper}>
-
       <Grid md={2} sm={2} xs={1} />
       <Grid item sm={8} md={4} xs={10}>
-        <Grid container  direction="column">
-          
+        <Grid container direction="column">
+
           <Grid item alignContent="center" className={classes.titleGroup}>
             <h1 className={classes.titleText}>Gracias! Hemos recibido tus comentarios</h1>
           </Grid>
@@ -102,7 +105,7 @@ const SurveyFinal = (props: any) => {
           <Grid item>
             <Grid container direction="column" alignItems="center">
               <Grid item><h2 className={classes.downloadText}>Descárgala ahora!</h2></Grid>
-              
+
               <Grid item className={classes.logGroup}>
                 <Grid container className={classes.logContainer} alignItems="center" justify="center">
                   <img src={imgLog} alt="Can not load image!" />
