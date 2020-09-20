@@ -166,6 +166,13 @@ export default function LoginPage(props: any) {
           dispatch({ type: 'USER_ID', uid: userInfo.user_id });
           history.push("/survey/start");
 
+          setSnackOption({
+            type: "success",
+            msg: "LogIn successed!"
+          });
+
+          setSnackStatus(true);
+
           axios.put(API_URL + '/api/company/add', {
             'userId': userInfo.user_id,
             'companyId': companyInfo.companyId,
@@ -174,7 +181,6 @@ export default function LoginPage(props: any) {
             .then(function (response: any) {
               const companyInfo = response.data;
               if (!companyInfo.msg) {
-                console.log("YYYYYYYYYYYYYYYYYYYYYYYYYY");
                 dispatch({ type: 'COMPANY_ADD', companyId: companyInfo.company_id, companyName: companyInfo.company_name });
               }
             })
