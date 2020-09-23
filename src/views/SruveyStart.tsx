@@ -170,7 +170,7 @@ export default function RecipeReviewCard() {
       .then(function (response: any) {
         console.log(response.data);
 
-        dispatch({ type: 'SURVEY_LOAD', survies: response.data });
+        dispatch({ type: 'SURVEY_LOAD', userType: nType, survies: response.data });
       })
       .catch(function (error: any) {
         console.log(error);
