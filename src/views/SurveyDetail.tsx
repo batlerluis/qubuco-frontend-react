@@ -160,8 +160,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard() {
   const classes = useStyles();
+  const [checked, setChecked] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   const [answers, setAnswers] = React.useState<string[]>([]);
+  const [questionIds, setQuestionIds] = React.useState('');
+  const [questionScores, setQuestionScores] = React.useState('');
+  const [scoreSum, setScoreSum] = React.useState(0);
+  const [scoreCount, setScoreCount] = React.useState(0);
 
   const history = useHistory();
 
@@ -177,6 +182,10 @@ export default function RecipeReviewCard() {
 
   const userId = useSelector((state: any) => {
     return state.userId
+  });
+
+  const userType = useSelector((state: any) => {
+    return state.userType
   });
 
   let questionKind: string;
@@ -198,6 +207,21 @@ export default function RecipeReviewCard() {
   }
 
   const SelectRating = (val: any) => {
+    let questionIds_temp = questionIds;
+    if (questionIds.length > 0) {
+      questionIds_temp += ",";
+    }
+    setQuestionIds(questionIds_temp + surveys[index].question_id);
+
+    let questionScores_temp = questionScores;
+    if (questionScores.length > 0) {
+      questionScores_temp += ",";
+    }
+    setQuestionScores(questionScores_temp + val);
+
+    setScoreSum(scoreSum + val);
+    setScoreCount(scoreCount + 1);
+
     let newArray = [...answers];
     newArray[index] = val;
     setAnswers(newArray);
@@ -206,6 +230,27 @@ export default function RecipeReviewCard() {
   }
 
   const SelectPositive = (val: string) => {
+    let questionIds_temp = questionIds;
+    if (questionIds.length > 0) {
+      questionIds_temp += ",";
+    }
+    setQuestionIds(questionIds_temp + surveys[index].question_id);
+
+    let questionScores_temp = questionScores;
+    if (questionScores.length > 0) {
+      questionScores_temp += ",";
+    }
+    let score: any;
+    if (val == "yes") {
+      score = 5;
+    } else {
+      score = 2;
+    }
+    setQuestionScores(questionScores_temp + score);
+    
+    setScoreSum(scoreSum + score);
+    setScoreCount(scoreCount + 1);
+
     let newArray = [...answers];
     newArray[index] = val;
     setAnswers(newArray);
@@ -240,12 +285,25 @@ export default function RecipeReviewCard() {
       }
     }
 
+    let score = scoreSum / scoreCount;
+    let readStatus: number;
+    if (checked == true) {
+      readStatus = 0;
+    } else {
+      readStatus = 1;
+    }
+
     axios.put(API_URL + '/api/comment/add', {
       companyId: companyId,
       userId: userId,
+      userType: userType,
       questions: question,
       answers: answer,
-      comment: textVal.value
+      comment: textVal.value,
+      questionIds: questionIds,
+      questionScores: questionScores,
+      score: parseFloat(score.toString()).toFixed(2),
+      readStatus: readStatus
     })
       .then(function (response: any) {
         console.log(response.data);
@@ -286,7 +344,7 @@ export default function RecipeReviewCard() {
             {'Question ' + (index + 1)}
           </Typography>
 
-          <LinearProgress variant="buffer" value={100 / questionCount * (index + 1)} className={classes.progBar} />
+          <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
 
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
@@ -334,7 +392,7 @@ export default function RecipeReviewCard() {
             {'Question ' + (index + 1)}
           </Typography>
 
-          <LinearProgress variant="buffer" value={100 / questionCount * (index + 1)} className={classes.progBar} />
+          <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
 
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
@@ -359,8 +417,8 @@ export default function RecipeReviewCard() {
     const answer: string = surveys[index].answer;
     const options: string[] = answer.split('@#');
 
-    const buttonList = options.map((option) =>
-      <Button variant="contained" color="primary" onClick={() => SelectMulti(option)} className={classes.btnClient}>{option}</Button>
+    const buttonList = options.map((option, key) =>
+      <Button variant="contained" color="primary" key={key} onClick={() => SelectMulti(option)} className={classes.btnClient}>{option}</Button>
     );
     cardBody = (
       <div>
@@ -386,7 +444,7 @@ export default function RecipeReviewCard() {
             {'Question ' + (index + 1)}
           </Typography>
 
-          <LinearProgress variant="buffer" value={100 / questionCount * (index + 1)} className={classes.progBar} />
+          <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
 
           <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
             <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
@@ -443,7 +501,7 @@ export default function RecipeReviewCard() {
           />
 
           <FormControlLabel
-            control={<Checkbox className={classes.checkStyle} />}
+            control={<Checkbox value={checked} onChange={(event: any) => setChecked(event.target.checked)} className={classes.checkStyle} />}
             label="Comentario privado"
             className={classes.formCtl}
           />

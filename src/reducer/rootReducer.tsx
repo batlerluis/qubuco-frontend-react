@@ -3,6 +3,7 @@ const initState = {
   companyName: "",
   survies: [],
   userId: 0,
+  userType: 0
 }
 
 const rootReducer = (state = initState, action: any) => {
@@ -22,7 +23,8 @@ const rootReducer = (state = initState, action: any) => {
     case 'SURVEY_LOAD':
       return {
         ...state,
-        survies: action.survies
+        survies: action.survies,
+        userType: action.userType
       }
     case 'USER_ID':
       return {
