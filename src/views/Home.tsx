@@ -74,7 +74,9 @@ const filter = createFilterOptions();
 
 const Home = (props: any) => {
 
-  const [companies, setCompanies] = useState([]);
+
+// const context = useContext(AppContext);
+  const [companies, setCompanies] = useState<any[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   const dispatch = useDispatch();
@@ -86,6 +88,7 @@ const Home = (props: any) => {
     axios.get(API_URL + '/api/company/load', {
     })
       .then(function (response: any) {
+        console.log(response.data);
         setCompanies(response.data);
         setLoaded(true);
       })
@@ -122,7 +125,7 @@ const Home = (props: any) => {
                   <Autocomplete
                     className={classes.search}
                     id="free-solo-demo"
-                    options={companies.map((option) => option)}
+                    options={companies.map((option: any) => option)}
                     onChange={(event: object, value: any) => OnCompanyChange(event, value)}
                     filterOptions={(options: any, params: any) => {
                       const filtered = filter(options, params);
@@ -155,7 +158,7 @@ const Home = (props: any) => {
                         </Grid>
                       );
                     }}
-                    renderInput={(params) => (
+                    renderInput={(params: any) => (
                       <TextField
                         {...params}
                         placeholder="Ingresa el nombre de la em…"
