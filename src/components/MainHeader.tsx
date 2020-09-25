@@ -6,6 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import imgLogo from "../assets/img/logo.png";
 
@@ -95,6 +96,8 @@ export default function LoginPage(props: any) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const history = useHistory();
+
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -102,6 +105,10 @@ export default function LoginPage(props: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const OnClick = (path: string) => {
+    history.push(path);
+  }
 
   // var list = () => {
   //   pageRoutes.map(item => {
@@ -121,7 +128,7 @@ export default function LoginPage(props: any) {
 
         <Grid item className={classes.logo}>
           <Grid container alignItems="center" className={classes.fullHeight}>
-            <Button><img src={imgLogo} />QUBU</Button>
+            <Button href="http://onelink.to/yj9evv"><img src={imgLogo} />QUBU</Button>
           </Grid>
         </Grid>
         
@@ -129,9 +136,9 @@ export default function LoginPage(props: any) {
           {
             pageRoutes.map((prop, key) => {
               if (activeRoute(prop.path)) {
-                return <Button className={classes.activeLink} key={key}>{prop.label}</Button>
+                return <Button onClick={() => OnClick(prop.path)} className={classes.activeLink} key={key}>{prop.label}</Button>
               }
-              return <Button className={classes.navLink} key={key}>{prop.label}</Button>
+              return <Button onClick={() => OnClick(prop.path)} className={classes.navLink} key={key}>{prop.label}</Button>
             })
           }
           <Button className={classes.accessLink}>Acceder</Button>

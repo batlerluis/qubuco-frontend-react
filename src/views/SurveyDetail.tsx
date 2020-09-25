@@ -14,7 +14,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
@@ -400,8 +399,8 @@ export default function RecipeReviewCard() {
             </Typography>
 
             <Grid container direction="column" className={classes.btnGroup}>
-              <Button variant="contained" color="primary" onClick={() => SelectPositive("yes")} className={classes.btnClient}>OPCIÓN POSITIVA</Button>
-              <Button variant="contained" color="inherit" onClick={() => SelectPositive("no")} className={classes.btnProvider}>OPCIÓN NEGATIVA</Button>
+              <Button variant="contained" color="primary" onClick={() => SelectPositive("yes")} className={classes.btnClient}>Si</Button>
+              <Button variant="contained" color="inherit" onClick={() => SelectPositive("no")} className={classes.btnProvider}>No</Button>
             </Grid>
           </Box>
 
@@ -452,9 +451,6 @@ export default function RecipeReviewCard() {
             </Typography>
             <Grid container direction="column" className={classes.btnGroup}>
               {buttonList}
-              {/* <Button variant="contained" color="primary" onClick={() => SelectMulti("")} className={classes.btnClient}>OPCIÓN A</Button>
-              <Button variant="contained" color="primary" onClick={() => SelectMulti("")} className={classes.btnClient}>OPCIÓN B</Button>
-              <Button variant="contained" color="primary" onClick={() => SelectMulti("")} className={classes.btnClient}>OPCIÓN C</Button> */}
             </Grid>
           </Box>
 

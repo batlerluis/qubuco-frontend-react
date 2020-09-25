@@ -88,7 +88,6 @@ const Home = (props: any) => {
     axios.get(API_URL + '/api/company/load', {
     })
       .then(function (response: any) {
-        console.log(response.data);
         setCompanies(response.data);
         setLoaded(true);
       })

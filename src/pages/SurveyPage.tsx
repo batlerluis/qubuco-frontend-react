@@ -7,6 +7,8 @@ import SurveyFinal from '../views/SurveyFinal';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import MainHeader from '../components/MainHeader';
+
 const indexRoutes = [
   { path: "/survey/start", component: SruveyStart },
   { path: "/survey/detail", component: SurveyDetail },
@@ -24,6 +26,7 @@ const SurveyPage = () => {
 
   return (
     <div>
+      <MainHeader />
       <Switch>
         {
           indexRoutes.map((prop, key) => {
