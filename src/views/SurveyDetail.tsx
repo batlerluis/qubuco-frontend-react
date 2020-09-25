@@ -183,15 +183,25 @@ export default function RecipeReviewCard() {
     return state.userId
   });
 
+  const companyName = useSelector((state: any) => {
+    return state.companyName;
+  });
+
+  const companyLogo = useSelector((state: any) => {
+    return state.companyLogo;
+  });
+
   const userType = useSelector((state: any) => {
     return state.userType
   });
 
   let questionKind: string;
+  let surveyName: string = "";
   if (surveys.length == 0 || surveys.length <= index) {
     questionKind = "final";
   } else {
     questionKind = surveys[index].kind_of_question;
+    surveyName = surveys[index].survey_name;
   }
 
   const questionCount: number = surveys.length;
@@ -246,7 +256,7 @@ export default function RecipeReviewCard() {
       score = 2;
     }
     setQuestionScores(questionScores_temp + score);
-    
+
     setScoreSum(scoreSum + score);
     setScoreCount(scoreCount + 1);
 
@@ -269,7 +279,7 @@ export default function RecipeReviewCard() {
     const textVal: any = textRef.current;
 
     let question: string = '';
-    for (let i = 0; i < surveys.length; i ++) {
+    for (let i = 0; i < surveys.length; i++) {
       question += surveys[i].question;
       if (i < surveys.length - 1) {
         question += '@#';
@@ -277,7 +287,7 @@ export default function RecipeReviewCard() {
     }
 
     let answer: string = '';
-    for (let i = 0; i < answers.length; i ++) {
+    for (let i = 0; i < answers.length; i++) {
       answer += answers[i];
       if (i < answers.length - 1) {
         answer += '@#';
@@ -311,32 +321,35 @@ export default function RecipeReviewCard() {
       .catch(function (error: any) {
         console.log(error);
       });
-    
+
     history.push('/survey/final');
   }
 
+  const cardHeader = (
+    <CardHeader
+      avatar={
+        <img src={`/images/${companyLogo}`} className={classes.avatar} />
+      }
+      action={
+        <Card className={classes.return}>
+          <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
+            <SettingsBackupRestoreIcon />Regresar
+                </IconButton>
+        </Card>
+      }
+      titleTypographyProps={{ variant: 'h5' }}
+      title={companyName}
+      subheaderTypographyProps={{ variant: 'h6' }}
+      subheader={surveyName}
+    />
+  );
   let cardBody;
 
   if (questionKind == "Rating") {
     const val = parseInt(answers[index], 10);
     cardBody = (
       <div>
-        <CardHeader
-          avatar={
-            <img src={imgLog} className={classes.avatar} />
-          }
-          action={
-            <Card className={classes.return}>
-              <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
-                <SettingsBackupRestoreIcon />Regresar
-              </IconButton>
-            </Card>
-          }
-          titleTypographyProps={{ variant: 'h5' }}
-          title="Company Name"
-          subheaderTypographyProps={{ variant: 'h6' }}
-          subheader="Survey Name"
-        />
+        {cardHeader}
 
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
@@ -370,22 +383,8 @@ export default function RecipeReviewCard() {
   } else if (questionKind == "Yes & No") {
     cardBody = (
       <div>
-        <CardHeader
-          avatar={
-            <img src={imgLog} className={classes.avatar} />
-          }
-          action={
-            <Card className={classes.return}>
-              <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
-                <SettingsBackupRestoreIcon />Regresar
-                </IconButton>
-            </Card>
-          }
-          titleTypographyProps={{ variant: 'h5' }}
-          title="Company Name"
-          subheaderTypographyProps={{ variant: 'h6' }}
-          subheader="Survey Name"
-        />
+        {cardHeader}
+
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
             {'Question ' + (index + 1)}
@@ -421,22 +420,7 @@ export default function RecipeReviewCard() {
     );
     cardBody = (
       <div>
-        <CardHeader
-          avatar={
-            <img src={imgLog} className={classes.avatar} />
-          }
-          action={
-            <Card className={classes.return}>
-              <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
-                <SettingsBackupRestoreIcon />Regresar
-              </IconButton>
-            </Card>
-          }
-          titleTypographyProps={{ variant: 'h5' }}
-          title="Company Name"
-          subheaderTypographyProps={{ variant: 'h6' }}
-          subheader="Survey Name"
-        />
+        {cardHeader}
 
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
@@ -465,22 +449,8 @@ export default function RecipeReviewCard() {
   } else if (questionKind == "final") {
     cardBody = (
       <div>
-        <CardHeader
-          avatar={
-            <img src={imgLog} className={classes.avatar} />
-          }
-          action={
-            <Card className={classes.return}>
-              <IconButton aria-label="menu" onClick={() => OnBack(index - 1)}>
-                <SettingsBackupRestoreIcon />Regresar
-                </IconButton>
-            </Card>
-          }
-          titleTypographyProps={{ variant: 'h5' }}
-          title="Company Name"
-          subheaderTypographyProps={{ variant: 'h6' }}
-          subheader="Survey Name"
-        />
+        {cardHeader}
+
         <CardContent>
           <Typography variant="subtitle1" color="textSecondary" component="p">
             Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.
