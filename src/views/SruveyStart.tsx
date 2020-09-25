@@ -162,6 +162,10 @@ export default function RecipeReviewCard() {
     return state.companyName;
   });
 
+  const companyLogo = useSelector((state: any) => {
+    return state.companyLogo;
+  });
+
   const SelectType = (nType: number) => {
     axios.post(API_URL + '/api/survey/load', {
       'companyId': companyId,
@@ -192,7 +196,7 @@ export default function RecipeReviewCard() {
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <img src={imgLog} className={classes.avatar} />
+            <img src={`/images/${companyLogo}`} className={classes.avatar} />
           }
           titleTypographyProps={{ variant: 'h5' }}
           title={companyName}

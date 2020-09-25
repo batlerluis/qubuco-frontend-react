@@ -103,7 +103,7 @@ const Home = (props: any) => {
   const handleLink = (event: any) => event.preventDefault();
 
   const OnCompanyChange = (event: object, value: any) => {
-    dispatch({ type: 'COMPANY_NAME', companyId: value.company_id, companyName: value.company_name });
+    dispatch({ type: 'COMPANY_NAME', companyId: value.company_id, companyName: value.company_name, companyLogo: value.logo });
     
     history.push("/home/login");
   }
@@ -153,6 +153,9 @@ const Home = (props: any) => {
                             <Typography variant="body2" color="textSecondary">
                               {option.location}
                             </Typography>
+                            <span hidden>
+                              {option.logo}
+                            </span>
                           </Grid>
                         </Grid>
                       );

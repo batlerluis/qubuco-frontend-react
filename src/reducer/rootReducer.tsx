@@ -3,7 +3,8 @@ const initState = {
   companyName: "",
   survies: [],
   userId: 0,
-  userType: 0
+  userType: 0,
+  companyLogo: "",
 }
 
 const rootReducer = (state = initState, action: any) => {
@@ -13,6 +14,7 @@ const rootReducer = (state = initState, action: any) => {
         ...state,
         companyId: action.companyId,
         companyName: action.companyName,
+        companyLogo: action.companyLogo,
       }
     case 'COMPANY_ADD':
       return {
