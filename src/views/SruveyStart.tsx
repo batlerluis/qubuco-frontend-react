@@ -158,8 +158,8 @@ export default function RecipeReviewCard() {
     return state.companyId;
   });
 
-  const userId = useSelector((state: any) => {
-    return state.userId;
+  const companyName = useSelector((state: any) => {
+    return state.companyName;
   });
 
   const SelectType = (nType: number) => {
@@ -195,7 +195,7 @@ export default function RecipeReviewCard() {
             <img src={imgLog} className={classes.avatar} />
           }
           titleTypographyProps={{ variant: 'h5' }}
-          title="Company Name"
+          title={companyName}
           subheaderTypographyProps={{ variant: 'subtitle2' }}
           subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
         />
@@ -207,8 +207,8 @@ export default function RecipeReviewCard() {
 
           <Grid container direction="column" className={classes.btnGroup}>
             <Button variant="contained" onClick={() => SelectType(3)} className={classes.btnClient}>CLIENTE</Button>
-            <Button variant="contained" onClick={() => SelectType(2)} className={classes.btnEmployee}>EMPLEADO</Button>
-            <Button variant="contained" onClick={() => SelectType(1)} className={classes.btnProvider}>PROVEEDOR</Button>
+            <Button variant="contained" onClick={() => SelectType(1)} className={classes.btnEmployee}>EMPLEADO</Button>
+            <Button variant="contained" onClick={() => SelectType(2)} className={classes.btnProvider}>PROVEEDOR</Button>
           </Grid>
         </CardContent>
       </Card>

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, FormControl, Grid, Card, CardContent, CardHeader, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useHistory } from 'react-router-dom';
 import SnackBar from '../components/SnackBar';
 import { useSelector } from 'react-redux';
@@ -153,58 +153,59 @@ export default function LoginPage(props: any) {
       'password': pass1
     })
       .then(function (response: any) {
-        console.log(response.data);
-        if (response.data.type == "error") {
+        console.log(response);
+        if (response.data.error) {
+          console.log("err");
+          const errors: string[] = response.data.error;
           setSnackOption({
             type: "error",
-            msg: response.data.message
+            msg: errors[0]
           });
           setSnackStatus(true);
-        }
-        else {
-          const userInfo = response.data.user;
-          dispatch({ type: 'USER_ID', uid: userInfo.user_id });
-          history.push("/survey/start");
 
+          return;
+        }
+
+        if (response.data.message) {
+          console.log("msg");
+          const msg: string = response.data.message
           setSnackOption({
-            type: "success",
-            msg: "LogIn successed!"
+            type: "error",
+            msg: "Login Failed! " + msg
           });
-
           setSnackStatus(true);
 
-          axios.put(API_URL + '/api/company/add', {
-            'userId': userInfo.user_id,
-            'companyId': companyInfo.companyId,
-            'companyName': companyInfo.companyName
-          })
-            .then(function (response: any) {
-              const companyInfo = response.data;
-              if (!companyInfo.msg) {
-                dispatch({ type: 'COMPANY_ADD', companyId: companyInfo.company_id, companyName: companyInfo.company_name });
-              }
-            })
-            .catch(function (error: any) {
-            });
+          return;
         }
+
+        console.log("ASDFASDFASDF");
+        const userInfo = response.data.user;
+        dispatch({ type: 'USER_ID', uid: userInfo.user_id });
+        console.log("ASDF");
+        history.push("/survey/start");
+
+        setSnackOption({
+          type: "success",
+          msg: "LogIn successed!"
+        });
+
+        setSnackStatus(true);
+
+        axios.put(API_URL + '/api/company/add', {
+          'userId': userInfo.user_id,
+          'companyId': companyInfo.companyId,
+          'companyName': companyInfo.companyName
+        })
+          .then(function (response: any) {
+            const companyInfo = response.data;
+            if (!companyInfo.msg) {
+              dispatch({ type: 'COMPANY_ADD', companyId: companyInfo.company_id, companyName: companyInfo.company_name });
+            }
+          })
+          .catch(function (error: any) {
+          });
       })
       .catch(function (error: any) {
-        console.log(error);
-        console.log(error.response);
-        let errObject: Object = error.response.data.errors;
-        if (errObject.hasOwnProperty('password')) {
-          setSnackOption({
-            type: "error",
-            msg: "LogIn Failed! " + error.response.data.errors.password[0]
-          });
-        }
-        else if (errObject.hasOwnProperty('email')) {
-          setSnackOption({
-            type: "error",
-            msg: "LogIn Failed! " + error.response.data.errors.email[0]
-          });
-        }
-        setSnackStatus(true);
       });
   }
 
@@ -219,7 +220,17 @@ export default function LoginPage(props: any) {
       'password': pass1,
       'password_confirmation': pass2
     })
-      .then(function (response: any) {
+      .then(function (response: AxiosResponse) {
+        if (response.data.error) {
+          let errors: string[] = response.data.error;
+          setSnackOption({
+            type: "error",
+            msg: "Register Failed! " + errors[0]
+          });
+          setSnackStatus(true);
+
+          return;
+        }
         setTabIndex(0);
         setEmail('');
         setPass1('');
@@ -230,22 +241,18 @@ export default function LoginPage(props: any) {
         setSnackStatus(true);
       })
       .catch(function (error: any) {
-        console.log(error);
-        console.log(error.response);
-        let errObject: Object = error.response.data.errors;
-        if (errObject.hasOwnProperty('password')) {
-          setSnackOption({
-            type: "error",
-            msg: "Register Failed! " + error.response.data.errors.password[0]
-          });
-        }
-        else if (errObject.hasOwnProperty('email')) {
-          setSnackOption({
-            type: "error",
-            msg: "Register Failed! " + error.response.data.errors.email[0]
-          });
-        }
-        setSnackStatus(true);
+
+      });
+  }
+
+  const handleForgot = () => {
+    axios.post(API_URL + '/api/pass/create', {
+      'email': email,
+    })
+      .then(function (response: AxiosResponse) {
+      })
+      .catch(function (error: any) {
+
       });
   }
 
@@ -284,7 +291,7 @@ export default function LoginPage(props: any) {
             control={<Checkbox className={classes.checkBox} />}
             label="Permanecer conectado"
           />
-          <a className={classes.forgot} href="#">Olvidé contraseña</a>
+          <a className={classes.forgot} onClick={() => handleForgot()}>Olvidé contraseña</a>
         </Grid>
 
         <Grid container className={classes.buttonbar} >
