@@ -257,6 +257,12 @@ export default function LoginPage(props: any) {
       'email': email,
     })
       .then(function (response: AxiosResponse) {
+        const data: any = response.data;
+        setSnackOption({
+          type: data.type,
+          msg: data.message
+        });
+        setSnackStatus(true);
       })
       .catch(function (error: any) {
 
