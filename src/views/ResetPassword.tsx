@@ -111,17 +111,24 @@ export default function ResetPassword(props: any) {
           .then(function (response: AxiosResponse) {
             const data: any = response.data;
             if (data.error) {
+              let errors: string[] = data.error;
               setSnackOption({
                 type: "error",
-                msg: data.error
+                msg: "Reset Password Failed! " + errors[0]
               });
               setSnackStatus(true);
-
+    
               return;
             }
             
             console.log(data.user);
             history.push('/home');
+
+            setSnackOption({
+              type: "success",
+              msg: "Reset Password Success!"
+            });
+            setSnackStatus(true);
           })
           .catch(function (error: any) {
 
