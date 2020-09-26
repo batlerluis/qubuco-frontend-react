@@ -129,6 +129,7 @@ export default function LoginPage(props: any) {
   const [email, setEmail] = useState('');
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
+  const [checked, setChecked] = useState(false);
   const [snackOption, setSnackOption] = useState({
     type: "warning",
     msg: "Internal Error!"
@@ -178,10 +179,16 @@ export default function LoginPage(props: any) {
           return;
         }
 
-        console.log("ASDFASDFASDF");
+        if (checked) {
+          localStorage.setItem('email', email);
+          const curDate = new Date().getTime();
+          const expireDate = curDate + (1000 * 60 * 60 * 24 * 15);
+          console.log(expireDate);
+          localStorage.setItem('expire', `${expireDate}`);
+        }
+
         const userInfo = response.data.user;
         dispatch({ type: 'USER_ID', uid: userInfo.user_id });
-        console.log("ASDF");
         history.push("/survey/start");
 
         setSnackOption({
@@ -246,7 +253,7 @@ export default function LoginPage(props: any) {
   }
 
   const handleForgot = () => {
-    axios.post(API_URL + '/api/pass/create', {
+    axios.post(API_URL + '/api/pass/forgot', {
       'email': email,
     })
       .then(function (response: AxiosResponse) {
@@ -288,7 +295,7 @@ export default function LoginPage(props: any) {
 
         <Grid container className={classes.passContainer}>
           <FormControlLabel
-            control={<Checkbox className={classes.checkBox} />}
+            control={<Checkbox value={checked} onChange={(event: any) => setChecked(event.target.checked)} className={classes.checkBox} />}
             label="Permanecer conectado"
           />
           <a className={classes.forgot} onClick={() => handleForgot()}>Olvidé contraseña</a>
