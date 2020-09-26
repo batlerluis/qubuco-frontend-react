@@ -121,7 +121,7 @@ export default function ResetPassword(props: any) {
             }
             
             console.log(data.user);
-            history.push('/home/login');
+            history.push('/home');
           })
           .catch(function (error: any) {
 
