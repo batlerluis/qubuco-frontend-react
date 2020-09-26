@@ -4,10 +4,12 @@ import HomePage from './pages/HomePage';
 import { Switch, BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import SurveyPage from './pages/SurveyPage';
 import { AppContext, AppProvider } from './context/AppContext';
+import ResetPassword from './views/ResetPassword';
 
 const indexRoutes = [
   { path: "/home", component: HomePage },
   { path: "/survey", component: SurveyPage },
+  { path: "/pass/reset/:pathParam?", component: ResetPassword },
   { path: "/", to: "/home", redirect: true }
 ];
 
