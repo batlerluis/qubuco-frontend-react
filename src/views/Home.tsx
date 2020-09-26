@@ -75,7 +75,7 @@ const filter = createFilterOptions();
 const Home = (props: any) => {
 
 
-// const context = useContext(AppContext);
+  // const context = useContext(AppContext);
   const [companies, setCompanies] = useState<any[]>([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -104,7 +104,20 @@ const Home = (props: any) => {
 
   const OnCompanyChange = (event: object, value: any) => {
     dispatch({ type: 'COMPANY_NAME', companyId: value.company_id, companyName: value.company_name, companyLogo: value.logo });
-    
+    const email = localStorage.getItem('email');
+    let expire = localStorage.getItem('expire');
+
+    if (email && expire) {
+      const curDate = new Date().getTime();
+      const expireDate = parseInt(expire, 10);
+
+      if (curDate < expireDate) {
+        history.push("/survey/start");
+
+        return;
+      }
+    }
+
     history.push("/home/login");
   }
 
