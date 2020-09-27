@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import SnackBar from '../components/SnackBar';
 import { useSelector } from 'react-redux';
 import { API_URL } from '../Config';
+import FacebookLogin from 'react-facebook-login';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -285,6 +286,10 @@ export default function LoginPage(props: any) {
     setPass2('');
   }
 
+  const responseFacebook = (response: any) => {
+    console.log(response);
+  }
+
   let LogAndRegister;
 
   if (tabIndex == 0) {
@@ -322,7 +327,12 @@ export default function LoginPage(props: any) {
             <span>O</span>
             <Grid className={classes.lineItem}><hr /></Grid>
           </Grid>
-          <Button variant="contained" onClick={() => handleFBLogin()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+          {/* <Button variant="contained" onClick={() => handleFBLogin()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button> */}
+          <FacebookLogin
+            appId="687042532167808" //APP ID NOT CREATED YET
+            fields="name,email,picture"
+            callback={responseFacebook}
+          />
         </Grid>
 
       </FormControl>
