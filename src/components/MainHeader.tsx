@@ -128,7 +128,7 @@ export default function LoginPage(props: any) {
 
         <Grid item className={classes.logo}>
           <Grid container alignItems="center" className={classes.fullHeight}>
-            <Button href="http://onelink.to/yj9evv"><img src={imgLogo} />QUBU</Button>
+            <Button href="http://onelink.to/yj9evv"><img alt="Avatar" src={imgLogo} />QUBU</Button>
           </Grid>
         </Grid>
         

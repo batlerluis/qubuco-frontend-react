@@ -121,8 +121,8 @@ const SurveyFinal = (props: any) => {
 
               <Grid item>
                 <Grid container className={classes.buttonGroup} justify="space-around">
-                  <img src={imgApple1} alt="Can not load image!" />
-                  <img src={imgGoogle1} alt="Can not load image!" />
+                  <img src={imgApple1} alt="Can not load file!" />
+                  <img src={imgGoogle1} alt="Can not load file!" />
                 </Grid>
               </Grid>
 
@@ -135,7 +135,7 @@ const SurveyFinal = (props: any) => {
 
       <Grid item sm={12} md={3} xs={12} justify-xs-center>
         <Grid container justify="center">
-          <img src={imgPhone2} alt="Can not load image!" />
+          <img src={imgPhone2} alt="Can not load file!" />
         </Grid>
       </Grid>
 

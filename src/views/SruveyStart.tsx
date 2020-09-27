@@ -196,7 +196,7 @@ export default function RecipeReviewCard() {
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <img src={`/images/${companyLogo}`} className={classes.avatar} />
+            <img src={`/images/${companyLogo}`} alt="Avatar" className={classes.avatar} />
           }
           titleTypographyProps={{ variant: 'h5' }}
           title={companyName}

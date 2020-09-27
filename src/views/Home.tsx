@@ -193,10 +193,10 @@ const Home = (props: any) => {
             <Grid container item>
               <Grid container justify="space-around">
                 <Grid item>
-                  <img src={imgApple} alt="Can not load image!" />
+                  <img src={imgApple} alt="Can not load file!" />
                 </Grid>
                 <Grid item>
-                  <img src={imgGoogle} alt="Can not load image!" />
+                  <img src={imgGoogle} alt="Can not load file!" />
                 </Grid>
               </Grid>
             </Grid>
@@ -207,7 +207,7 @@ const Home = (props: any) => {
         <Grid item md={4} sm={8}>
           <Grid container className={classes.paddingH1} alignContent="center" >
             <Grid item>
-              <img src={imgPhone1} alt="Can not load image!" />
+              <img src={imgPhone1} alt="Can not load file!" />
             </Grid>
           </Grid>
         </Grid>

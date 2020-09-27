@@ -21,7 +21,6 @@ import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import imgLog from "../assets/img/car.png"
 import { createMuiTheme } from '@material-ui/core/styles';
 import deepPurple from '@material-ui/core/colors/purple';
 import { API_URL } from '../Config';
@@ -197,7 +196,7 @@ export default function RecipeReviewCard() {
 
   let questionKind: string;
   let surveyName: string = "";
-  if (surveys.length == 0 || surveys.length <= index) {
+  if (surveys.length === 0 || surveys.length <= index) {
     questionKind = "final";
   } else {
     questionKind = surveys[index].kind_of_question;
@@ -250,7 +249,7 @@ export default function RecipeReviewCard() {
       questionScores_temp += ",";
     }
     let score: any;
-    if (val == "yes") {
+    if (val === "yes") {
       score = 5;
     } else {
       score = 2;
@@ -296,7 +295,7 @@ export default function RecipeReviewCard() {
 
     let score = scoreSum / scoreCount;
     let readStatus: number;
-    if (checked == true) {
+    if (checked === true) {
       readStatus = 0;
     } else {
       readStatus = 1;
@@ -345,7 +344,7 @@ export default function RecipeReviewCard() {
   );
   let cardBody;
 
-  if (questionKind == "Rating") {
+  if (questionKind === "Rating") {
     const val = parseInt(answers[index], 10);
     cardBody = (
       <div>
@@ -380,7 +379,7 @@ export default function RecipeReviewCard() {
         </CardContent>
       </div>
     );
-  } else if (questionKind == "Yes & No") {
+  } else if (questionKind === "Yes & No") {
     cardBody = (
       <div>
         {cardHeader}
@@ -411,7 +410,7 @@ export default function RecipeReviewCard() {
         </CardContent>
       </div>
     )
-  } else if (questionKind == "Multiple Question") {
+  } else if (questionKind === "Multiple Question") {
     const answer: string = surveys[index].answer;
     const options: string[] = answer.split('@#');
 
@@ -446,7 +445,7 @@ export default function RecipeReviewCard() {
         </CardContent>
       </div>
     );
-  } else if (questionKind == "final") {
+  } else if (questionKind === "final") {
     cardBody = (
       <div>
         {cardHeader}

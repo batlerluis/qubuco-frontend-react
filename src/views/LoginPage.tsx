@@ -54,6 +54,14 @@ const useStyles = makeStyles((theme) => ({
   },
   seperator: {
     fontSize: "32px",
+    margin: 0,
+    position: "relative",
+    top: "-60px",
+    left: "48%",
+    width: 0,
+    "@media screen and (max-width: 600px)": {
+      left: "45%",
+    }
   },
   forgot: {
     color: "#8a56ac",
@@ -389,11 +397,11 @@ export default function LoginPage(props: any) {
               }}
             >
               <Tab label="Ingresar" className={classes.tabItem}></Tab>
-              <p >|</p>
               <Tab label="Registrarse" className={classes.tabItem}></Tab>
             </Tabs>
           }
         />
+        <span className={classes.seperator}>|</span>
         <CardContent>
           {LogAndRegister}
         </CardContent>
