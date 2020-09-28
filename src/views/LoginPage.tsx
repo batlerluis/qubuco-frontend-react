@@ -298,7 +298,8 @@ export default function LoginPage(props: any) {
       axios.post(API_URL + '/api/fbregister', {
         'name': response.name,
         'email': response.email,
-        'id': response.id,
+        'login_type': 'facebook',
+        'facebook_id': response.id,
       })
         .then(function (response: AxiosResponse) {
           if (response.data.error) {
