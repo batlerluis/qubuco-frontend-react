@@ -192,7 +192,6 @@ export default function LoginPage(props: any) {
           localStorage.setItem('email', email);
           const curDate = new Date().getTime();
           const expireDate = curDate + (1000 * 60 * 60 * 24 * 15);
-          console.log(expireDate);
           localStorage.setItem('expire', `${expireDate}`);
         }
 
@@ -225,8 +224,106 @@ export default function LoginPage(props: any) {
       });
   }
 
-  const handleFBLogin = () => {
+  const handleFBLogin = (response: any) => {
+    if (response.id) {
+      axios.post(API_URL + '/api/fblogin', {
+        'email': response.email,
+        'id': response.id
+      })
+        .then(function (response: any) {
+          console.log(response);
+          if (response.data.error) {
+            console.log("err");
+            const errors: string[] = response.data.error;
+            setSnackOption({
+              type: "error",
+              msg: errors[0]
+            });
+            setSnackStatus(true);
 
+            return;
+          }
+
+          if (response.data.message) {
+            console.log("msg");
+            const msg: string = response.data.message
+            setSnackOption({
+              type: "error",
+              msg: "Login Failed! " + msg
+            });
+            setSnackStatus(true);
+
+            return;
+          }
+
+          if (checked) {
+            localStorage.setItem('email', email);
+            const curDate = new Date().getTime();
+            const expireDate = curDate + (1000 * 60 * 60 * 24 * 15);
+            localStorage.setItem('expire', `${expireDate}`);
+          }
+
+          const userInfo = response.data.user;
+          dispatch({ type: 'USER_ID', uid: userInfo.user_id });
+          history.push("/survey/start");
+
+          setSnackOption({
+            type: "success",
+            msg: "LogIn successed!"
+          });
+
+          setSnackStatus(true);
+
+          axios.put(API_URL + '/api/company/add', {
+            'userId': userInfo.user_id,
+            'companyId': companyInfo.companyId,
+            'companyName': companyInfo.companyName
+          })
+            .then(function (response: any) {
+              const companyInfo = response.data;
+              if (!companyInfo.msg) {
+                dispatch({ type: 'COMPANY_ADD', companyId: companyInfo.company_id, companyName: companyInfo.company_name });
+              }
+            })
+            .catch(function (error: any) {
+            });
+        })
+        .catch(function (error: any) {
+        });
+    }
+  }
+
+  const handleFBRegister = (response: any) => {
+    if (response.id) {
+      axios.post(API_URL + '/api/fbregister', {
+        'name': response.name,
+        'email': response.email,
+        'id': response.id,
+      })
+        .then(function (response: AxiosResponse) {
+          if (response.data.error) {
+            let errors: string[] = response.data.error;
+            setSnackOption({
+              type: "error",
+              msg: "Register Failed! " + errors[0]
+            });
+            setSnackStatus(true);
+
+            return;
+          }
+          setTabIndex(0);
+          setEmail('');
+          setPass1('');
+          setSnackOption({
+            type: "success",
+            msg: "Register Success!"
+          });
+          setSnackStatus(true);
+        })
+        .catch(function (error: any) {
+
+        });
+    }
   }
 
   const handleRegister = () => {
@@ -286,10 +383,6 @@ export default function LoginPage(props: any) {
     setPass2('');
   }
 
-  const responseFacebook = (response: any) => {
-    console.log(response);
-  }
-
   let LogAndRegister;
 
   if (tabIndex == 0) {
@@ -331,7 +424,7 @@ export default function LoginPage(props: any) {
           <FacebookLogin
             appId="687042532167808" //APP ID NOT CREATED YET
             fields="name,email,picture"
-            callback={responseFacebook}
+            callback={handleFBLogin}
           />
         </Grid>
 
@@ -379,7 +472,12 @@ export default function LoginPage(props: any) {
             <span>O</span>
             <Grid className={classes.lineItem}><hr /></Grid>
           </Grid>
-          <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button>
+          {/* <Button variant="contained" onClick={() => handleRegister()} className={classes.facebookBtn}><FacebookIcon color="primary" /><span>Facebook</span><span></span></Button> */}
+          <FacebookLogin
+            appId="687042532167808" //APP ID NOT CREATED YET
+            fields="name,email,picture"
+            callback={handleFBRegister}
+          />
         </Grid>
 
       </FormControl>
