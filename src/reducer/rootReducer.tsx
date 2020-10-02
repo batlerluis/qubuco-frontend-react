@@ -5,6 +5,7 @@ const initState = {
   userId: 0,
   userType: 0,
   companyLogo: "",
+  surveyId: "",
 }
 
 const rootReducer = (state = initState, action: any) => {
@@ -22,16 +23,20 @@ const rootReducer = (state = initState, action: any) => {
         companyId: action.companyId,
         companyName: action.companyName,
       }
-    case 'SURVEY_LOAD':
+    case 'SURVEY_SELECT':
       return {
         ...state,
-        survies: action.survies,
         userType: action.userType
       }
     case 'USER_ID':
       return {
         ...state,
         userId: action.uid
+      }
+    case 'SURVEYID_INPUT':
+      return {
+        ...state,
+        surveyId: action.surveyId
       }
   }
   return state

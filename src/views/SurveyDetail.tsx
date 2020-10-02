@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,6 +21,7 @@ import Rating from '@material-ui/lab/Rating';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import deepPurple from '@material-ui/core/colors/purple';
@@ -51,6 +53,13 @@ const useStyles = makeStyles((theme) => ({
     action: {
       margin: 0,
     }
+  },
+  blank: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center'
   },
   appBar: {
     height: "70px",
@@ -165,34 +174,76 @@ export default function RecipeReviewCard() {
   const [questionScores, setQuestionScores] = React.useState('');
   const [scoreSum, setScoreSum] = React.useState(0);
   const [scoreCount, setScoreCount] = React.useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const [surveys, setSurveys] = useState<any[]>([]);
+  const [companyId, setCompanyId] = React.useState(useSelector((state: any) => {
+    return state.companyId
+  }));
+  const [companyName, setCompanyName] = React.useState('');
+  const [companyLogo, setCompanyLogo] = React.useState('');
+
+  const userType = useSelector((state: any) => {
+    return state.userType;
+  });
 
   const history = useHistory();
 
   const textRef = useRef();
 
-  const surveys: any[] = useSelector((state: any) => {
-    return state.survies
-  });
-
-  const companyId = useSelector((state: any) => {
-    return state.companyId
-  });
-
   const userId = useSelector((state: any) => {
     return state.userId
   });
 
-  const companyName = useSelector((state: any) => {
-    return state.companyName;
-  });
+  const dispatch = useDispatch();
 
-  const companyLogo = useSelector((state: any) => {
-    return state.companyLogo;
-  });
+  useEffect(() => {
+    if (loaded) {
+      return;
+    }
 
-  const userType = useSelector((state: any) => {
-    return state.userType
-  });
+    const curUrl: string = window.location.href;
+    let nodes: string[] = curUrl.split("/");
+    let surveyId: string = "";
+    surveyId = nodes[nodes.length - 1];
+    let apiUrl: string = "";
+    if (surveyId == "detail") {
+      apiUrl = API_URL + '/api/survey/load';
+    } else {
+      apiUrl = API_URL + '/api/survey/load/' + surveyId;
+    }
+
+    const email = sessionStorage.getItem("email");
+    const token = sessionStorage.getItem("token");
+
+    axios.post(apiUrl, {
+      'companyId': companyId,
+      'category': userType
+    }, {
+      headers: {
+        'email': email,
+        'Authorization': `${token}`
+      }
+    })
+      .then(function (response: any) {
+        if (response.data.msg) {
+          dispatch({ type: 'SURVEYID_INPUT', surveyId: surveyId });
+          history.push('/home/login');
+
+          return;
+        }
+
+        if (response.data.length > 0) {
+          setCompanyId(response.data[0].company_id);
+          setCompanyName(response.data[0].company_name);
+          setCompanyLogo(response.data[0].logo);
+        }
+        setSurveys(response.data);
+        setLoaded(true);
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
+  }, []);
 
   let questionKind: string;
   let surveyName: string = "";
@@ -301,6 +352,9 @@ export default function RecipeReviewCard() {
       readStatus = 1;
     }
 
+    const email = sessionStorage.getItem("email");
+    const token = sessionStorage.getItem("token");
+
     axios.put(API_URL + '/api/comment/add', {
       companyId: companyId,
       userId: userId,
@@ -312,6 +366,11 @@ export default function RecipeReviewCard() {
       questionScores: questionScores,
       score: parseFloat(score.toString()).toFixed(2),
       readStatus: readStatus
+    }, {
+      headers: {
+        'email': email,
+        'Authorization': `${token}`
+      }
     })
       .then(function (response: any) {
         console.log(response.data);
@@ -344,139 +403,147 @@ export default function RecipeReviewCard() {
   );
   let cardBody;
 
-  if (questionKind === "Rating") {
-    const val = parseInt(answers[index], 10);
+  if (loaded == false) {
     cardBody = (
-      <div>
-        {cardHeader}
-
-        <CardContent>
-          <Typography variant="h6" color="textSecondary" component="p">
-            {'Question ' + (index + 1)}
-          </Typography>
-
-          <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
-
-          <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
-            <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
-              {surveys[index].question}
-            </Typography>
-            <Rating
-              name="simple-controlled"
-              value={val}
-              className={classes.rating}
-              onChange={(event, newValue) => {
-                SelectRating(newValue);
-              }}
-            />
-          </Box>
-
-          <Card className={classes.skip}>
-            <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
-              Omitir<ArrowForwardIcon />
-            </IconButton>
-          </Card>
-        </CardContent>
-      </div>
-    );
-  } else if (questionKind === "Yes & No") {
-    cardBody = (
-      <div>
-        {cardHeader}
-
-        <CardContent>
-          <Typography variant="h6" color="textSecondary" component="p">
-            {'Question ' + (index + 1)}
-          </Typography>
-
-          <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
-
-          <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
-            <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
-              {surveys[index].question}
-            </Typography>
-
-            <Grid container direction="column" className={classes.btnGroup}>
-              <Button variant="contained" color="primary" onClick={() => SelectPositive("yes")} className={classes.btnClient}>Si</Button>
-              <Button variant="contained" color="inherit" onClick={() => SelectPositive("no")} className={classes.btnProvider}>No</Button>
-            </Grid>
-          </Box>
-
-          <Card className={classes.skip}>
-            <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
-              Omitir<ArrowForwardIcon />
-            </IconButton>
-          </Card>
-        </CardContent>
+      <div className={classes.blank}>
+        <CircularProgress />
       </div>
     )
-  } else if (questionKind === "Multiple Question") {
-    const answer: string = surveys[index].answer;
-    const options: string[] = answer.split('@#');
+  } else {
+    if (questionKind === "Rating") {
+      const val = parseInt(answers[index], 10);
+      cardBody = (
+        <div>
+          {cardHeader}
 
-    const buttonList = options.map((option, key) =>
-      <Button variant="contained" color="primary" key={key} onClick={() => SelectMulti(option)} className={classes.btnClient}>{option}</Button>
-    );
-    cardBody = (
-      <div>
-        {cardHeader}
-
-        <CardContent>
-          <Typography variant="h6" color="textSecondary" component="p">
-            {'Question ' + (index + 1)}
-          </Typography>
-
-          <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
-
-          <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
-            <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
-              {surveys[index].question}
+          <CardContent>
+            <Typography variant="h6" color="textSecondary" component="p">
+              {'Question ' + (index + 1)}
             </Typography>
-            <Grid container direction="column" className={classes.btnGroup}>
-              {buttonList}
-            </Grid>
-          </Box>
 
-          <Card className={classes.skip}>
-            <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
-              Omitir<ArrowForwardIcon />
-            </IconButton>
-          </Card>
-        </CardContent>
-      </div>
-    );
-  } else if (questionKind === "final") {
-    cardBody = (
-      <div>
-        {cardHeader}
+            <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
 
-        <CardContent>
-          <Typography variant="subtitle1" color="textSecondary" component="p">
-            Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.
+            <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
+              <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
+                {surveys[index].question}
+              </Typography>
+              <Rating
+                name="simple-controlled"
+                value={val}
+                className={classes.rating}
+                onChange={(event, newValue) => {
+                  SelectRating(newValue);
+                }}
+              />
+            </Box>
+
+            <Card className={classes.skip}>
+              <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
+                Omitir<ArrowForwardIcon />
+              </IconButton>
+            </Card>
+          </CardContent>
+        </div>
+      );
+    } else if (questionKind === "Yes & No") {
+      cardBody = (
+        <div>
+          {cardHeader}
+
+          <CardContent>
+            <Typography variant="h6" color="textSecondary" component="p">
+              {'Question ' + (index + 1)}
+            </Typography>
+
+            <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
+
+            <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
+              <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
+                {surveys[index].question}
+              </Typography>
+
+              <Grid container direction="column" className={classes.btnGroup}>
+                <Button variant="contained" color="primary" onClick={() => SelectPositive("yes")} className={classes.btnClient}>Si</Button>
+                <Button variant="contained" color="inherit" onClick={() => SelectPositive("no")} className={classes.btnProvider}>No</Button>
+              </Grid>
+            </Box>
+
+            <Card className={classes.skip}>
+              <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
+                Omitir<ArrowForwardIcon />
+              </IconButton>
+            </Card>
+          </CardContent>
+        </div>
+      )
+    } else if (questionKind === "Multiple Question") {
+      const answer: string = surveys[index].answer;
+      const options: string[] = answer.split('@#');
+
+      const buttonList = options.map((option, key) =>
+        <Button variant="contained" color="primary" key={key} onClick={() => SelectMulti(option)} className={classes.btnClient}>{option}</Button>
+      );
+      cardBody = (
+        <div>
+          {cardHeader}
+
+          <CardContent>
+            <Typography variant="h6" color="textSecondary" component="p">
+              {'Question ' + (index + 1)}
+            </Typography>
+
+            <LinearProgress variant="determinate" value={100 / questionCount * (index + 1)} className={classes.progBar} />
+
+            <Box component="fieldset" textAlign="center" mb={3} justifyContent="center" borderColor="transparent">
+              <Typography variant="h5" align="center" color="textSecondary" component="p" className={classes.description}>
+                {surveys[index].question}
+              </Typography>
+              <Grid container direction="column" className={classes.btnGroup}>
+                {buttonList}
+              </Grid>
+            </Box>
+
+            <Card className={classes.skip}>
+              <IconButton aria-label="skip" onClick={() => setIndex(index + 1)}>
+                Omitir<ArrowForwardIcon />
+              </IconButton>
+            </Card>
+          </CardContent>
+        </div>
+      );
+    } else if (questionKind === "final") {
+      cardBody = (
+        <div>
+          {cardHeader}
+
+          <CardContent>
+            <Typography variant="subtitle1" color="textSecondary" component="p">
+              Comparte tus experiencias con otros usuarios, y ayuda a nuestra comunidad a encontrar empresas de calidad.
           </Typography>
 
-          <TextField
-            id="outlined-multiline-static"
-            placeholder="Escribe tu comentario…"
-            multiline
-            rows={5}
-            inputRef={textRef}
-            variant="outlined"
-            className={classes.comment}
-          />
+            <TextField
+              id="outlined-multiline-static"
+              placeholder="Escribe tu comentario…"
+              multiline
+              rows={5}
+              inputRef={textRef}
+              variant="outlined"
+              className={classes.comment}
+            />
 
-          <FormControlLabel
-            control={<Checkbox value={checked} onChange={(event: any) => setChecked(event.target.checked)} className={classes.checkStyle} />}
-            label="Comentario privado"
-            className={classes.formCtl}
-          />
+            <FormControlLabel
+              control={<Checkbox value={checked} onChange={(event: any) => setChecked(event.target.checked)} className={classes.checkStyle} />}
+              label="Comentario privado"
+              className={classes.formCtl}
+            />
 
-          <Grid container direction="column" className={classes.btnGroup}>
-            <Button variant="contained" onClick={() => OnConfirm()} color="primary" className={classes.btnClient}>COMENTAR</Button>
-          </Grid>
-        </CardContent>
-      </div>
-    );
+            <Grid container direction="column" className={classes.btnGroup}>
+              <Button variant="contained" onClick={() => OnConfirm()} color="primary" className={classes.btnClient}>COMENTAR</Button>
+            </Grid>
+          </CardContent>
+        </div>
+      );
+    }
   }
 
   return (
