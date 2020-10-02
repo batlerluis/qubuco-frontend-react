@@ -11,7 +11,7 @@ import MainHeader from '../components/MainHeader';
 
 const indexRoutes = [
   { path: "/survey/start", component: SruveyStart },
-  { path: "/survey/detail", component: SurveyDetail },
+  { path: "/survey/detail/:pathParam?", component: SurveyDetail },
   { path: "/survey/final", component: SurveyFinal},
 ];
 

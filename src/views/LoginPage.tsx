@@ -157,6 +157,10 @@ export default function LoginPage(props: any) {
     };
   });
 
+  const surveyId = useSelector((state: any) => {
+    return state.surveyId
+  });
+
   const handleLogin = () => {
     axios.post(API_URL + '/api/login', {
       'email': email,
@@ -188,6 +192,9 @@ export default function LoginPage(props: any) {
           return;
         }
 
+        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("token", response.data.token);
+
         if (checked) {
           localStorage.setItem('email', email);
           const curDate = new Date().getTime();
@@ -197,6 +204,13 @@ export default function LoginPage(props: any) {
 
         const userInfo = response.data.user;
         dispatch({ type: 'USER_ID', uid: userInfo.user_id });
+
+        if (surveyId) {
+          history.push("/survey/detail/" + surveyId);
+
+          return;
+        }
+
         history.push("/survey/start");
 
         setSnackOption({

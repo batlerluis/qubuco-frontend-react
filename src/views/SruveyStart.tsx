@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -14,8 +13,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { useHistory } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { API_URL } from '../Config';
-import imgLog from "../assets/img/car.png"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -167,18 +164,7 @@ export default function RecipeReviewCard() {
   });
 
   const SelectType = (nType: number) => {
-    axios.post(API_URL + '/api/survey/load', {
-      'companyId': companyId,
-      'category': nType
-    })
-      .then(function (response: any) {
-        console.log(response.data);
-
-        dispatch({ type: 'SURVEY_LOAD', userType: nType, survies: response.data });
-      })
-      .catch(function (error: any) {
-        console.log(error);
-      });
+    dispatch({ type: 'SURVEY_SELECT', userType: nType });
 
     history.push('/survey/detail');
   };
