@@ -10,19 +10,6 @@ const initState = {
 
 const rootReducer = (state = initState, action: any) => {
   switch (action.type) {
-    case 'COMPANY_NAME':
-      return {
-        ...state,
-        companyId: action.companyId,
-        companyName: action.companyName,
-        companyLogo: action.companyLogo,
-      }
-    case 'COMPANY_ADD':
-      return {
-        ...state,
-        companyId: action.companyId,
-        companyName: action.companyName,
-      }
     case 'SURVEY_SELECT':
       return {
         ...state,

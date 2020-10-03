@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import imgLogo from "../assets/img/logo.png";
 
 const pageRoutes = [
-  { path: "/home", label: "Comentar empresa" },
+  { path: "/home/d", label: "Comentar empresa" },
   { path: "/home/c", label: "Qué es" },
   { path: "/home/a", label: "Empresas" },
   { path: "/home/b", label: "Contacto" },

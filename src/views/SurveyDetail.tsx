@@ -22,6 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import SnackBar from '../components/SnackBar';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import deepPurple from '@material-ui/core/colors/purple';
@@ -165,7 +166,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function SurveyDetail(props: any) {
+  const data = props.location.state;
+
+  let companyInfo: any = {};
+  if (data && data.companyInfo) {
+    companyInfo = data.companyInfo;
+  }
+
+  let userId: number = 0;
+  if (data && data.userInfo) {
+    userId = data.userInfo.user_id;
+  }
+
+  let categoryId: number = 0;
+  if (data && data.categoryId) {
+    categoryId = data.categoryId;
+  }
+
   const classes = useStyles();
   const [checked, setChecked] = React.useState(false);
   const [index, setIndex] = React.useState(0);
@@ -176,48 +194,41 @@ export default function RecipeReviewCard() {
   const [scoreCount, setScoreCount] = React.useState(0);
   const [loaded, setLoaded] = useState(false);
   const [surveys, setSurveys] = useState<any[]>([]);
-  const [companyId, setCompanyId] = React.useState(useSelector((state: any) => {
-    return state.companyId
-  }));
+  const [companyId, setCompanyId] = React.useState(0);
   const [companyName, setCompanyName] = React.useState('');
   const [companyLogo, setCompanyLogo] = React.useState('');
 
-  const userType = useSelector((state: any) => {
-    return state.userType;
+  const [snackOption, setSnackOption] = useState({
+    type: "warning",
+    msg: "Internal Error!"
   });
+  const [snackStatus, setSnackStatus] = React.useState(false);
 
   const history = useHistory();
 
   const textRef = useRef();
 
-  const userId = useSelector((state: any) => {
-    return state.userId
-  });
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (loaded) {
-      return;
-    }
-
     const curUrl: string = window.location.href;
     let nodes: string[] = curUrl.split("/");
-    let surveyId: string = "";
-    surveyId = nodes[nodes.length - 1];
-    let apiUrl: string = "";
-    if (surveyId == "detail") {
-      apiUrl = API_URL + '/api/survey/load';
-    } else {
-      apiUrl = API_URL + '/api/survey/load/' + surveyId;
+    let surveyId: string = nodes[nodes.length - 1];
+    if (surveyId === "detail") {
+      surveyId = "";
+    }
+
+    let company_Id: number = 0;
+    if (companyInfo) {
+      company_Id = companyInfo.id;
     }
 
     const email = sessionStorage.getItem("email");
     const token = sessionStorage.getItem("token");
 
-    axios.post(apiUrl, {
-      'companyId': companyId,
-      'category': userType
+    axios.post(API_URL + '/api/survey/load/' + surveyId, {
+      'companyId': company_Id,
+      'category': categoryId
     }, {
       headers: {
         'email': email,
@@ -225,33 +236,60 @@ export default function RecipeReviewCard() {
       }
     })
       .then(function (response: any) {
-        if (response.data.msg) {
+        if (response.data.noUser) {
           dispatch({ type: 'SURVEYID_INPUT', surveyId: surveyId });
-          history.push('/home/login');
+          history.push('/home/login', { surveyId: surveyId });
 
           return;
         }
 
+        setLoaded(true);
+
         if (response.data.length > 0) {
-          setCompanyId(response.data[0].company_id);
-          setCompanyName(response.data[0].company_name);
-          setCompanyLogo(response.data[0].logo);
+          if (company_Id) {
+            setCompanyId(response.data[0].company_id);
+            setCompanyName(response.data[0].company_name);
+            setCompanyLogo(response.data[0].logo);
+          } else {
+            setCompanyName(companyInfo.name);
+            setCompanyLogo("DvP0JuNMrehWfzG1793520589.png");
+          }
+        } else {
+          setSnackOption({
+            type: "error",
+            msg: "No match surveys!"
+          });
+
+          setSnackStatus(true);
+
+          return;
         }
         setSurveys(response.data);
-        setLoaded(true);
       })
       .catch(function (error: any) {
+        setLoaded(true);
         console.log(error);
       });
   }, []);
 
-  let questionKind: string;
+  let questionKind: string = "";
   let surveyName: string = "";
-  if (surveys.length === 0 || surveys.length <= index) {
-    questionKind = "final";
-  } else {
-    questionKind = surveys[index].kind_of_question;
-    surveyName = surveys[index].survey_name;
+  if (loaded) {
+    if (surveys.length <= index) {
+      questionKind = "final";
+    } else {
+      questionKind = surveys[index].kind_of_question;
+      surveyName = surveys[index].survey_name;
+      if (!surveyName) {
+        if (categoryId === 1) {
+          surveyName = "Empleados";
+        } else if (categoryId === 2) {
+          surveyName = "Proveedores";
+        } else if (categoryId === 3) {
+          surveyName = "Clientes";
+        }
+      }
+    }
   }
 
   const questionCount: number = surveys.length;
@@ -352,13 +390,11 @@ export default function RecipeReviewCard() {
       readStatus = 1;
     }
 
-    const email = sessionStorage.getItem("email");
-    const token = sessionStorage.getItem("token");
-
     axios.put(API_URL + '/api/comment/add', {
+      companyName: companyName,
       companyId: companyId,
       userId: userId,
-      userType: userType,
+      userType: categoryId,
       questions: question,
       answers: answer,
       comment: textVal.value,
@@ -366,11 +402,6 @@ export default function RecipeReviewCard() {
       questionScores: questionScores,
       score: parseFloat(score.toString()).toFixed(2),
       readStatus: readStatus
-    }, {
-      headers: {
-        'email': email,
-        'Authorization': `${token}`
-      }
     })
       .then(function (response: any) {
         console.log(response.data);
@@ -403,7 +434,7 @@ export default function RecipeReviewCard() {
   );
   let cardBody;
 
-  if (loaded == false) {
+  if (loaded === false) {
     cardBody = (
       <div className={classes.blank}>
         <CircularProgress />
@@ -544,11 +575,21 @@ export default function RecipeReviewCard() {
         </div>
       );
     }
+
+    if (surveys.length === 0) {
+      cardBody = (
+        <Grid container direction="column" className={classes.blank}>
+          <p style={{ fontSize: 24 }}>No hay encuestas.</p>
+          <p style={{ fontSize: 24 }}>Por favor, vete a casa.</p>
+        </Grid>
+      )
+    }
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Grid container>
+        {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
         <AppBar position="static" color="inherit" className={classes.appBar} >
           <Toolbar variant="dense">
             <IconButton edge="start" href="/home" aria-label="menu">

@@ -144,29 +144,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function SurveyStart(props: any) {
+  const data = props.location.state;
+  console.log(data);
+
+  let companyInfo: any = {};
+  if (data.companyInfo) {
+    companyInfo = data.companyInfo;
+  }
+
+  let userInfo: any = {};
+  if (data.userInfo) {
+    userInfo = data.userInfo;
+  }
+
   const classes = useStyles();
   
   const history = useHistory();
 
-  const dispatch = useDispatch();
-  
-  const companyId = useSelector((state: any) => {
-    return state.companyId;
-  });
-
-  const companyName = useSelector((state: any) => {
-    return state.companyName;
-  });
-
-  const companyLogo = useSelector((state: any) => {
-    return state.companyLogo;
-  });
-
   const SelectType = (nType: number) => {
-    dispatch({ type: 'SURVEY_SELECT', userType: nType });
-
-    history.push('/survey/detail');
+    history.push('/survey/detail', {companyInfo: companyInfo, userInfo:userInfo, categoryId: nType});
   };
 
   return (
@@ -182,10 +179,10 @@ export default function RecipeReviewCard() {
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <img src={`/images/${companyLogo}`} alt="Avatar" className={classes.avatar} />
+            <img src={`/images/${companyInfo.logo}`} alt="Avatar" className={classes.avatar} />
           }
           titleTypographyProps={{ variant: 'h5' }}
-          title={companyName}
+          title={companyInfo.name}
           subheaderTypographyProps={{ variant: 'subtitle2' }}
           subheader="Escoge la opción que más se ajuste al comentario que harás sobre esta empresa."
         />
