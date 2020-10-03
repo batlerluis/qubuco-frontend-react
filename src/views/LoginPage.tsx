@@ -130,6 +130,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LoginPage(props: any) {
+  const data = props.location.state;
+  console.log(data);
+
+  let companyInfo: any = {};
+  if (data.companyInfo) {
+    companyInfo = data.companyInfo;
+  }
+
+  let surveyId: string = "";
+  if (data.surveyId) {
+    surveyId = data.surveyId;
+  }
 
   const [tabIndex, setTabIndex] = useState(0);
   const classes = useStyles();
@@ -139,6 +151,7 @@ export default function LoginPage(props: any) {
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
   const [checked, setChecked] = useState(false);
+
   const [snackOption, setSnackOption] = useState({
     type: "warning",
     msg: "Internal Error!"
@@ -150,21 +163,11 @@ export default function LoginPage(props: any) {
 
   const dispatch = useDispatch();
 
-  const companyInfo = useSelector((state: any) => {
-    return {
-      companyId: state.companyId,
-      companyName: state.companyName
-    };
-  });
-
-  const surveyId = useSelector((state: any) => {
-    return state.surveyId
-  });
-
   const handleLogin = () => {
     axios.post(API_URL + '/api/login', {
       'email': email,
-      'password': pass1
+      'password': pass1,
+      'remember': checked
     })
       .then(function (response: any) {
         console.log(response);
@@ -192,47 +195,23 @@ export default function LoginPage(props: any) {
           return;
         }
 
-        sessionStorage.setItem("email", email);
-        sessionStorage.setItem("token", response.data.token);
-
         if (checked) {
-          localStorage.setItem('email', email);
-          const curDate = new Date().getTime();
-          const expireDate = curDate + (1000 * 60 * 60 * 24 * 15);
-          localStorage.setItem('expire', `${expireDate}`);
+          localStorage.setItem("email", email);
+          localStorage.setItem("token", response.data.token);
+        } else {
+          sessionStorage.setItem("email", email);
+          sessionStorage.setItem("token", response.data.token);
         }
 
         const userInfo = response.data.user;
-        dispatch({ type: 'USER_ID', uid: userInfo.user_id });
 
         if (surveyId) {
-          history.push("/survey/detail/" + surveyId);
+          history.push("/survey/detail/" + surveyId, { userInfo: userInfo });
 
           return;
         }
 
-        history.push("/survey/start");
-
-        setSnackOption({
-          type: "success",
-          msg: "LogIn successed!"
-        });
-
-        setSnackStatus(true);
-
-        axios.put(API_URL + '/api/company/add', {
-          'userId': userInfo.user_id,
-          'companyId': companyInfo.companyId,
-          'companyName': companyInfo.companyName
-        })
-          .then(function (response: any) {
-            const companyInfo = response.data;
-            if (!companyInfo.msg) {
-              dispatch({ type: 'COMPANY_ADD', companyId: companyInfo.company_id, companyName: companyInfo.company_name });
-            }
-          })
-          .catch(function (error: any) {
-          });
+        history.push("/survey/start", { companyInfo: companyInfo, userInfo: userInfo });
       })
       .catch(function (error: any) {
       });
@@ -242,7 +221,8 @@ export default function LoginPage(props: any) {
     if (response.id) {
       axios.post(API_URL + '/api/fblogin', {
         'email': response.email,
-        'id': response.id
+        'id': response.id,
+        'remember': checked
       })
         .then(function (response: any) {
           console.log(response);
@@ -270,37 +250,8 @@ export default function LoginPage(props: any) {
             return;
           }
 
-          if (checked) {
-            localStorage.setItem('email', email);
-            const curDate = new Date().getTime();
-            const expireDate = curDate + (1000 * 60 * 60 * 24 * 15);
-            localStorage.setItem('expire', `${expireDate}`);
-          }
-
           const userInfo = response.data.user;
-          dispatch({ type: 'USER_ID', uid: userInfo.user_id });
-          history.push("/survey/start");
-
-          setSnackOption({
-            type: "success",
-            msg: "LogIn successed!"
-          });
-
-          setSnackStatus(true);
-
-          axios.put(API_URL + '/api/company/add', {
-            'userId': userInfo.user_id,
-            'companyId': companyInfo.companyId,
-            'companyName': companyInfo.companyName
-          })
-            .then(function (response: any) {
-              const companyInfo = response.data;
-              if (!companyInfo.msg) {
-                dispatch({ type: 'COMPANY_ADD', companyId: companyInfo.company_id, companyName: companyInfo.company_name });
-              }
-            })
-            .catch(function (error: any) {
-            });
+          history.push("/survey/start", { companyInfo: companyInfo, userInfo: userInfo });
         })
         .catch(function (error: any) {
         });

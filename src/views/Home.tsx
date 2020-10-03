@@ -103,22 +103,35 @@ const Home = (props: any) => {
   const handleLink = (event: any) => event.preventDefault();
 
   const OnCompanyChange = (event: object, value: any) => {
-    dispatch({ type: 'COMPANY_NAME', companyId: value.company_id, companyName: value.company_name, companyLogo: value.logo });
+    const companyInfo = {
+      id: value.company_id,
+      name: value.company_name,
+      logo: value.logo ? value.logo : "DvP0JuNMrehWfzG1793520589.png"
+    };
+
     const email = localStorage.getItem('email');
-    let expire = localStorage.getItem('expire');
 
-    if (email && expire) {
-      const curDate = new Date().getTime();
-      const expireDate = parseInt(expire, 10);
-
-      if (curDate < expireDate) {
-        history.push("/survey/start");
-
-        return;
+    axios.get(API_URL + '/api/checktoken', {
+      headers: {
+        'email': email,
       }
-    }
+    })
+      .then(function (response: any) {
+        let userInfo: any = {};
+        if (response.data.user) {
+          userInfo = response.data.user;
+        }
 
-    history.push("/home/login");
+        if (response.data.remember == 1) {
+          history.push("/survey/start", { companyInfo: companyInfo, userInfo: userInfo });
+
+          return;
+        }
+        
+        history.push('/home/login', {companyInfo: companyInfo});
+      })
+      .catch(function (error: any) {
+      });
   }
 
   return (
