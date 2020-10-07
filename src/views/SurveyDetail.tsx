@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Card from '@material-ui/core/Card';
@@ -10,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -170,19 +167,8 @@ export default function SurveyDetail(props: any) {
   const data = props.location.state;
 
   let companyInfo: any = {};
-  if (data && data.companyInfo) {
-    companyInfo = data.companyInfo;
-  }
-
   let userId: number = 0;
-  if (data && data.userInfo) {
-    userId = data.userInfo.user_id;
-  }
-
   let categoryId: number = 0;
-  if (data && data.categoryId) {
-    categoryId = data.categoryId;
-  }
 
   const classes = useStyles();
   const [checked, setChecked] = React.useState(false);
@@ -210,12 +196,46 @@ export default function SurveyDetail(props: any) {
 
   const dispatch = useDispatch();
 
+  const snackInfo = useSelector((state: any) => state.snackInfo);
+
   useEffect(() => {
     const curUrl: string = window.location.href;
     let nodes: string[] = curUrl.split("/");
     let surveyId: string = nodes[nodes.length - 1];
     if (surveyId === "detail") {
       surveyId = "";
+    }
+
+    if (!data && !surveyId) {
+      history.push('/home');
+
+      return;
+    }
+
+    if (snackInfo.type && snackInfo.msg) {
+      setSnackOption({
+        type: snackInfo.type,
+        msg: snackInfo.msg
+      });
+      setSnackStatus(true);
+
+      console.log('after');
+
+      dispatch({ type: 'SNACK', snackInfo: { type: '', msg: '' } });
+    }
+
+    if (data) {
+      if (data.companyInfo) {
+        companyInfo = data.companyInfo;
+      }
+
+      if (data.userInfo) {
+        userId = data.userInfo.user_id;
+      }
+
+      if (data.categoryId) {
+        categoryId = data.categoryId;
+      }
     }
 
     let company_Id: number = 0;
@@ -246,7 +266,7 @@ export default function SurveyDetail(props: any) {
         setLoaded(true);
 
         if (response.data.length > 0) {
-          if (company_Id) {
+          if (company_Id || surveyId) {
             setCompanyId(response.data[0].company_id);
             setCompanyName(response.data[0].company_name);
             setCompanyLogo(response.data[0].logo);
@@ -590,14 +610,6 @@ export default function SurveyDetail(props: any) {
     <ThemeProvider theme={theme}>
       <Grid container>
         {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
-        <AppBar position="static" color="inherit" className={classes.appBar} >
-          <Toolbar variant="dense">
-            <IconButton edge="start" href="/home" aria-label="menu">
-              <ArrowBackIosIcon />SALIR
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-
         <Card className={classes.root}>
           {cardBody}
         </Card>

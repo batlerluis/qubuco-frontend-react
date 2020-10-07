@@ -131,16 +131,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginPage(props: any) {
   const data = props.location.state;
-  console.log(data);
 
   let companyInfo: any = {};
-  if (data.companyInfo) {
-    companyInfo = data.companyInfo;
-  }
-
   let surveyId: string = "";
-  if (data.surveyId) {
-    surveyId = data.surveyId;
+
+  if (data) {
+    if (data.companyInfo) {
+      companyInfo = data.companyInfo;
+    }
+  
+    if (data.surveyId) {
+      surveyId = data.surveyId;
+    }
   }
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -197,21 +199,26 @@ export default function LoginPage(props: any) {
 
         if (checked) {
           localStorage.setItem("email", email);
-          localStorage.setItem("token", response.data.token);
         } else {
           sessionStorage.setItem("email", email);
           sessionStorage.setItem("token", response.data.token);
         }
 
+        dispatch({type: 'SNACK', snackInfo: {type: 'success', msg: 'Log in Success!'}});
+        
         const userInfo = response.data.user;
-
+        
         if (surveyId) {
           history.push("/survey/detail/" + surveyId, { userInfo: userInfo });
 
           return;
         }
 
-        history.push("/survey/start", { companyInfo: companyInfo, userInfo: userInfo });
+        if (Object.keys(companyInfo).length == 0) {
+          history.push("/home");
+        } else {
+          history.push("/survey/start", { companyInfo: companyInfo, userInfo: userInfo });
+        }
       })
       .catch(function (error: any) {
       });

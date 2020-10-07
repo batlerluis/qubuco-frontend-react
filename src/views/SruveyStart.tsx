@@ -1,19 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { useHistory } from 'react-router-dom';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
+import SnackBar from '../components/SnackBar';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -145,37 +141,61 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SurveyStart(props: any) {
-  const data = props.location.state;
-  console.log(data);
-
-  let companyInfo: any = {};
-  if (data.companyInfo) {
-    companyInfo = data.companyInfo;
-  }
-
-  let userInfo: any = {};
-  if (data.userInfo) {
-    userInfo = data.userInfo;
-  }
-
   const classes = useStyles();
-  
   const history = useHistory();
+  const [companyInfo, setCompanyInfo] = useState({name: '', logo: ''});
+  const data = props.location.state;
+  let userInfo: any = {};
+
+  const dispatch = useDispatch();
+
+  const [snackOption, setSnackOption] = useState({
+    type: "warning",
+    msg: "Internal Error!"
+  });
+
+  const [snackStatus, setSnackStatus] = React.useState(false);
+
+  const snackInfo = useSelector((state: any) => state.snackInfo);
+
+  useEffect(() => {
+    if (!data) {
+      history.push('/home');
+
+      return;
+    }
+
+    if (snackInfo.type && snackInfo.msg) {
+      setSnackOption({
+        type: snackInfo.type,
+        msg: snackInfo.msg
+      });
+      setSnackStatus(true);
+
+      console.log('after');
+
+      dispatch({ type: 'SNACK', snackInfo: { type: '', msg: '' } });
+    }
+
+    if (data.companyInfo) {
+      setCompanyInfo(data.companyInfo);
+    }
+
+    if (data.userInfo) {
+      userInfo = data.userInfo;
+    }
+  }, []);
+
+  console.log('123');
+  console.log(companyInfo);
 
   const SelectType = (nType: number) => {
-    history.push('/survey/detail', {companyInfo: companyInfo, userInfo:userInfo, categoryId: nType});
+    history.push('/survey/detail', { companyInfo: companyInfo, userInfo: userInfo, categoryId: nType });
   };
 
   return (
     <Grid container>
-      <AppBar position="static" color="inherit" className={classes.appBar}>
-        <Toolbar variant="dense">
-          <IconButton edge="start" href="/home" aria-label="menu">
-            <ArrowBackIosIcon />SALIR
-            </IconButton>
-        </Toolbar>
-      </AppBar>
-
+      {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
       <Card className={classes.root}>
         <CardHeader
           avatar={
