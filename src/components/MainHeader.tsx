@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, AppBar, Grid, Button, Icon } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from "@material-ui/core/Hidden";
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import SnackBar from '../components/SnackBar';
 import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-
+import axios from 'axios';
+import { API_URL } from '../Config';
+import { useSelector } from 'react-redux';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import imgLogo from "../assets/img/logo.png";
 
 const pageRoutes = [
-  { path: "/home/d", label: "Comentar empresa" },
-  { path: "/home/c", label: "Qué es" },
-  { path: "/home/a", label: "Empresas" },
-  { path: "/home/b", label: "Contacto" },
+  { path: "/home/comment", label: "Comentar empresa" },
+  { path: "/home/whatisit", label: "Qué es" },
+  { path: "/home/business", label: "Empresas" },
+  { path: "/home/contact", label: "Contacto" },
 ];
 
 const useStyles = makeStyles({
@@ -84,11 +89,19 @@ const useStyles = makeStyles({
 
 
 
-export default function LoginPage(props: any) {
+export default function MainHeader(props: any) {
+  const curUrl: string = window.location.href;
 
   const classes = useStyles();
 
   let location = useLocation();
+
+  const [snackOption, setSnackOption] = useState({
+    type: "warning",
+    msg: "Internal Error!"
+  });
+
+  const [snackStatus, setSnackStatus] = React.useState(false);
 
   const activeRoute = (routeName: string) => {
     return location.pathname.indexOf(routeName) > -1 ? true : false;
@@ -107,7 +120,42 @@ export default function LoginPage(props: any) {
   };
 
   const OnClick = (path: string) => {
+    handleClose();
     history.push(path);
+  }
+
+  const email = sessionStorage.getItem('email');
+  const token = sessionStorage.getItem('token');
+  const loginText = email && token ? 'Salir' : 'Acceder';
+
+  const OnAcceder = () => {
+    handleClose();
+    if (loginText === "Acceder") {
+      history.push('/home/login');
+    } else {
+      sessionStorage.removeItem('email');
+      sessionStorage.removeItem('token');
+
+      axios.get(API_URL + '/api/logout', {
+        headers: {
+          'email': email,
+          'Authorization': token
+        }
+      })
+        .then(function (response: any) {
+          setSnackOption({
+            type: "success",
+            msg: 'Log out success!'
+          });
+
+          setSnackStatus(true);
+
+          history.push('/home');
+        })
+        .catch(function (error: any) {
+        });
+    }
+
   }
 
   // var list = () => {
@@ -121,62 +169,83 @@ export default function LoginPage(props: any) {
   //   })
   // }
 
-  return (
-    <AppBar className={classes.appBar}>
-      {/* <Grid container className={classes.wrapper} alignItems="stretch"> */}
-      <Toolbar className={classes.container}>
+  let appBar;
+  if (curUrl.indexOf('/survey/start') > 0 || curUrl.indexOf('/survey/detail') > 0) {
+    appBar = (
+      <AppBar position="static" color="inherit" className={classes.appBar} >
+        <Toolbar variant="dense">
+          <IconButton edge="start" href="/home" aria-label="menu">
+            <ArrowBackIosIcon />SALIR
+            </IconButton>
+        </Toolbar>
+      </AppBar>
+    );
+  } else {
+    appBar = (
+      <AppBar className={classes.appBar}>
+        {/* <Grid container className={classes.wrapper} alignItems="stretch"> */}
+        <Toolbar className={classes.container}>
 
-        <Grid item className={classes.logo}>
-          <Grid container alignItems="center" className={classes.fullHeight}>
-            <Button href="http://onelink.to/yj9evv"><img alt="Avatar" src={imgLogo} />QUBU</Button>
-          </Grid>
-        </Grid>
-        
-        <Hidden smDown>
-          {
-            pageRoutes.map((prop, key) => {
-              if (activeRoute(prop.path)) {
-                return <Button onClick={() => OnClick(prop.path)} className={classes.activeLink} key={key}>{prop.label}</Button>
-              }
-              return <Button onClick={() => OnClick(prop.path)} className={classes.navLink} key={key}>{prop.label}</Button>
-            })
-          }
-          <Button className={classes.accessLink}>Acceder</Button>
-          <Grid item>
+          <Grid item className={classes.logo}>
             <Grid container alignItems="center" className={classes.fullHeight}>
-              <Button className={classes.companyLink}>Acceder como empresa</Button>
+              <Button href="http://onelink.to/yj9evv"><img alt="Avatar" src={imgLogo} />QUBU</Button>
             </Grid>
           </Grid>
-        </Hidden>
 
-        <Hidden mdUp>
-          <Button
-            aria-controls="simple-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
+          <Hidden smDown>
+            {
+              pageRoutes.map((prop, key) => {
+                if (activeRoute(prop.path)) {
+                  return <Button onClick={() => OnClick(prop.path)} className={classes.activeLink} key={key}>{prop.label}</Button>
+                }
+                return <Button onClick={() => OnClick(prop.path)} className={classes.navLink} key={key}>{prop.label}</Button>
+              })
+            }
+            <Button onClick={() => OnAcceder()} className={classes.accessLink}>{loginText}</Button>
+            <Grid item>
+              <Grid container alignItems="center" className={classes.fullHeight}>
+                <Button className={classes.companyLink}>Acceder como empresa</Button>
+              </Grid>
+            </Grid>
+          </Hidden>
+
+          <Hidden mdUp>
+            <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MenuIcon />
+            </Button>
+          </Hidden>
+
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
           >
-            <MenuIcon />
-          </Button>
-        </Hidden>
-        
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {
-            pageRoutes.map((prop, key) => {
-              if (activeRoute(prop.path)) {
-                return <MenuItem key={key} onClick={handleClose}>{prop.label}</MenuItem>
-              }
-              return <MenuItem key={key} onClick={handleClose}>{prop.label}</MenuItem>
-            })
-          }
-        </Menu>
-      </Toolbar>
-    </AppBar>
+            {
+              pageRoutes.map((prop, key) => {
+                if (activeRoute(prop.path)) {
+                  return <MenuItem key={key} onClick={() => OnClick(prop.path)}>{prop.label}</MenuItem>
+                }
+                return <MenuItem key={key} onClick={() => OnClick(prop.path)}>{prop.label}</MenuItem>
+              })
+            }
+            <MenuItem onClick={() => OnAcceder()}>{loginText}</MenuItem>
+          </Menu>
+        </Toolbar>
+      </AppBar>
+    );
+  }
+
+  return (
+    <div>
+      {appBar}
+      {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
+    </div>
   );
 }
 

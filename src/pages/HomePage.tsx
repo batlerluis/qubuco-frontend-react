@@ -16,7 +16,6 @@ const pageStyle = {
 const HomePage = () => {
   return (
     <div>
-      <MainHeader />
       <Switch>
         {
           indexRoutes.map((prop, key) => {

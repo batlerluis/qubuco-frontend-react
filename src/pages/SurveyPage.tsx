@@ -26,7 +26,6 @@ const SurveyPage = () => {
 
   return (
     <div>
-      <MainHeader />
       <Switch>
         {
           indexRoutes.map((prop, key) => {

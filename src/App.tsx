@@ -5,6 +5,7 @@ import { Switch, BrowserRouter as Router, Route, Redirect } from 'react-router-d
 import SurveyPage from './pages/SurveyPage';
 import { AppContext, AppProvider } from './context/AppContext';
 import ResetPassword from './views/ResetPassword';
+import MainHeader from './components/MainHeader';
 
 const indexRoutes = [
   { path: "/home", component: HomePage },
@@ -17,6 +18,7 @@ const App = () => {
   return (
     // <AppProvider>
       <Router>
+        <MainHeader />
         <Switch>
           {indexRoutes.map((prop, key) => {
             if (prop.redirect) {
