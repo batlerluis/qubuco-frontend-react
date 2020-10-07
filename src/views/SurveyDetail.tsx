@@ -170,6 +170,20 @@ export default function SurveyDetail(props: any) {
   let userId: number = 0;
   let categoryId: number = 0;
 
+  if (data) {
+    if (data.companyInfo) {
+      companyInfo = data.companyInfo;
+    }
+
+    if (data.userInfo) {
+      userId = data.userInfo.user_id;
+    }
+
+    if (data.categoryId) {
+      categoryId = data.categoryId;
+    }
+  }
+
   const classes = useStyles();
   const [checked, setChecked] = React.useState(false);
   const [index, setIndex] = React.useState(0);
@@ -222,20 +236,6 @@ export default function SurveyDetail(props: any) {
       console.log('after');
 
       dispatch({ type: 'SNACK', snackInfo: { type: '', msg: '' } });
-    }
-
-    if (data) {
-      if (data.companyInfo) {
-        companyInfo = data.companyInfo;
-      }
-
-      if (data.userInfo) {
-        userId = data.userInfo.user_id;
-      }
-
-      if (data.categoryId) {
-        categoryId = data.categoryId;
-      }
     }
 
     let company_Id: number = 0;
