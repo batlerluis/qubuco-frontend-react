@@ -144,8 +144,8 @@ export default function SurveyStart(props: any) {
   const classes = useStyles();
   const history = useHistory();
   const [companyInfo, setCompanyInfo] = useState({name: '', logo: ''});
+  const [userInfo, setUserInfo] = useState({});
   const data = props.location.state;
-  let userInfo: any = {};
 
   const dispatch = useDispatch();
 
@@ -182,7 +182,7 @@ export default function SurveyStart(props: any) {
     }
 
     if (data.userInfo) {
-      userInfo = data.userInfo;
+      setUserInfo(data.userInfo);
     }
   }, []);
 
