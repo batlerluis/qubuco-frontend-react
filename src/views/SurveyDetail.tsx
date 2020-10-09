@@ -164,27 +164,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SurveyDetail(props: any) {
-  const data = props.location.state;
-
-  let companyInfo: any = {};
-  let userId: number = 0;
-  let categoryId: number = 0;
-
-  if (data) {
-    if (data.companyInfo) {
-      companyInfo = data.companyInfo;
-    }
-
-    if (data.userInfo) {
-      userId = data.userInfo.user_id;
-    }
-
-    if (data.categoryId) {
-      categoryId = data.categoryId;
-    }
-  }
-
   const classes = useStyles();
+  const [categoryId, setCategoryId] = React.useState(0);
   const [checked, setChecked] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   const [answers, setAnswers] = React.useState<string[]>([]);
@@ -197,6 +178,7 @@ export default function SurveyDetail(props: any) {
   const [companyId, setCompanyId] = React.useState(0);
   const [companyName, setCompanyName] = React.useState('');
   const [companyLogo, setCompanyLogo] = React.useState('');
+  const [ownerId, setOwnerId] = React.useState(0);
 
   const [snackOption, setSnackOption] = useState({
     type: "warning",
@@ -220,7 +202,16 @@ export default function SurveyDetail(props: any) {
       surveyId = "";
     }
 
-    if (!data && !surveyId) {
+    let isNew: boolean = false;
+    if (surveyId.indexOf('@@') > 0) {
+      isNew = true;
+    } else {
+      isNew = false;
+    }
+
+    const data = props.location.state;
+
+    if (!surveyId || (isNew && !data)) {
       history.push('/home');
 
       return;
@@ -233,23 +224,13 @@ export default function SurveyDetail(props: any) {
       });
       setSnackStatus(true);
 
-      console.log('after');
-
       dispatch({ type: 'SNACK', snackInfo: { type: '', msg: '' } });
-    }
-
-    let company_Id: number = 0;
-    if (companyInfo) {
-      company_Id = companyInfo.id;
     }
 
     const email = sessionStorage.getItem("email");
     const token = sessionStorage.getItem("token");
 
-    axios.post(API_URL + '/api/survey/load/' + surveyId, {
-      'companyId': company_Id,
-      'category': categoryId
-    }, {
+    axios.get(API_URL + '/api/survey/load/' + surveyId, {
       headers: {
         'email': email,
         'Authorization': `${token}`
@@ -266,13 +247,23 @@ export default function SurveyDetail(props: any) {
         setLoaded(true);
 
         if (response.data.length > 0) {
-          if (company_Id || surveyId) {
+          if (!isNew) {
             setCompanyId(response.data[0].company_id);
             setCompanyName(response.data[0].company_name);
             setCompanyLogo(response.data[0].logo);
+            setOwnerId(response.data[0].user_id);
+            setCategoryId(response.data[0].survey_user_type);
           } else {
-            setCompanyName(companyInfo.name);
+            const surveyInfo:string[] = surveyId.split('@@');
+            if (surveyInfo.length != 3) {
+              history.push('/home');
+
+              return;
+            }
+
+            setCompanyName(surveyInfo[1]);
             setCompanyLogo("DvP0JuNMrehWfzG1793520589.png");
+            setCategoryId(parseInt(surveyInfo[2], 10));
           }
         } else {
           setSnackOption({
@@ -284,6 +275,7 @@ export default function SurveyDetail(props: any) {
 
           return;
         }
+
         setSurveys(response.data);
       })
       .catch(function (error: any) {
@@ -403,17 +395,20 @@ export default function SurveyDetail(props: any) {
     }
 
     let score = scoreSum / scoreCount;
-    let readStatus: number;
+    let status: number;
     if (checked === true) {
-      readStatus = 0;
+      status = 0;
     } else {
-      readStatus = 1;
+      status = 1;
     }
 
+    const email = sessionStorage.getItem("email");
+
     axios.put(API_URL + '/api/comment/add', {
+      email: email,
       companyName: companyName,
       companyId: companyId,
-      userId: userId,
+      ownerId: ownerId,
       userType: categoryId,
       questions: question,
       answers: answer,
@@ -421,7 +416,7 @@ export default function SurveyDetail(props: any) {
       questionIds: questionIds,
       questionScores: questionScores,
       score: parseFloat(score.toString()).toFixed(2),
-      readStatus: readStatus
+      status: status
     })
       .then(function (response: any) {
         console.log(response.data);

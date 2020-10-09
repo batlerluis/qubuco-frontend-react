@@ -16,6 +16,7 @@ import imgPhone1 from "../assets/img/phone1.png"
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../Config';
+import { createNamedExports } from 'typescript';
 
 const pageStyle = {
   wrapper: {
@@ -123,9 +124,11 @@ const Home = (props: any) => {
 
   const OnCompanyChange = (event: object, value: any) => {
     if (!value) return;
+
+    const companyName: string = value.company_name;
     const companyInfo = {
       id: value.company_id,
-      name: value.company_name,
+      name: companyName.trim(),
       logo: value.logo ? value.logo : "DvP0JuNMrehWfzG1793520589.png"
     };
 
@@ -157,7 +160,7 @@ const Home = (props: any) => {
         }
 
         if (response.data.passed == 1) {
-          history.push("/survey/start", { companyInfo: companyInfo, userInfo: userInfo });
+          history.push("/survey/start", { companyInfo: companyInfo });
 
           return;
         }

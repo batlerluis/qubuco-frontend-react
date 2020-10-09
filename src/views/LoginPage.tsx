@@ -206,10 +206,8 @@ export default function LoginPage(props: any) {
 
         dispatch({type: 'SNACK', snackInfo: {type: 'success', msg: 'Log in Success!'}});
         
-        const userInfo = response.data.user;
-        
         if (surveyId) {
-          history.push("/survey/detail/" + surveyId, { userInfo: userInfo });
+          history.push("/survey/detail/" + surveyId);
 
           return;
         }
@@ -217,7 +215,7 @@ export default function LoginPage(props: any) {
         if (Object.keys(companyInfo).length == 0) {
           history.push("/home");
         } else {
-          history.push("/survey/start", { companyInfo: companyInfo, userInfo: userInfo });
+          history.push("/survey/start", { companyInfo: companyInfo });
         }
       })
       .catch(function (error: any) {
