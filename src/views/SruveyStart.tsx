@@ -10,6 +10,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { useHistory } from 'react-router-dom';
 import SnackBar from '../components/SnackBar';
+import { API_URL } from '../Config';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -143,8 +145,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SurveyStart(props: any) {
   const classes = useStyles();
   const history = useHistory();
-  const [companyInfo, setCompanyInfo] = useState({name: '', logo: ''});
-  const [userInfo, setUserInfo] = useState({});
+  const [companyInfo, setCompanyInfo] = useState({ id: 0, name: '', logo: '' });
   const data = props.location.state;
 
   const dispatch = useDispatch();
@@ -180,17 +181,28 @@ export default function SurveyStart(props: any) {
     if (data.companyInfo) {
       setCompanyInfo(data.companyInfo);
     }
-
-    if (data.userInfo) {
-      setUserInfo(data.userInfo);
-    }
   }, []);
 
-  console.log('123');
-  console.log(companyInfo);
-
   const SelectType = (nType: number) => {
-    history.push('/survey/detail', { companyInfo: companyInfo, userInfo: userInfo, categoryId: nType });
+    axios.post(API_URL + '/api/survey/select', {
+      'companyId': companyInfo.id,
+      'category': nType
+    })
+      .then(function (response: any) {
+        console.log(response.data);
+        const survey = response.data;
+        let surveyId: string = "";
+        if (!survey) {
+          surveyId = "add@@" + companyInfo.name + "@@" + nType;
+        } else {
+          surveyId = survey.survey_id;
+        }
+
+        history.push('/survey/detail/' + surveyId, { select: 'select' });
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
   };
 
   return (
