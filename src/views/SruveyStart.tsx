@@ -193,12 +193,12 @@ export default function SurveyStart(props: any) {
         const survey = response.data;
         let surveyId: string = "";
         if (!survey) {
-          surveyId = "add@@" + companyInfo.name + "@@" + nType;
+          surveyId = "";
         } else {
           surveyId = survey.survey_id;
         }
 
-        history.push('/survey/detail/' + surveyId, { select: 'select' });
+        history.push('/survey/detail/' + surveyId, { companyName: companyInfo.name, category: nType });
       })
       .catch(function (error: any) {
         console.log(error);

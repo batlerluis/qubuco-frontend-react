@@ -203,7 +203,7 @@ export default function SurveyDetail(props: any) {
     }
 
     let isNew: boolean = false;
-    if (surveyId.indexOf('@@') > 0) {
+    if (surveyId === "") {
       isNew = true;
     } else {
       isNew = false;
@@ -211,7 +211,7 @@ export default function SurveyDetail(props: any) {
 
     const data = props.location.state;
 
-    if (!surveyId || (isNew && !data)) {
+    if (isNew && !data) {
       history.push('/home');
 
       return;
@@ -230,7 +230,11 @@ export default function SurveyDetail(props: any) {
     const email = sessionStorage.getItem("email");
     const token = sessionStorage.getItem("token");
 
-    axios.get(API_URL + '/api/survey/load/' + surveyId, {
+    let surveyUrl = surveyId;
+    if (isNew) {
+      surveyUrl = "@@~" + data.category;
+    }
+    axios.get(API_URL + '/api/survey/load/' + surveyUrl, {
       headers: {
         'email': email,
         'Authorization': `${token}`
@@ -238,7 +242,6 @@ export default function SurveyDetail(props: any) {
     })
       .then(function (response: any) {
         if (response.data.noUser) {
-          dispatch({ type: 'SURVEYID_INPUT', surveyId: surveyId });
           history.push('/home/login', { surveyId: surveyId });
 
           return;
@@ -254,16 +257,9 @@ export default function SurveyDetail(props: any) {
             setOwnerId(response.data[0].user_id);
             setCategoryId(response.data[0].survey_user_type);
           } else {
-            const surveyInfo:string[] = surveyId.split('@@');
-            if (surveyInfo.length != 3) {
-              history.push('/home');
-
-              return;
-            }
-
-            setCompanyName(surveyInfo[1]);
+            setCompanyName(data.companyName);
             setCompanyLogo("DvP0JuNMrehWfzG1793520589.png");
-            setCategoryId(parseInt(surveyInfo[2], 10));
+            setCategoryId(data.category);
           }
         } else {
           setSnackOption({
