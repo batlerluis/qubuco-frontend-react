@@ -139,7 +139,7 @@ export default function LoginPage(props: any) {
     if (data.companyInfo) {
       companyInfo = data.companyInfo;
     }
-  
+
     if (data.surveyId) {
       surveyId = data.surveyId;
     }
@@ -204,8 +204,8 @@ export default function LoginPage(props: any) {
           sessionStorage.setItem("token", response.data.token);
         }
 
-        dispatch({type: 'SNACK', snackInfo: {type: 'success', msg: 'Log in Success!'}});
-        
+        dispatch({ type: 'SNACK', snackInfo: { type: 'success', msg: 'Log in Success!' } });
+
         if (surveyId) {
           history.push("/survey/detail/" + surveyId);
 
@@ -335,6 +335,19 @@ export default function LoginPage(props: any) {
     })
       .then(function (response: AxiosResponse) {
         const data: any = response.data;
+
+        if (data.error) {
+          console.log("err");
+          const errors: string[] = data.error;
+          setSnackOption({
+            type: "error",
+            msg: errors[0]
+          });
+          setSnackStatus(true);
+
+          return;
+        }
+
         setSnackOption({
           type: data.type,
           msg: data.message
