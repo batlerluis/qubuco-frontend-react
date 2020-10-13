@@ -124,8 +124,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   passContainer: {
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingTop: '5px',
+    paddingBottom: '15px',
   }
 }));
 
@@ -391,10 +393,10 @@ export default function LoginPage(props: any) {
         />
 
         <Grid container className={classes.passContainer}>
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value={checked} onChange={(event: any) => setChecked(event.target.checked)} className={classes.checkBox} />}
             label="Permanecer conectado"
-          />
+          /> */}
           <a href="" className={classes.forgot} onClick={(e) => handleForgot(e)}>Olvidé contraseña</a>
         </Grid>
 
