@@ -329,7 +329,8 @@ export default function LoginPage(props: any) {
       });
   }
 
-  const handleForgot = () => {
+  const handleForgot = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
     axios.post(API_URL + '/api/pass/forgot', {
       'email': email,
     })
@@ -394,7 +395,7 @@ export default function LoginPage(props: any) {
             control={<Checkbox value={checked} onChange={(event: any) => setChecked(event.target.checked)} className={classes.checkBox} />}
             label="Permanecer conectado"
           />
-          <a className={classes.forgot} onClick={() => handleForgot()}>Olvidé contraseña</a>
+          <a href="" className={classes.forgot} onClick={(e) => handleForgot(e)}>Olvidé contraseña</a>
         </Grid>
 
         <Grid container className={classes.buttonbar} >
