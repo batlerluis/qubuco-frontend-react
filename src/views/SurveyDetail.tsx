@@ -234,6 +234,7 @@ export default function SurveyDetail(props: any) {
     if (isNew) {
       surveyUrl = "@@~" + data.category;
     }
+    
     axios.get(API_URL + '/api/survey/load/' + surveyUrl, {
       headers: {
         'email': email,
