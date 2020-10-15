@@ -453,7 +453,7 @@ export default function SurveyDetail(props: any) {
       </div>
     )
   } else {
-    if (questionKind === "Rating") {
+    if (questionKind === "Rating" || questionKind === "Calificación") {
       const val = parseInt(answers[index], 10);
       cardBody = (
         <div>
@@ -488,7 +488,7 @@ export default function SurveyDetail(props: any) {
           </CardContent>
         </div>
       );
-    } else if (questionKind === "Yes & No") {
+    } else if (questionKind === "Yes & No" || questionKind === "Opción simple") {
       cardBody = (
         <div>
           {cardHeader}
@@ -519,7 +519,7 @@ export default function SurveyDetail(props: any) {
           </CardContent>
         </div>
       )
-    } else if (questionKind === "Multiple Question") {
+    } else if (questionKind === "Multiple Question" || questionKind === "Múltiples opciones") {
       const answer: string = surveys[index].answer;
       const options: string[] = answer.split('@#');
 
