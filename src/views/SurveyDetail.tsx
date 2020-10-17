@@ -23,7 +23,7 @@ import SnackBar from '../components/SnackBar';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import deepPurple from '@material-ui/core/colors/purple';
-import { API_URL } from '../Config';
+import { API_URL, APP_URL } from '../Config';
 import axios from 'axios';
 
 const theme = createMuiTheme({
@@ -429,7 +429,7 @@ export default function SurveyDetail(props: any) {
   const cardHeader = (
     <CardHeader
       avatar={
-        <img src={`/images/${companyLogo}`} className={classes.avatar} />
+        <img src={`${APP_URL}/app/webservice/images/400X400/${companyLogo}`} className={classes.avatar} />
       }
       action={
         <Card className={classes.return}>

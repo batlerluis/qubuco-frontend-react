@@ -10,7 +10,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { useHistory } from 'react-router-dom';
 import SnackBar from '../components/SnackBar';
-import { API_URL } from '../Config';
+import { API_URL, APP_URL } from '../Config';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -211,7 +211,7 @@ export default function SurveyStart(props: any) {
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <img src={`/images/${companyInfo.logo}`} alt="Avatar" className={classes.avatar} />
+            <img src={`${APP_URL}/app/webservice/images/400X400/${companyInfo.logo}`} alt="Avatar" className={classes.avatar} />
           }
           titleTypographyProps={{ variant: 'h5' }}
           title={companyInfo.name}
