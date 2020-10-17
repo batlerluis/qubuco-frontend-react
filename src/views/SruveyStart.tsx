@@ -211,7 +211,7 @@ export default function SurveyStart(props: any) {
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <img src={`/images/${companyInfo.logo}`} alt="Avatar" className={classes.avatar} />
+            <img src={`http://3.88.19.135/app/webservice/images/400X400/${companyInfo.logo}`} alt="Avatar" className={classes.avatar} />
           }
           titleTypographyProps={{ variant: 'h5' }}
           title={companyInfo.name}
