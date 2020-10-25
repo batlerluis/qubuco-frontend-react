@@ -89,12 +89,12 @@ const SurveyFinal = (props: any) => {
   const history = useHistory();
 
   return (
-    <Grid container justify-xs-space-between className={classes.wrapper}>
-      <Grid md={2} sm={2} xs={1} />
+    <Grid container justify-xs-space-between="true" className={classes.wrapper}>
+      <Grid item md={2} sm={2} xs={1} />
       <Grid item sm={8} md={4} xs={10}>
         <Grid container direction="column">
 
-          <Grid item alignContent="center" className={classes.titleGroup}>
+          <Grid container alignContent="center" className={classes.titleGroup}>
             <h1 className={classes.titleText}>Gracias! Hemos recibido tus comentarios</h1>
           </Grid>
 
@@ -131,15 +131,15 @@ const SurveyFinal = (props: any) => {
         </Grid>
       </Grid>
 
-      <Grid sm={1} md={1} xs={1} />
+      <Grid item sm={1} md={1} xs={1} />
 
-      <Grid item sm={12} md={3} xs={12} justify-xs-center>
+      <Grid item sm={12} md={3} xs={12} justify-xs-center="true">
         <Grid container justify="center">
           <img src={imgPhone2} alt="Can not load file!" />
         </Grid>
       </Grid>
 
-      <Grid md={2} sm={2} />
+      <Grid item md={2} sm={2} />
     </Grid>
   );
 }
