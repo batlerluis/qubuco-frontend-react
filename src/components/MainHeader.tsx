@@ -121,6 +121,7 @@ export default function MainHeader(props: any) {
 
   const OnClick = (path: string) => {
     handleClose();
+    console.log(path);
     history.push(path);
   }
 

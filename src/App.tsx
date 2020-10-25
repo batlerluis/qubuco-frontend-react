@@ -6,7 +6,7 @@ import SurveyPage from './pages/SurveyPage';
 import { AppContext, AppProvider } from './context/AppContext';
 import ResetPassword from './views/ResetPassword';
 import MainHeader from './components/MainHeader';
-import { Helmet } from 'react-helmet';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 const indexRoutes = [
   { path: "/home", component: HomePage },
@@ -20,18 +20,20 @@ const TITLE = 'Qubu - Negocios de calidad'
 const App = () => {
   return (
     <Router>
-      <Helmet>
-        <title>{TITLE}</title>
-      </Helmet>
-      <MainHeader />
-      <Switch>
-        {indexRoutes.map((prop, key) => {
-          if (prop.redirect) {
-            return <Redirect from={prop.path} to={prop.to} key={key} />
-          }
-          return <Route path={prop.path} component={prop.component} key={key} />;
-        })}
-      </Switch>
+      <HelmetProvider>
+        <Helmet>
+          <title>{TITLE}</title>
+        </Helmet>
+        <MainHeader />
+        <Switch>
+          {indexRoutes.map((prop, key) => {
+            if (prop.redirect) {
+              return <Redirect from={prop.path} to={prop.to} key={key} />
+            }
+            return <Route path={prop.path} component={prop.component} key={key} />;
+          })}
+        </Switch>
+      </HelmetProvider>
     </Router>
   );
 }
