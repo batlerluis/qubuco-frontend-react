@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './App.css';
 import HomePage from './pages/HomePage';
 import { Switch, BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import SurveyPage from './pages/SurveyPage';
-import { AppContext, AppProvider } from './context/AppContext';
+// import { AppContext, AppProvider } from './context/AppContext';
 import ResetPassword from './views/ResetPassword';
 import MainHeader from './components/MainHeader';
 import { HelmetProvider, Helmet } from 'react-helmet-async';

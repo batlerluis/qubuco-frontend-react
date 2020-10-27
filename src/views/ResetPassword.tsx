@@ -144,7 +144,7 @@ export default function ResetPassword(props: any) {
       <MainHeader />
 
       <Grid container alignItems="center">
-        {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
+        {snackStatus === true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
         <Card className={classes.root}>
           <CardHeader
             titleTypographyProps={{ variant: 'h5' }}

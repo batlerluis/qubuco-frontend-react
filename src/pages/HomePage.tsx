@@ -2,15 +2,15 @@ import React from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Home from '../views/Home';
 import WhatIsIt from '../views/WhatIsIt';
+import Business from '../views/Business';
 import LoginPage from '../views/LoginPage';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import MainHeader from '../components/MainHeader';
 
 const indexRoutes = [
   { path: "/home/login", component: LoginPage },
   { path: "/home/comment", component: Home },
   { path: "/home/whatisit", component: WhatIsIt },
-  { path: "/home/business", component: Home },
+  { path: "/home/business", component: Business },
   { path: "/home/contact", component: Home },
   { path: "/home", to: "/home/comment", redirect: true }
 ];

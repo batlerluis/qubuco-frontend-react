@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import { makeStyles, AppBar, Button, Icon } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 import imgYutube from '../assets/img/whatisit_youtube.png'
 import imgLogo from '../assets/img/whatisit_logo.png'

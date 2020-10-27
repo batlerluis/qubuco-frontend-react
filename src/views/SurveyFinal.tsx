@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Grid } from '@material-ui/core';
@@ -86,7 +85,7 @@ const SurveyFinal = (props: any) => {
 
   const { classes } = props;
 
-  const history = useHistory();
+  // const history = useHistory();
 
   return (
     <Grid container justify-xs-space-between="true" className={classes.wrapper}>
@@ -108,7 +107,7 @@ const SurveyFinal = (props: any) => {
 
               <Grid item className={classes.logGroup}>
                 <Grid container className={classes.logContainer} alignItems="center" justify="center">
-                  <img src={imgLog} alt="Can not load image!" />
+                  <img src={imgLog} alt="Can not load any file!" />
                 </Grid>
               </Grid>
 

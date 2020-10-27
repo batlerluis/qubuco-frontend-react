@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { Button, Grid, Link } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import SearchIcon from '@material-ui/icons/Search';
-import Typography from '@material-ui/core/Typography';
+import { Button, Grid } from '@material-ui/core';
 import SnackBar from '../components/SnackBar';
 import "./HomeStyle.css";
 
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { API_URL } from '../Config';
 import MainFooter from '../components/MainFooter';
 import imgPhone1 from "../assets/img/whatisit_phone.png"
 import imgPhoneBlur from "../assets/img/whatisit_phone_blur.png"

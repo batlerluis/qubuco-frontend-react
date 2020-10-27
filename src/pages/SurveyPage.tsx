@@ -7,8 +7,6 @@ import SurveyFinal from '../views/SurveyFinal';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import MainHeader from '../components/MainHeader';
-
 const indexRoutes = [
   { path: "/survey/start", component: SruveyStart },
   { path: "/survey/detail/:pathParam?", component: SurveyDetail },
@@ -20,7 +18,7 @@ const pageStyle = {
 
 const SurveyPage = () => {
 
-  const companyName = useSelector((state:any) => state.companyName);
+  // const companyName = useSelector((state:any) => state.companyName);
 
   const history = useHistory();
 

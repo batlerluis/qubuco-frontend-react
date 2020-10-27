@@ -429,7 +429,7 @@ export default function SurveyDetail(props: any) {
   const cardHeader = (
     <CardHeader
       avatar={
-        <img src={`${APP_URL}/app/webservice/images/400X400/${companyLogo}`} className={classes.avatar} />
+        <img src={`${APP_URL}/app/webservice/images/400X400/${companyLogo}`} alt="" className={classes.avatar} />
       }
       action={
         <Card className={classes.return}>
@@ -601,7 +601,7 @@ export default function SurveyDetail(props: any) {
   return (
     <ThemeProvider theme={theme}>
       <Grid container>
-        {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
+        {snackStatus === true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
         <Card className={classes.root}>
           {cardBody}
         </Card>

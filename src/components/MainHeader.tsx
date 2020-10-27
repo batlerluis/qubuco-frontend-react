@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles, AppBar, Grid, Button, Icon } from '@material-ui/core';
+import { makeStyles, AppBar, Grid, Button } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from "@material-ui/core/Hidden";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -10,7 +10,6 @@ import { useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../Config';
-import { useSelector } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import imgLogo from "../assets/img/logo.png";
@@ -245,7 +244,7 @@ export default function MainHeader(props: any) {
   return (
     <div>
       {appBar}
-      {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
+      {snackStatus === true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
     </div>
   );
 }

@@ -16,7 +16,6 @@ import imgPhone1 from "../assets/img/phone1.png"
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../Config';
-import { createNamedExports } from 'typescript';
 
 const pageStyle = {
   wrapper: {
@@ -159,7 +158,7 @@ const Home = (props: any) => {
           userInfo = response.data.user;
         }
 
-        if (response.data.passed == 1) {
+        if (response.data.passed === 1) {
           history.push("/survey/start", { companyInfo: companyInfo });
 
           return;
@@ -173,7 +172,7 @@ const Home = (props: any) => {
 
   return (
     <div>
-      {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
+      {snackStatus === true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
       <Grid container className={classes.wrapper} justify="center">
         <Grid container justify="center" className={classes.content}>
           <Grid item sm={7} md={4} className={classes.paddingH1}>

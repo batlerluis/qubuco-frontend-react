@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, FormControl, Grid, Card, CardContent, CardHeader, Tab, Tabs, Checkbox, FormControlLabel, Button } from '@material-ui/core';
-import FacebookIcon from '@material-ui/icons/Facebook';
+import { TextField, FormControl, Grid, Card, CardContent, CardHeader, Tab, Tabs, Button } from '@material-ui/core';
 import axios, { AxiosResponse } from 'axios';
 import { useHistory } from 'react-router-dom';
 import SnackBar from '../components/SnackBar';
-import { useSelector } from 'react-redux';
 import { API_URL } from '../Config';
 import FacebookLogin from 'react-facebook-login';
 
@@ -214,7 +212,7 @@ export default function LoginPage(props: any) {
           return;
         }
 
-        if (Object.keys(companyInfo).length == 0) {
+        if (Object.keys(companyInfo).length === 0) {
           history.push("/home");
         } else {
           history.push("/survey/start", { companyInfo: companyInfo });
@@ -372,7 +370,7 @@ export default function LoginPage(props: any) {
 
   let LogAndRegister;
 
-  if (tabIndex == 0) {
+  if (tabIndex === 0) {
     LogAndRegister = (
       <FormControl className={classes.formGroup}>
 
@@ -474,7 +472,7 @@ export default function LoginPage(props: any) {
   return (
 
     <Grid container alignItems="center">
-      {snackStatus == true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
+      {snackStatus === true ? <SnackBar setSnackStatus={setSnackStatus} type={snackOption.type} msg={snackOption.msg} /> : null}
       <Card className={classes.root}>
         <CardHeader
           titleTypographyProps={{ variant: 'h5' }}
