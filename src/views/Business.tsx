@@ -19,23 +19,28 @@ import Phone3 from "../assets/img/Phone3.png"
 import horse from "../assets/img/horse.png"
 
 const pageStyle = {
+  root: {
+    overflow: "hidden",
+  },
   wrapper: {
     paddingTop: 120,
-    margin: "0 100px"
+    margin: "0 11vw 5vw",
   },
   content: {
     height: "fit-content",
-    marginBottom: 20
+    marginBottom: "20vw"
   },
   paddingH1: {
     marginBottom: 50,
     justifyContent: "center",
     position: "relative" as "relative",
     right: "-6.1em",
-    transform: "scale(1.1)",
+    top: "6vw",
+    transform: "scale(1.5)",
     alignItems: "center" as "center",
     "@media screen and (max-width: 962px)": {
       right: 0,
+      transform: "scale(1)",
     }
   },
   paddingH2: {
@@ -71,6 +76,14 @@ const pageStyle = {
       alignItems: "center",
     }
   },
+  textBox2: {
+    // alignItems: "center",
+    paddingTop: "30px",
+    paddingRight: "10em",
+    "@media screen and (max-width: 962px)": {
+      alignItems: "center",
+    }
+  },
   iconGroup: {
     paddingRight: "4vw",
     "& > h1": {
@@ -79,7 +92,8 @@ const pageStyle = {
       minHeight: "2.4em",
       lineHeight: "1em",
       "@media screen and (max-width: 962px)": {
-        fontSize: "46px"
+        fontSize: "46px",
+        minHeight: "1.4em",
       },
       "@media screen and (max-width: 425px)": {
         fontSize: "30px"
@@ -88,17 +102,26 @@ const pageStyle = {
     "& > h2": {
       minHeight: "7em",
       color: "#707070",
+      fontSize: "1.5vw",
       "@media screen and (max-width: 1400px)": {
-        minHeight: "8.2em"
+        // fontSize: "30px",
       },
       "@media screen and (max-width: 1101px)": {
-        minHeight: "10em"
+        minHeight: "6em",
+        // fontSize: "20px"
+      },
+      "@media screen and (max-width: 961px)": {
+        minHeight: "4em",
+        fontSize: "20px"
       }
       // lineHeight: "1em",
     },
     "& > div": {
       width: "100%",
       textAlign: "center",
+      "& > button": {
+        transform: "scale(0.7)"
+      }
     },
   },
   // progBar: {
@@ -110,10 +133,16 @@ const pageStyle = {
   //     borderRadius: "5px",
   //   },
   // },
-  // content1: {
-  //   height: "fit-content",
-  //   backgroundColor: "#8a56ac"
-  // },
+  content1: {
+    height: "fit-content",
+    width: "50%",
+    marginBottom: "5vw",
+    backgroundColor: "#8a56ac",
+    "& > h1": {
+      textAlign: "center",
+      marginBottom: "0",
+    }
+  },
   // fullHeight: {
   //   height: "100%",
   // },
@@ -126,6 +155,7 @@ const pageStyle = {
     fontWeight: 600,
     color: "#202124",
     opacity: 1,
+    width: "100%",
     "font-width": "scaleY(0.95)",
     textAlign: "left" as "left",
     "@media screen and (max-width: 962px)": {
@@ -153,6 +183,7 @@ const pageStyle = {
   titleText1: {
     letterSpacing: "-0.46px",
     fontSize: "3.9vw",
+    width: "100%",
     margin: "4vw 0",
     fontWeight: 600,
     color: "#ffffff",
@@ -190,11 +221,12 @@ const pageStyle = {
   //   height: 130,
   //   alignItems: 'center'
   // },
-  // horseImg: {
-  //   // width: 380
-  //   position: 'relative' as 'relative',
-  //   left: "100%"
-  // },
+  horseImg: {
+    top: "0vw",
+    left: "20vw",
+    position: "relative" as "relative",
+    // transform: "scale(1)",
+  },
   btnClient: {
     backgroundColor: "#8a56ac !important",
     opacity: 1,
@@ -228,6 +260,21 @@ const pageStyle = {
     fontSize: "10vw",
     width: "100%",
   },
+  card: {
+    width: "100%",
+    position: "relative" as "relative",
+    top: "35vw",
+    borderRadius: "20px",
+    "z-index": "100",
+  },
+  btn1: {
+    width: "100%",
+    display: "flex",
+    "justify-content": "flex-end",
+    "@media screen and (max-width: 962px)": {
+      justifyContent: "center",
+    }
+  },
   // thirdSection: {
   //   minHeight: "80vh",
   //   height: "auto",
@@ -240,12 +287,15 @@ const pageStyle = {
   //   height: 80,
   //   borderRadius: 40
   // }
+  footer: {
+    marginTop: "2vw",
+  }
 };
 
 const Business = (props: any) => {
   const { classes } = props;
   return (
-    <div>
+    <div className={classes.root}>
       <div className={classes.wrapper}>
         <Grid container justify="center">
           <Grid container justify="center" className={classes.content}>
@@ -262,7 +312,7 @@ const Business = (props: any) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container justify="center" className={classes.content1}>
+          <Grid container justify="center">
             <Grid item md={7}>
               <Grid container className={classes.textBox1} direction="column" justify="flex-end" alignItems="flex-start">
                 <h1 className={classes.titleText1}>Haz seguimiento al clima laboral</h1>
@@ -272,21 +322,23 @@ const Business = (props: any) => {
             </Grid>
             <Grid item md={5}>
               <Grid container className={classes.paddingH2} alignContent="center" >
-              {/* <Grid container alignContent="center" > */}
+                {/* <Grid container alignContent="center" > */}
                 <img src={Phone3} alt="Can not load file!" />
               </Grid>
             </Grid>
           </Grid>
           <Grid container justify="flex-start" alignItems="center" className={classes.thirdSection}>
             <Grid item md={7}>
-              <Grid container className={classes.textBox} direction="column" justify="flex-end" alignItems="flex-start">
+              <Grid container className={classes.textBox2} direction="column" justify="flex-end" alignItems="flex-start">
                 <h1 className={classes.titleText}>Observa tu progreso</h1>
-                <h2>Con nuestro sistema SMART-REVIEW, no tienes que preocuparte por análisis de encuestas. QUBU analiza las respuestas de los usuarios y entrega los resultados en tiempo real.</h2>
-                <Button variant="contained" color="primary" className={classes.btnClient}>Comentar una empresa</Button>
+                <h2 className={classes.dscrText}>Con nuestro sistema SMART-REVIEW, no tienes que preocuparte por análisis de encuestas. QUBU analiza las respuestas de los usuarios y entrega los resultados en tiempo real.</h2>
+                <div className={classes.btn1}>
+                  <Button variant="contained" color="primary" className={classes.btnClient}>Comentar una empresa</Button>
+                </div>
               </Grid>
             </Grid>
             <Grid item md={5} >
-              <Card className={classes.root}>
+              <Card className={classes.card}>
                 <CardContent>
                   <List>
                     <ListItem>
@@ -302,10 +354,10 @@ const Business = (props: any) => {
                   </List>
                 </CardContent>
               </Card>
-            </Grid>
-            <Grid item>
-              <Grid container className={classes.horseImg} alignContent="center" >
-                <img src={horse} alt="Can not load file!" />
+              <Grid item>
+                <Grid container className={classes.horseImg} alignContent="center" >
+                  <img src={horse} alt="Can not load file!" />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -341,7 +393,7 @@ const Business = (props: any) => {
           </Grid>
         </Grid>
       </div>
-      <MainFooter />
+      <MainFooter  />
     </div>
   );
 }
